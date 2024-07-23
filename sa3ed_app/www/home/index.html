@@ -1,0 +1,33 @@
+{% extends base_template_path %}
+{% block content %}
+<a class="res btn btn-secondary" asp-page="Disclaimer">إخلاء مسئولية🤚</a><br/>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <a class="miss btn btn-secondary" asp-page="UploadImageLost">
+                <img src="~/img/lost.svg"/>
+                <br/>فقد طفل
+            </a>
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <a class="find btn btn-secondary" asp-page="UploadImageFound">
+                <img src="~/img/foundhome.svg"/>
+                <br/>
+                وجد طفل
+            </a>
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <a class="follow btn btn-secondary" asp-page="case">
+                متابعة حالة
+                <img src="~/img/arrow-pink.svg"/>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
