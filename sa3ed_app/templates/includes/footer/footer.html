@@ -1,12 +1,5 @@
 <footer class="web-footer">
 	<div class="container">
-		{% include "templates/includes/footer/footer_logo_extension.html" %}
-
-		{% if footer_items -%}
-			{% include "templates/includes/footer/footer_grouped_links.html" %}
-		{% endif %}
-
-		{% include "templates/includes/footer/footer_links.html" %}
-		{% include "templates/includes/footer/footer_info.html" %}
+	{{_("Powered By {0}").format('<a href="https://www.LavaLoon.com" target="_blank" class="text-muted">LavaLoon</a>') }}, {{ _("Built on {0}").format('<a href="https://frappeframework.com?source=website_footer" target="_blank" class="text-muted">Frappe</a>') }}
 	</div>
 </footer>
