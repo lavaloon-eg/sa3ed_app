@@ -1,12 +1,13 @@
 {% extends base_template_path %}
 {% block content %}
-<a class="res btn btn-secondary" href="disclaimer">إخلاء مسئولية🤚</a><br/>
+<a class="res btn btn-secondary" href="disclaimer">{{_('إخلاء مسئولية')}} 🤚</a>
+<br/>
 <div class="container">
     <div class="row">
         <div class="col text-center">
             <a class="miss btn btn-secondary" href="uploadImageLost">
                 <img src="/assets/img/lost.svg"/>
-                <br/>فقد طفل
+                <br/>{{_('فقد طفل')}}
             </a>
             <br/>
         </div>
@@ -16,7 +17,7 @@
             <a class="find btn btn-secondary" href="uploadImageFound">
                 <img src="/assets/img/foundhome.svg"/>
                 <br/>
-                وجد طفل
+                {{_('وجد طفل')}}
             </a>
             <br/>
         </div>
@@ -24,7 +25,7 @@
     <div class="row">
         <div class="col text-center">
             <a class="follow btn btn-secondary" href="#">
-                متابعة حالة
+                {{_('متابعة حالة')}}
                 <img src="/assets/img/arrow-pink.svg"/>
             </a>
         </div>
