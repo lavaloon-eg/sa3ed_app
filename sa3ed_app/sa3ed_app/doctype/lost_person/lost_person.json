@@ -22,7 +22,11 @@
   "notes",
   "case_status_tab",
   "case_status",
-  "lost_date"
+  "lost_date",
+  "addresses_tab",
+  "home_address",
+  "column_break_vjnr",
+  "lost_address"
  ],
  "fields": [
   {
@@ -132,11 +136,32 @@
    "fieldtype": "Date",
    "label": "Lost Date",
    "reqd": 1
+  },
+  {
+   "fieldname": "addresses_tab",
+   "fieldtype": "Tab Break",
+   "label": "Addresses"
+  },
+  {
+   "fieldname": "home_address",
+   "fieldtype": "Link",
+   "label": "Home Address",
+   "options": "Sa3ed Address"
+  },
+  {
+   "fieldname": "column_break_vjnr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "lost_address",
+   "fieldtype": "Link",
+   "label": "Lost Address",
+   "options": "Sa3ed Address"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-22 03:23:14.056923",
+ "modified": "2024-07-24 12:52:35.572899",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",

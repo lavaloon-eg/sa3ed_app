@@ -1,4 +1,5 @@
 import frappe
+from frappe import _
 from frappe import cint
 from sa3ed_app.Utils.Localization import *
 from pypika.functions import Count
