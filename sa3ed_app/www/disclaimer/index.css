@@ -1,0 +1,69 @@
+label {
+  position: static;
+  width: 180px;
+  height: 32px;
+  left: 81.5px;
+  top: 0px;
+  font-family: Changa;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  color: #053b4f;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+p.disclaimer-content {
+  position: static;
+  width: 80%;
+  height: 288px;
+  left: 0px;
+  top: 58px;
+  font-family: Changa;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: right;
+  color: #053b4f;
+  opacity: 0.8;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 0px;
+}
+
+.close-disclaimer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 40px;
+  position: absolute;
+  width: 141px;
+  height: 56px;
+  left: calc(50% - 141px / 2);
+  bottom: 5%;
+  background: #ff476e;
+  box-shadow: 1px -1px 0px rgba(249, 242, 242, 0.25),
+    0px 1px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 24px;
+  color: #ffffff;
+  overflow: auto;
+}
+
+.go-back {
+  background-image: url(@Url.Content("~/img/close.svg"));
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 30%;
+  background-color: white;
+  width: 12%;
+  height: 45px;
+  border-style: none;
+  content: icon;
+  float: right;
+  margin: 0% 5%;
+}

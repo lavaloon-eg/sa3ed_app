@@ -14,8 +14,8 @@ app_license = "agpl-3.0"
 # app_include_js = "/assets/sa3ed_app/js/sa3ed_app.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/sa3ed_app/css/sa3ed_app.css"
-# web_include_js = "/assets/sa3ed_app/js/sa3ed_app.js"
+web_include_css = "/assets/css/sa3ed.css"
+web_include_js = "/assets/js/site.js"
 
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "sa3ed_app/public/scss/website"
@@ -41,8 +41,10 @@ app_license = "agpl-3.0"
 # Home Pages
 # ----------
 
+# website base template
+base_template = "sa3ed_app/templates/sa3ed_base_template.html"
 # application home page (will override Website Settings)
-# home_page = "login"
+home_page = "home"
 
 # website user home page (by Role)
 # role_home_page = {

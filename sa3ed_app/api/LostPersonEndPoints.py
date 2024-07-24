@@ -1,4 +1,5 @@
 import frappe
+from frappe import _
 from ApiEndPoint import *
 
 
@@ -32,7 +33,7 @@ def get_lost_persons(args_obj: {} = None):
 @frappe.whitelist(allow_guest=True)
 def create_lost_person_case(args_obj: {}):
     status_code, message, data = None, '', None
-    mandatory_args_csv = "first_name,middleman,last_name,birthdate,nationality"
+    mandatory_args_csv = _("first_name,middleman,last_name,birthdate,nationality")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                           mandatory_args_csv=mandatory_args_csv)
     if error_msg:
@@ -44,6 +45,6 @@ def create_lost_person_case(args_obj: {}):
         # TODO: add the rest of fields
         new_doc.save()
         status_code = 200
-        message = f"Lost Person Case has been created successfully."
+        message = _(f"Lost Person Case has been created successfully.")
         data = {"lost_person_case_id": new_doc.name}
     return ApiEndPoint.create_response(status_code=status_code, message=message, data=data)
