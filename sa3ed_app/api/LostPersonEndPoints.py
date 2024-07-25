@@ -1,6 +1,6 @@
-from ApiEndPoint import *
+from sa3ed_app.api.ApiEndPoint import *
 from frappe import _
-from Sa3edAddressEndPoints import create_sa3ed_address
+from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
 
 
 @frappe.whitelist(allow_guest=True)

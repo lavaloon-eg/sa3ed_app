@@ -1,4 +1,4 @@
-from ApiEndPoint import *
+from sa3ed_app.api.ApiEndPoint import *
 from frappe import _
 
 
