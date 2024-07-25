@@ -3,15 +3,6 @@ for details on configuring this project to bundle and minify static web assets. 
 
 @import url('https://fonts.googleapis.com/css?family=Changa:100,300,400,500,700,900');
 
-#app {
-    font-family: 'Changa';
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 10px;
-}
 
 body {
     background-color: #F2EFE6;
@@ -35,13 +26,31 @@ a {
     color: #42b983;
 }
 
-.res {
+a:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.content {
+    width: 50%;
+    height: fit-content;
+    margin: 60px auto;
+    background: #F2EFE6;
+    border: 1px solid #bbc0c2;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-family: 'Changa';
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+}
+
+a.btn:not(.btn-md):not(.btn-lg).res {
     background-color: #FFF;
     color: #053b4f;
     border-color: #FFF;
     border-radius: 10px;
-    box-shadow: 1px 2px 0px 0px #8080803b;
     font-weight: inherit;
+    padding: 6px 24px;
 }
 
 a.btn.miss {
@@ -52,6 +61,11 @@ a.btn.miss {
     border: none !important;
     border-radius: 24px;
     font-weight: inherit;
+    color: #FFF;
+}
+
+a.btn.miss:hover {
+    background: #ff4771;
     color: #FFF;
 }
 
@@ -66,17 +80,41 @@ a.btn.find {
     color: #FFF;
 }
 
-.follow {
+a.btn.find:hover {
+    background: #876bff;
+    color: #FFF;
+}
+
+a.btn.follow {
     margin-top: 2%;
     background-color: white;
     color: #ff476e;
     border-color: white;
     border-radius: 10px;
-    box-shadow: 1px 2px 0px 0px #8080803b;
-    padding: 1%;
-    padding-left: 2%;
-    padding-right: 2%;
     font-weight: inherit;
     margin-bottom: 1%;
     margin-top: 10%;
+}
+
+a.btn:not(.btn-md):not(.btn-lg).follow {
+    padding: 6px 24px;
+}
+
+a.btn.follow:hover {
+    background-color: #FFF;
+    color: #ff476e;
+    border-color: #FFF;
+}
+
+
+@media (max-width: 1024px) {
+    .content {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        width: 90%;
+    }
 }

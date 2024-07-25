@@ -15,11 +15,11 @@
 	{% block favicon %}
 	<link
 		rel="shortcut icon"
-		href="{{ (favicon or "/assets/frappe/images/frappe-favicon.svg") | abs_url }}"
+		href="{{ "/assets/img/favicon.ico" | abs_url }}"
 		type="image/x-icon"
 	>
 	{% endblock %}
-
+	
 	{%- block head -%}
 		{% include "templates/includes/head.html" %}
 	{%- endblock -%}
@@ -73,10 +73,11 @@
 			add_bottom_padding=0,
 		) }}
 	{%- endblock -%}
-
+    <div class="content p-6 d-flex flex-column justify-content-center align-items-center rounded">
 	{% block content %}
 		{{ content }}
 	{% endblock %}
+</div>
 
 	{%- block footer -%}
 		{{ web_block(
