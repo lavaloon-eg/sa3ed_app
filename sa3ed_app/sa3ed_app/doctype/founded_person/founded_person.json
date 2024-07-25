@@ -58,6 +58,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Gender",
+   "options": "Male\nFemale",
    "reqd": 1,
    "sort_options": 1,
    "translatable": 1
@@ -164,7 +165,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-25 20:03:19.335676",
+ "modified": "2024-07-26 00:26:32.541482",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Founded Person",
