@@ -73,10 +73,11 @@
 			add_bottom_padding=0,
 		) }}
 	{%- endblock -%}
-
+    <div class="content p-6 d-flex flex-column justify-content-center align-items-center rounded">
 	{% block content %}
 		{{ content }}
 	{% endblock %}
+</div>
 
 	{%- block footer -%}
 		{{ web_block(
