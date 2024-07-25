@@ -49,9 +49,12 @@ def create_lost_person_case(args_obj: {}):
         new_doc.birthdate = args_obj["birthdate"]
         # new_doc.pic = args_obj["pic"] # TODO: handle uploading and adding the pic
         new_doc.phone_1 = args_obj["phone_1"]
-        new_doc.phone_2 = args_obj["phone_2"]
-        new_doc.email_Address = args_obj["email_Address"]
-        new_doc.notes = args_obj["notes"]
+        if args_obj["phone_2"]:
+            new_doc.phone_2 = args_obj["phone_2"]
+        if args_obj["email_Address"]:
+            new_doc.email_Address = args_obj["email_Address"]
+        if args_obj["notes"]:
+            new_doc.notes = args_obj["notes"]
         new_doc.case_status = "Open"
         new_doc.lost_date = args_obj["lost_date"]
         if args_obj["home_address"]:
