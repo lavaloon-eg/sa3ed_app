@@ -2,7 +2,8 @@ import frappe
 from frappe import _
 from frappe import cint
 from sa3ed_app.Utils.Localization import *
-from pypika.functions import Count
+from pypika.functions import Count, Lower
+from pypika import Order
 from frappe.query_builder import DocType
 
 
@@ -29,6 +30,23 @@ class ApiEndPoint:
 
     @staticmethod
     def create_response(status_code: int, message: str, data: {} = None) -> {}:
-        response = {"status_code": status_code,
-                    "message": message,
-                    "data": data}
+        return {"status_code": status_code,
+                "message": message,
+                "data": data}
+
+    @staticmethod
+    def get_key_value(parent_obj: dict, key: str,
+                      default_value=None,
+                      raise_error_if_not_exist: bool = True):
+        if not parent_obj:
+            if raise_error_if_not_exist:
+                frappe.throw(msg="main object is null")
+            else:
+                return default_value
+        else:
+            if parent_obj[key]:
+                return parent_obj[key]
+            elif not parent_obj[key] and raise_error_if_not_exist:
+                frappe.throw(msg=f"key '{key}' doesn't exist")
+            else:
+                return default_value
