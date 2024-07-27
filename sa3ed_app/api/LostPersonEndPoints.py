@@ -1,12 +1,14 @@
+import json
 from sa3ed_app.api.ApiEndPoint import *
 from frappe import _
 from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
+from sa3ed_app.Utils.FileHandler import save_image_attachment
 
 
 @frappe.whitelist(allow_guest=True)
-def get_lost_persons(args_obj: {} = None):
+def get_lost_persons(args_obj: str = None):
     status_code, message, data = None, '', None
-
+    args_obj = json.loads(args_obj)
     try:
         current_lang = get_language()  # TODO: Apply the language
         page_limit = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="page_limit",
@@ -38,8 +40,11 @@ def get_lost_persons(args_obj: {} = None):
 
 
 @frappe.whitelist(allow_guest=True)
-def create_lost_person_case(args_obj: {}):
+def create_lost_person_case(args_obj: str):
     status_code, message, data = None, '', None
+    args_obj = json.loads(args_obj)
+    if args_obj["pic"]:
+        pass
     mandatory_args_csv = _("first_name,middleman,last_name,birthdate,nationality,gender,lost_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                           mandatory_args_csv=mandatory_args_csv)
@@ -58,7 +63,6 @@ def create_lost_person_case(args_obj: {}):
             new_doc.birthdate = args_obj["birthdate"]
             new_doc.case_status = "Open"
             new_doc.lost_date = args_obj["lost_date"]
-            # new_doc.pic = args_obj["pic"] # TODO: handle uploading and adding the pic
             new_doc.phone_1 = args_obj["phone_1"]
             new_doc.phone_2 = ApiEndPoint.get_key_value(parent_obj=args_obj, key="phone_2",
                                                         raise_error_if_not_exist=False)
@@ -70,6 +74,16 @@ def create_lost_person_case(args_obj: {}):
                 new_doc.home_address = create_sa3ed_address(args_obj["home_address"])
             if args_obj["lost_address"]:
                 new_doc.lost_address = create_sa3ed_address(args_obj["lost_address"])
+            new_doc.insert()
+
+            if args_obj["pic"]:
+                image_file_url = save_image_attachment(filedata=args_obj['pic'],
+                                                       target_doctype="Lost Person",
+                                                       target_doctype_id=new_doc.name,
+                                                       max_size_in_mb=2,
+                                                       is_private=0)
+                new_doc.pic = image_file_url
+
             new_doc.save()
             status_code = 200
             frappe.db.commit()
