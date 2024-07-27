@@ -1,3 +1,4 @@
+import json
 from sa3ed_app.api.ApiEndPoint import *
 from frappe import _
 from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
@@ -5,9 +6,9 @@ from sa3ed_app.Utils.FileHandler import save_image_attachment
 
 
 @frappe.whitelist(allow_guest=True)
-def get_lost_persons(args_obj: {} = None):
+def get_lost_persons(args_obj: str = None):
     status_code, message, data = None, '', None
-
+    args_obj = json.loads(args_obj)
     try:
         current_lang = get_language()  # TODO: Apply the language
         page_limit = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="page_limit",
@@ -39,8 +40,9 @@ def get_lost_persons(args_obj: {} = None):
 
 
 @frappe.whitelist(allow_guest=True)
-def create_lost_person_case(args_obj: {}):
+def create_lost_person_case(args_obj: str):
     status_code, message, data = None, '', None
+    args_obj = json.loads(args_obj)
     if args_obj["pic"]:
         pass
     mandatory_args_csv = _("first_name,middleman,last_name,birthdate,nationality,gender,lost_date")

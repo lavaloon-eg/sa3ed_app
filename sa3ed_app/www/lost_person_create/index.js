@@ -53,11 +53,23 @@ function run_progress_bar(){
 function render_response_create_lost_person_case(){
 }
 
+const convert_file_to_object = (file) => {
+    return {
+        lastModified: file.lastModified,
+        lastModifiedDate: file.lastModifiedDate,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        webkitRelativePath: file.webkitRelativePath
+    };
+};
+
 document.getElementById("SubmitImage").onclick = function (evt) {
     evt.preventDefault();
     $("#SubmitImage").attr("disabled", true);
     $("#ProgressBar").attr("hidden", false);
     let args = {};
+    file_data_obj = convert_file_to_object(file_data_obj);
     args = {
     'args_obj': {
          'pic': file_data_obj
