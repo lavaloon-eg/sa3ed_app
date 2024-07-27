@@ -4,7 +4,7 @@ from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
 
 
 @frappe.whitelist(allow_guest=True)
-def get_lost_persons(args_obj: {} = None):
+def get_lost_persons(args_obj: dict = {}):
     status_code, message, data = None, '', None
 
     try:
@@ -38,7 +38,7 @@ def get_lost_persons(args_obj: {} = None):
 
 
 @frappe.whitelist(allow_guest=True)
-def create_lost_person_case(args_obj: {}):
+def create_lost_person_case(args_obj: dict = {}):
     status_code, message, data = None, '', None
     mandatory_args_csv = _("first_name,middleman,last_name,birthdate,nationality,gender,lost_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,

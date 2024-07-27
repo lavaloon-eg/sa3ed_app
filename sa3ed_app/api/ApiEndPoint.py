@@ -9,7 +9,7 @@ from frappe.query_builder import DocType
 
 class ApiEndPoint:
     @staticmethod
-    def validate_mandatory_parameters(args_obj: {},
+    def validate_mandatory_parameters(args_obj: dict = {},
                                       mandatory_args_csv: str = '') -> str:
         """
         Validate the API main object of the args
@@ -29,7 +29,7 @@ class ApiEndPoint:
         return error_msg
 
     @staticmethod
-    def create_response(status_code: int, message: str, data: {} = None) -> {}:
+    def create_response(status_code: int, message: str, data: dict = None) -> dict:
         return {"status_code": status_code,
                 "message": message,
                 "data": data}
