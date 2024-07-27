@@ -58,9 +58,13 @@ document.getElementById("SubmitImage").onclick = function (evt) {
     $("#SubmitImage").attr("disabled", true);
     $("#ProgressBar").attr("hidden", false);
     let args = {};
-    args['args_obj'] = {'pic': file_data_obj};
+    args = {
+    'args_obj': {
+         'pic': file_data_obj
+         }
+    }
     run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
-                    type= "POST".
+                    type= "POST",
                     async = false,
                     args = args,
                     function_render_response = render_response_create_lost_person_case
