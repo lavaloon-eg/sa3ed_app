@@ -43,9 +43,8 @@ def get_lost_persons(args_obj: str = None):
 def create_lost_person_case(args_obj: str):
     status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
-    if args_obj["pic"]:
-        pass
-    mandatory_args_csv = _("first_name,middleman,last_name,birthdate,nationality,gender,lost_date")
+
+    mandatory_args_csv = _("first_name,middle_name,last_name,birthdate,nationality,gender,lost_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                           mandatory_args_csv=mandatory_args_csv)
     if error_msg:
@@ -64,19 +63,19 @@ def create_lost_person_case(args_obj: str):
             new_doc.case_status = "Open"
             new_doc.lost_date = args_obj["lost_date"]
             new_doc.phone_1 = args_obj["phone_1"]
-            new_doc.phone_2 = ApiEndPoint.get_key_value(parent_obj=args_obj, key="phone_2",
-                                                        raise_error_if_not_exist=False)
-            new_doc.email_Address = ApiEndPoint.get_key_value(parent_obj=args_obj, key="email_Address",
-                                                              raise_error_if_not_exist=False)
-            new_doc.notes = ApiEndPoint.get_key_value(parent_obj=args_obj, key="notes",
-                                                      raise_error_if_not_exist=False, default_value='')
-            if args_obj["home_address"]:
+            if args_obj.get("phone_2"):
+                new_doc.phone_2 = args_obj["phone_2"]
+            if args_obj.get("email_Address"):
+                new_doc.phone_2 = args_obj["email_Address"]
+            if args_obj.get("notes"):
+                new_doc.phone_2 = args_obj["notes"]
+            if args_obj.get("home_address"):
                 new_doc.home_address = create_sa3ed_address(args_obj["home_address"])
-            if args_obj["lost_address"]:
+            if args_obj.get("lost_address"):
                 new_doc.lost_address = create_sa3ed_address(args_obj["lost_address"])
             new_doc.insert()
 
-            if args_obj["pic"]:
+            if args_obj.get("pic"):
                 image_file_url = save_image_attachment(filedata=args_obj['pic'],
                                                        target_doctype="Lost Person",
                                                        target_doctype_id=new_doc.name,

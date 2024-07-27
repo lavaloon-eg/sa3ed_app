@@ -44,9 +44,9 @@ class ApiEndPoint:
             else:
                 return default_value
         else:
-            if parent_obj[key]:
+            if parent_obj.get(key):
                 return parent_obj[key]
-            elif not parent_obj[key] and raise_error_if_not_exist:
+            elif not parent_obj.get(key) and raise_error_if_not_exist:
                 frappe.throw(msg=f"key '{key}' doesn't exist")
             else:
                 return default_value
