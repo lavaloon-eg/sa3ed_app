@@ -58,7 +58,6 @@ def create_lost_person_case(args_obj: dict = {}):
             new_doc.birthdate = args_obj["birthdate"]
             new_doc.case_status = "Open"
             new_doc.lost_date = args_obj["lost_date"]
-            # new_doc.pic = args_obj["pic"] # TODO: handle uploading and adding the pic
             new_doc.phone_1 = args_obj["phone_1"]
             new_doc.phone_2 = ApiEndPoint.get_key_value(parent_obj=args_obj, key="phone_2",
                                                         raise_error_if_not_exist=False)
@@ -81,4 +80,15 @@ def create_lost_person_case(args_obj: dict = {}):
             message = f"creating a lost person case, error: '{str(ex)}'"
             status_code = 400
 
+    return ApiEndPoint.create_response(status_code=status_code, message=message, data=data)
+
+
+@frappe.whitelist(allow_guest=True, methods=['POST'])
+def insert_lost_person_pic(image_url, record_id):
+    status_code, message, data = None, '', None
+    try:
+        frappe.db.set_value('Lost Person', record_id, "pic", image_url)
+        status_code, message = 200, "OK"
+    except Exception as e:
+        status_code, message = 400, str(e)
     return ApiEndPoint.create_response(status_code=status_code, message=message, data=data)
