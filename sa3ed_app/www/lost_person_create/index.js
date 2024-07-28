@@ -1,6 +1,10 @@
-var file_data_obj = null;
 function OpenFileBrowser() {
     $('#UploadImage').click();
+}
+
+function ControlSubmission(is_disabled){
+    $("#SubmitImage").attr("disabled", true);
+    $("#ProgressBar").attr("hidden", !is_disabled);
 }
 
 document.getElementById("UploadImage").onchange = function () {
@@ -8,7 +12,7 @@ document.getElementById("UploadImage").onchange = function () {
         document.getElementById("SubmitImage").disabled = false;
     }
 
-    file_data_obj = event.target.files[0];
+    const file_data_obj = this.files[0];
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
     const maxSize = 1 * 1024 * 1024;
 
@@ -28,11 +32,7 @@ document.getElementById("UploadImage").onchange = function () {
         document.getElementById('imagePreview').style.display = 'block';
     };
     reader.readAsDataURL(file_data_obj);
-
-    //Change imagePreview to uploaded photo
-//    var src = URL.createObjectURL(this.files[0])
-//    document.getElementById('imagePreview').src = src
-}//Submit button is disabled until image is uploaded
+}
 
 
 function run_progress_bar(){
@@ -50,7 +50,15 @@ function run_progress_bar(){
     return xhr;
 }
 
-function render_response_create_lost_person_case(){
+function render_response_create_lost_person_case(...args){
+    //debugger;
+    const response_obj = args[0];
+    let data = null;
+    if (data in response_obj){
+        data = response_obj['data'];
+    }
+    document.getElementById('response_label').textContent = response_obj['error_message'];
+    ControlSubmission(is_disabled=false);
 }
 
 const convert_file_to_object = (file) => {
@@ -66,13 +74,26 @@ const convert_file_to_object = (file) => {
 
 document.getElementById("SubmitImage").onclick = function (evt) {
     evt.preventDefault();
-    $("#SubmitImage").attr("disabled", true);
-    $("#ProgressBar").attr("hidden", false);
+    ControlSubmission(is_disabled=true);
     let args = {};
-    file_data_obj = convert_file_to_object(file_data_obj);
+    //file_data_obj = convert_file_to_object(file_data_obj);
+    const file_data_obj = document.getElementById("UploadImage").files[0];
+    if (!file_data_obj) {
+        alert('Please select a file.');
+        return;
+    }
+    debugger;
     args = {
     'args_obj': {
-         'pic': file_data_obj
+         'pic': file_data_obj,
+         'first_name': "Ahmed",
+         'middle_name': "Mohamed",
+         'last_name': "Ali",
+         'gender': "Male",
+         'nationality': "Egypt",
+         'birthdate': "1980-01-01",
+         'lost_date': "2024-01-01",
+         'phone_1': "+2012345678",
          }
     }
     run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
