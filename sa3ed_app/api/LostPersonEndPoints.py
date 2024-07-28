@@ -80,10 +80,10 @@ def create_lost_person_case(args_obj: str):
                                                        target_doctype="Lost Person",
                                                        target_doctype_id=new_doc.name,
                                                        max_size_in_mb=2,
+                                                       target_field="pic_preview",
                                                        is_private=0)
-                new_doc.pic = image_file_url
-
-            new_doc.save()
+                new_doc.pic = new_doc.pic_preview = image_file_url
+                new_doc.save()
             status_code = 200
             frappe.db.commit()
             message = _(f"Lost Person Case has been created successfully.")

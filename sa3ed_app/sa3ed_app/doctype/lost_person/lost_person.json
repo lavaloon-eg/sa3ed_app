@@ -102,7 +102,8 @@
   {
    "fieldname": "pic_preview",
    "fieldtype": "Image",
-   "label": "Pic Preview"
+   "label": "Pic Preview",
+   "options": "pic"
   },
   {
    "fieldname": "tb_notes",
@@ -170,7 +171,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-25 19:58:30.293646",
+ "modified": "2024-07-29 01:03:34.457605",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
