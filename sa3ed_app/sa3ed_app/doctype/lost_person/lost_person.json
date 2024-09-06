@@ -171,7 +171,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-29 01:03:34.457605",
+ "modified": "2024-09-06 18:19:46.149391",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
@@ -188,6 +188,11 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Guest"
   }
  ],
  "sort_field": "modified",
