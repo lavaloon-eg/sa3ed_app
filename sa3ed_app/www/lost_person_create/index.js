@@ -3,6 +3,7 @@ function OpenFileBrowser() {
 }
 
 function ControlSubmission(is_disabled){
+    debugger;
     $("#SubmitImage").attr("disabled", true);
     $("#ProgressBar").attr("hidden", !is_disabled);
 }
@@ -51,17 +52,21 @@ function run_progress_bar(){
 }
 
 function render_response_create_lost_person_case(...args){
-    //debugger;
+    debugger;
     const response_obj = args[0];
     let data = null;
-    if (data in response_obj){
+    if ("data" in response_obj){
         data = response_obj['data'];
+        document.getElementById('validationRules').textContent = "lost_person_case_id: " +  data['lost_person_case_id'];
     }
-    document.getElementById('response_label').textContent = response_obj['error_message'];
-    ControlSubmission(is_disabled=false);
+    else
+    {
+        document.getElementById('validationRules').textContent = response_obj['error_message'];
+        ControlSubmission(is_disabled=false);
+    }
 }
 
-const convert_file_to_object = (file) => {
+function convert_file_to_object(file){
     return {
         lastModified: file.lastModified,
         lastModifiedDate: file.lastModifiedDate,
@@ -76,30 +81,35 @@ document.getElementById("SubmitImage").onclick = function (evt) {
     evt.preventDefault();
     ControlSubmission(is_disabled=true);
     let args = {};
-    //file_data_obj = convert_file_to_object(file_data_obj);
-    const file_data_obj = document.getElementById("UploadImage").files[0];
-    if (!file_data_obj) {
+    const file = document.getElementById("UploadImage").files[0];
+    const file_data_obj = convert_file_to_object(file);
+    if (!file) {
         alert('Please select a file.');
         return;
     }
-    debugger;
-    args = {
-    'args_obj': {
-         'pic': file_data_obj,
-         'first_name': "Ahmed",
-         'middle_name': "Mohamed",
-         'last_name': "Ali",
-         'gender': "Male",
-         'nationality': "Egypt",
-         'birthdate': "1980-01-01",
-         'lost_date': "2024-01-01",
-         'phone_1': "+2012345678",
-         }
-    }
-    run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
-                    type= "POST",
-                    async = false,
-                    args = args,
-                    function_render_response = render_response_create_lost_person_case
-               );
+    //debugger;
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const pic_base64Image = event.target.result;
+        args = {
+            'args_obj': {
+                 'pic': {'pic_base64Image': pic_base64Image,'file_data_obj': file_data_obj},
+                 'first_name': "Ahmed",
+                 'middle_name': "Mohamed",
+                 'last_name': "Ali",
+                 'gender': "Male",
+                 'nationality': "Egypt",
+                 'birthdate': "1980-01-01",
+                 'lost_date': "2024-01-01",
+                 'phone_1': "+2012345678",
+                 }
+                }
+        run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
+                type= "POST",
+                async = false,
+                args = args,
+                function_render_response = render_response_create_lost_person_case
+            );
+    };
+    reader.readAsDataURL(file);
 };
