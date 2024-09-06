@@ -40,6 +40,12 @@ a:hover {
     text-align: center;
 }
 
+.btn-home {
+    width: 180px !important;
+    padding: 4px 8px !important;
+    height: 80px;
+}
+
 a.btn:not(.btn-md):not(.btn-lg).res {
     background-color: #FFF;
     color: #053b4f;
@@ -49,14 +55,14 @@ a.btn:not(.btn-md):not(.btn-lg).res {
     padding: 6px 24px;
 }
 
-a.btn.miss {
-    margin-top: 8%;
-    width: 70%;
-    padding: 4%;
-    background: #ff476e;
+a.btn.miss, a.btn.find, a.btn.follow {
     border: none !important;
     border-radius: 24px;
     font-weight: inherit;
+}
+
+a.btn.miss {
+    background: #ff476e;
     color: #FFF;
 }
 
@@ -66,13 +72,7 @@ a.btn.miss:hover {
 }
 
 a.btn.find {
-    margin-top: 3%;
-    width: 70%;
-    padding: 4%;
     background: #876bfa;
-    border: none !important;
-    border-radius: 24px;
-    font-weight: inherit;
     color: #FFF;
 }
 
@@ -82,14 +82,8 @@ a.btn.find:hover {
 }
 
 a.btn.follow {
-    margin-top: 2%;
     background-color: white;
     color: #ff476e;
-    border-color: white;
-    border-radius: 10px;
-    font-weight: inherit;
-    margin-bottom: 1%;
-    margin-top: 10%;
 }
 
 a.btn:not(.btn-md):not(.btn-lg).follow {

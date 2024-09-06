@@ -15,15 +15,12 @@
                     <div>
                         <img class="img-upload" src="/assets/img/upload.svg" onclick="OpenFileBrowser()" id="imagePreview" alt="image preview" />
                     </div>
-                    <div>
-                        <a href="#" onclick="OpenFileBrowser()"> رفع الصورة</a>
-                    </div>
                     <form method="post" id="form_img_upload" enctype="multipart/form-data">
-                        <div id="validationRules"></div>
+                        <div class="hide alert mt-4 mx-auto w-75" id="validationRules"></div>
                         <div>
                             <input type="file" id="UploadImage" style="display:none" accept=".png, .jpg, .jpeg">
                         </div>
-                        <button type="button" class="btn btn-success mt-5" id="SubmitImage" disabled>حفظ</button>
+                        <button type="button" class="save btn btn-success mt-5" id="SubmitImage" disabled>حفظ</button>
                         <div class="progress my-4" id="ProgressBar" style="width:20%;margin:auto" hidden>
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                         </div>

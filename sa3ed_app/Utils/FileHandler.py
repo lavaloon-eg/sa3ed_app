@@ -1,13 +1,9 @@
 import frappe
 import base64
-from io import BytesIO
-from PIL import Image
 
 
 def convert_image_base64_to_image_data(image_base64):
     image_data = base64.b64decode(image_base64.split(',')[1])
-    # image_file = BytesIO(image_data)
-    # img = Image.open(image_file)
     return image_data
 
 
