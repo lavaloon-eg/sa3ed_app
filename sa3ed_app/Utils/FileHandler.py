@@ -30,7 +30,7 @@ def save_file_attachment(filedata, target_doctype, target_doctype_id, target_fie
             "is_private": is_private,
             "content": convert_image_base64_to_image_data(filedata['pic_base64Image'])
         })
-        file_doc.insert()
+        file_doc.insert(ignore_permissions=True)
         return file_doc.file_url
     except Exception as ex:
         frappe.throw(msg=f"Error saving file: {str(ex)}")
