@@ -3,7 +3,6 @@ function OpenFileBrowser() {
 }
 
 function ControlSubmission(is_disabled){
-    debugger;
     $("#SubmitImage").attr("disabled", true);
     $("#ProgressBar").attr("hidden", !is_disabled);
 }
@@ -18,19 +17,18 @@ document.getElementById("UploadImage").onchange = function () {
     const maxSize = 1 * 1024 * 1024;
 
     if (!allowedTypes.includes(file_data_obj.type)) {
-        document.getElementById('validationRules').textContent = 'Allowed file types: JPEG, JPG, PNG';
+        display_alert_with_timeout(msg="Allowed file types: JPEG, JPG, PNG", type="danger");
         return;
     }
 
     if (file_data_obj.size > maxSize) {
-        document.getElementById('validationRules').textContent = 'File size exceeds 5MB';
+        display_alert_with_timeout(msg="File size exceeds 5MB", type="danger");
         return;
     }
 
     const reader = new FileReader();
     reader.onload = function (e) {
         document.getElementById('imagePreview').src = e.target.result;
-        document.getElementById('imagePreview').style.display = 'block';
     };
     reader.readAsDataURL(file_data_obj);
 }
@@ -52,16 +50,15 @@ function run_progress_bar(){
 }
 
 function render_response_create_lost_person_case(...args){
-    debugger;
     const response_obj = args[0];
     let data = null;
     if ("data" in response_obj){
         data = response_obj['data'];
-        document.getElementById('validationRules').textContent = "lost_person_case_id: " +  data['lost_person_case_id'];
+        display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000);
     }
     else
     {
-        document.getElementById('validationRules').textContent = response_obj['error_message'];
+        display_alert_with_timeout(msg=response_obj['error_message'], type="danger", timeout=3000);
         ControlSubmission(is_disabled=false);
     }
 }
@@ -87,7 +84,7 @@ document.getElementById("SubmitImage").onclick = function (evt) {
         alert('Please select a file.');
         return;
     }
-    //debugger;
+
     const reader = new FileReader();
     reader.onload = function(event) {
         const pic_base64Image = event.target.result;
@@ -113,3 +110,9 @@ document.getElementById("SubmitImage").onclick = function (evt) {
     };
     reader.readAsDataURL(file);
 };
+
+function display_alert_with_timeout(msg, type, timeout=3000) {
+    setTimeout(() => {
+        $('#validationRules').text(msg).removeClass("hide").addClass("alert-" + type);
+    }, timeout);
+}
