@@ -1,0 +1,56 @@
+form {
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-right: 15px;
+}
+label {
+    font-size: 18px;
+    font-weight: 400;
+    color: #053B4F;
+}
+input {
+    text-align: right;
+    width: 336px;
+    height: 36px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1.8px solid #053B4F;
+    margin-bottom: 44px;
+}
+input::placeholder {
+    color: #053B4F;
+    opacity: 20%;
+    font-size: 18px;
+}
+textarea {
+    padding: 20px;
+    border: none;
+    border-radius: 11px;
+    width: 336px;
+    height: 150px;
+    resize: none; 
+    text-align: right;
+    margin-bottom: 44px;
+}
+.clickbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.clickbtn div {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 183px;
+    height: 56px;
+    padding: 12px 40px;
+    border-radius: 24px;
+    background-color: #FF476E;
+    color: white;
+    cursor: pointer;
+    gap: 5px;
+}

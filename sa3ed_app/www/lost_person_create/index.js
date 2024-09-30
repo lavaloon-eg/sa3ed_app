@@ -33,7 +33,6 @@ document.getElementById("UploadImage").onchange = function () {
     reader.readAsDataURL(file_data_obj);
 }
 
-
 function run_progress_bar(){
     var xhr = new window.XMLHttpRequest();
 
@@ -55,6 +54,24 @@ function render_response_create_lost_person_case(...args){
     if ("data" in response_obj){
         data = response_obj['data'];
         display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000);
+
+        setTimeout(() => {
+            document.getElementById("BachToHome").disabled = false;
+            document.getElementById("BachToHome").onclick = function () {
+                window.location.pathname = 'home'
+            }
+        }, 4000);
+        // clear data from localstorage
+        setTimeout(() => {
+            window.localStorage.setItem('first_name',' ');
+            window.localStorage.setItem('gender',' ');
+            window.localStorage.setItem('country',' ');
+            window.localStorage.setItem('birthdate',' ');
+            window.localStorage.setItem('phone_1',' ');
+            window.localStorage.setItem('lost_address',' ');
+            window.localStorage.setItem('lost_date',' ');
+            window.localStorage.setItem('notes',' ');
+        }, 4000);
     }
     else
     {
@@ -90,29 +107,41 @@ document.getElementById("SubmitImage").onclick = function (evt) {
         const pic_base64Image = event.target.result;
         args = {
             'args_obj': {
-                 'pic': {'pic_base64Image': pic_base64Image,'file_data_obj': file_data_obj},
-                 'first_name': "Ahmed",
-                 'middle_name': "Mohamed",
-                 'last_name': "Ali",
-                 'gender': "Male",
-                 'nationality': "Egypt",
-                 'birthdate': "1980-01-01",
-                 'lost_date': "2024-01-01",
-                 'phone_1': "+2012345678",
-                 }
+                    'pic': {'pic_base64Image': pic_base64Image,'file_data_obj': file_data_obj},
+                    'first_name': window.localStorage.getItem('first_name'),
+                    'middle_name': "",
+                    'last_name': "test",
+                    'gender': window.localStorage.getItem('gender'),
+                    'nationality': window.localStorage.getItem('country'),
+                    'birthdate': window.localStorage.getItem('birthdate'),
+                    'lost_date': window.localStorage.getItem('lost_date'),
+                    'phone_1': window.localStorage.getItem('phone_1'),
+                    'notes':window.localStorage.getItem('notes'),
+                    'email_Address':window.localStorage.getItem('email_Address')
+                    // /  'lost_address':window.localStorage.getItem('lost_address'),
                 }
-        run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
-                type= "POST",
-                async = false,
-                args = args,
-                function_render_response = render_response_create_lost_person_case
-            );
+            }
+                // badry
+                if(window.localStorage.getItem('first_name') != ""
+                    &&window.localStorage.getItem('gender') != ""
+                    && window.localStorage.getItem('country') != ""
+                    &&window.localStorage.getItem('birthdate') != ""
+                    &&window.localStorage.getItem('lost_date') != ""
+                    &&window.localStorage.getItem('lost_address') != ""
+                    &&window.localStorage.getItem('phone_1') != "") {
+                    run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
+                        type= "POST",
+                        async = false,
+                        args = args,
+                        function_render_response = render_response_create_lost_person_case
+                    );
+                } 
     };
     reader.readAsDataURL(file);
 };
-
 function display_alert_with_timeout(msg, type, timeout=3000) {
     setTimeout(() => {
         $('#validationRules').text(msg).removeClass("hide").addClass("alert-" + type);
+        
     }, timeout);
 }
