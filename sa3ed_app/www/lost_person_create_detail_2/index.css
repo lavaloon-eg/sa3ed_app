@@ -53,4 +53,30 @@ textarea {
     color: white;
     cursor: pointer;
     gap: 5px;
+    margin-top: 44px;
+}
+
+.iti__flag {
+    background-color: transparent;
+}
+
+.iti__input {
+    width: calc(100% - 40px); 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
+}
+.iti__country-list {
+    width: 300px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffffa1 !important;
+}
+.iti__hide {
+    display: none !important;
+}
+.swal2-title , .swal2-confirm ,.swal2-styled {
+    font-family: 'Changa';
 }

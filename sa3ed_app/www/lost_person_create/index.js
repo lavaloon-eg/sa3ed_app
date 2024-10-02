@@ -53,14 +53,8 @@ function render_response_create_lost_person_case(...args){
     let data = null;
     if ("data" in response_obj){
         data = response_obj['data'];
-        display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000);
-
-        setTimeout(() => {
-            document.getElementById("BachToHome").disabled = false;
-            document.getElementById("BachToHome").onclick = function () {
-                window.location.pathname = 'home'
-            }
-        }, 4000);
+        display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000)
+       
         // clear data from localstorage
         setTimeout(() => {
             window.localStorage.setItem('first_name',' ');
@@ -142,6 +136,27 @@ document.getElementById("SubmitImage").onclick = function (evt) {
 function display_alert_with_timeout(msg, type, timeout=3000) {
     setTimeout(() => {
         $('#validationRules').text(msg).removeClass("hide").addClass("alert-" + type);
-        
+        if(type == 'success') {
+            Swal.fire({
+                title: 'تم الحفظ!',
+                text: 'البيانات تم حفظها بنجاح.',
+                icon: 'success',
+                confirmButtonText: 'موافق'
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'لم يتم الحفظ!',
+                text: 'البيانات لم يتم حفظها بنجاح.',
+                icon: 'error',
+                confirmButtonText: 'خطا'
+            });
+        }
+        setTimeout(() => {
+            document.getElementById("BachToHome").disabled = false;
+            document.getElementById("BachToHome").onclick = function () {
+                window.location.pathname = 'home'
+            }
+        }, 3000);
     }, timeout);
 }

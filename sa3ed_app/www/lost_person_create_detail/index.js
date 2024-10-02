@@ -262,7 +262,6 @@ var app = Vue.createApp({
             const isBirthdateValid = this.validateBirthdate();
             const isLostdateValid = this.validateLostdate();
             if( !(isBirthdateValid && isLostdateValid) ) {
-                window.alert("خطا في التاريخ");
                 return;
             }   
             if(this.lostpername != '' && this.perdate != '' && this.lostperloca != '' && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
@@ -275,38 +274,42 @@ var app = Vue.createApp({
                 window.localStorage.setItem('notes',this.notes)
                 window.location.pathname ='/lost_person_create_detail_2'
             } else {
-                window.alert("Enter the values")
+                Swal.fire({
+                    title: 'يرجي ادخال البيانات',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });
             }
         },
         changeline() {
             if(this.$refs.name.value != '') {
-                console.log("yes")
                 this.$refs.name.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             }
             if(this.$refs.date.value != '') {
-                console.log("yes")
                 this.$refs.date.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
             if(this.$refs.loc.value != '') {
-                console.log("yes")
                 this.$refs.loc.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             }
             if(this.$refs.lostdate.value != '') {
-                console.log("yes")
                 this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
         },
         validateBirthdate() {
             const birthdate = this.perdate;
-            if (!this.isValidDate(birthdate)) {
-                alert("تأكد من إدخال تاريخ صحيح بتنسيق في ميلاد الشخص YYYY-MM-DD");
-                return false;
-            } else if (new Date(birthdate) > new Date()) {
-                alert("تاريخ الميلاد يجب أن يكون أصغر من أو يساوي تاريخ اليوم");
+            
+            if (new Date(birthdate) > new Date()) {
+                Swal.fire({
+                    title: 'تاريخ الميلاد يجب ان يكون اصغر من او يساوي تاريخ اليوم',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });
                 return false;
             } else {
                 return true;
@@ -314,19 +317,26 @@ var app = Vue.createApp({
         },
         validateLostdate() {
             const lostdate = this.lostperdate;
-            if (!this.isValidDate(lostdate)) {
-                alert(" تأكد من إدخال تاريخ صحيح بتنسيق في تاريخ الفقدان YYYY-MM-DD");
+            if (new Date(lostdate) > new Date()) {
+                Swal.fire({
+                    title: 'تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });
                 return false;
-            } else if (new Date(lostdate) > new Date()) {
-                alert("تاريخ الفقدان يجب أن يكون أصغر من أو يساوي تاريخ اليوم");
+            } else if(new Date(this.perdate) >= new Date(lostdate)){
+                Swal.fire({
+                    title: 'تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });                
                 return false;
-            } else {
+            }
+            else {
                 return true;
             }
-        },
-        isValidDate(dateString) {
-            const regex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
-            return regex.test(dateString);
         },
     }
 })

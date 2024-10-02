@@ -79,3 +79,6 @@ textarea {
     width: 100%; 
     
 }
+.swal2-title , .swal2-confirm ,.swal2-styled {
+    font-family: 'Changa';
+}

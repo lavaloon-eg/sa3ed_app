@@ -4,21 +4,44 @@ var app = Vue.createApp({
             user_name: '',        
             email: '',           
             phone_number: '',    
+            phoneInput: null, 
         }
+    },
+
+    mounted() {
+        // Initialize intl-tel-input with GeoIP lookup
+        this.phoneInput = window.intlTelInput(this.$refs.phone, {
+            initialCountry: "auto",
+            geoIpLookup: function(callback) {
+                fetch('https://ipinfo.io/json', { headers: { 'Accept': 'application/json' } })
+                    .then(response => response.json())
+                    .then(data => callback(data.country))
+                    .catch(() => callback('us'));
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
     },
     methods: {
         btnevent() { 
-            if (this.user_name && this.email && this.phone_number) {
-                window.localStorage.setItem('user_name', this.user_name);
-                window.localStorage.setItem('email_Address', this.email);
-                window.localStorage.setItem('phone_1', this.phone_number);
-                window.location.pathname = '/lost_person_create';
+            if (this.user_name && this.email && this.phoneInput.isValidNumber()) {
+                if (this.VailedEmail(this.email)) {
+                    window.localStorage.setItem('user_name', this.user_name);
+                    window.localStorage.setItem('email_Address', this.email);
+                    window.localStorage.setItem('phone_1', this.phoneInput.getNumber());
+                    window.location.pathname = '/lost_person_create';
+                }
             } else {
-                window.alert("يرجى إدخال القيم المطلوبة");
+                Swal.fire({
+                    title: 'خطا في ادخال البيانات',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });
             }
         },
+
         changeline() {
-            const fields = [this.$refs.name, this.$refs.date, this.$refs.area];
+            const fields = [this.$refs.name, this.$refs.date, this.$refs.phone];
             const btn = this.$refs.btn;
             fields.forEach(field => {
                 if (field.value !== '') {
@@ -29,12 +52,37 @@ var app = Vue.createApp({
                 }
             });
         },
+
+        VailedEmail(email) {
+            let emailtest = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+            if (emailtest.test(email)) {
+                return true;
+            } else {
+                Swal.fire({
+                    title: 'خطا في البريد الالكتروني',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });
+                return false;
+            }
+        },
+
+        validatePhone() {
+            if (this.phoneInput.isValidNumber()) {
+                this.phone_number = this.phoneInput.getNumber();
+            } else {
+                this.phone_number = '';
+                Swal.fire({
+                    title: 'خطا في رقم الهاتف المحمول',
+                    text: '',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
+                });
+                return false;
+            }
+        }
     }
 });
+
 app.mount("#app");
-
-
-
-
-
-

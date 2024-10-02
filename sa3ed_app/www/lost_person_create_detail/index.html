@@ -1,5 +1,8 @@
 {% extends base_template_path %}
 {% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <link rel="stylehsheet" href="index.css" />
 <script src="../lost_person_create_detail/index.js"></script>    
@@ -19,16 +22,15 @@
                     font-weight: 400;">قم بادخال بيانات الطفل</p>
         </div>
     </div>
-        <!-- form -->
     <form class="row justify-content-left">
         <label for="" >اسم الطفل</label>
         <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="lostpername" required>
         <label for="">تاريخ ميلاد الطفل</label>
-        <input  @mouseleave="changeline()" type="text" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
+        <input class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
         <label for="">منطقه الفقدان</label>
         <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  المنطقه اللتي فقد فيها الطفل" v-model="lostperloca" required>
         <label for="">تاريخ الفقدان</label>
-        <input  @mouseleave="changeline()" type="text" ref="lostdate" placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
+        <input  @mouseleave="changeline()" type="date" ref="lostdate" placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
         <label for="" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
         <!-- Gender -->
         <select v-model="selectedGender" class="form-control" required>
