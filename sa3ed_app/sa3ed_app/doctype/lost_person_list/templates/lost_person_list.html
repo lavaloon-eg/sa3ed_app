@@ -1,0 +1,23 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<h1>{{ title }}</h1>
+<div class="row align-items-center justify-content-center" style="margin-bottom: 30px; margin-top: 30px; gap: 30px;">
+    <div class="col">
+        <img src="{{image}}" alt="" style="border-radius: 30px;">
+    </div>
+
+    <div class="col text-dark">
+        <div class="row badge badge-danger" style="width: min-content; padding: 6px 10px; margin-bottom: 7px; transform: translateX(-40px);">
+            Status: {{status}}
+        </div>
+        <div class="row" style="margin-bottom: 7px;">Name: {{ _(first_name) }}</div>
+        <div class="row" style="margin-bottom: 7px;">Gender: {{gender}}</div>
+        <div class="row" style="margin-bottom: 7px;">Last Seen: {{last_seen}}</div>
+        <div class="row" style="margin-bottom: 7px; width: 150%;">Contact info: {{email}}</div>
+        <div class="row" style="margin-bottom: 7px;">Phone: {{author_phone}}</div>
+    </div>
+</div>
+<hr>
+<p class="text-dark" style="line-height: 1.6;"> {{description}} </p>
+{% endblock %}
