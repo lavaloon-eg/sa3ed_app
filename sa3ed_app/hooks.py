@@ -229,3 +229,6 @@ home_page = "home"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+override_whitelisted_methods = {
+    "foundedpersonendpoint.create_founded_person": "sa3ed_app.api.foundedpersonendpoint.create_founded_person"
+}
