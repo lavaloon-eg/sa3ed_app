@@ -5,7 +5,9 @@
     cursor: pointer;
     object-fit: fill;
 }
-
 .save.btn {
     width: 120px
+}
+.swal2-title , .swal2-confirm ,.swal2-styled ,.swal2-html-container {
+    font-family: 'Changa';
 }
