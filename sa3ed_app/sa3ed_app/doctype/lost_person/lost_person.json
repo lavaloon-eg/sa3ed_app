@@ -166,12 +166,12 @@
    "fieldname": "founded_person",
    "fieldtype": "Link",
    "label": "Founded Person",
-   "options": "Founded Person"
+   "options": "Found Person"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-06 18:19:46.149391",
+ "modified": "2024-09-23 19:17:47.911421",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
