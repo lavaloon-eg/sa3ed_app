@@ -16,12 +16,14 @@ function followUpCase() {
             document.getElementById("SearchCaseButton").disabled = false;
             document.getElementById("ProgressBar").hidden = true;
 
-            if (response.message && response.message.case_status) {
-                document.getElementById('statusMessage').innerHTML = '<p class="text-success">الحالة: ' + response.message.case_status + '</p>';
-            } else if (response.message && response.message.error) {
-                document.getElementById('statusMessage').innerHTML = '<p class="text-danger">' + response.message.error + '</p>';
+            if (response.message && response.message.success) {
+                if (response.message.data && response.message.data.case_status) {
+                    document.getElementById('statusMessage').innerHTML = '<p class="text-success">الحالة: ' + response.message.data.case_status + '</p>';
+                } else {
+                    document.getElementById('statusMessage').innerHTML = '<p class="text-danger">لم يتم العثور على الحالة.</p>';
+                }
             } else {
-                document.getElementById('statusMessage').innerHTML = '<p class="text-danger">لم يتم العثور على الحالة.</p>';
+                document.getElementById('statusMessage').innerHTML = '<p class="text-danger">' + (response.message.error || 'حدث خطأ أثناء التحقق من الحالة.') + '</p>';
             }
         },
         error: function(error) {
