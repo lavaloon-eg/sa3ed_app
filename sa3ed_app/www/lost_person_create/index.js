@@ -17,23 +17,21 @@ document.getElementById("UploadImage").onchange = function () {
     const maxSize = 1 * 1024 * 1024;
 
     if (!allowedTypes.includes(file_data_obj.type)) {
-        document.getElementById('validationRules').textContent = 'Allowed file types: JPEG, JPG, PNG';
+        display_alert_with_timeout(msg="Allowed file types: JPEG, JPG, PNG", type="danger");
         return;
     }
 
     if (file_data_obj.size > maxSize) {
-        document.getElementById('validationRules').textContent = 'File size exceeds 5MB';
+        display_alert_with_timeout(msg="File size exceeds 5MB", type="danger");
         return;
     }
 
     const reader = new FileReader();
     reader.onload = function (e) {
         document.getElementById('imagePreview').src = e.target.result;
-        document.getElementById('imagePreview').style.display = 'block';
     };
     reader.readAsDataURL(file_data_obj);
 }
-
 
 function run_progress_bar(){
     var xhr = new window.XMLHttpRequest();
@@ -51,17 +49,32 @@ function run_progress_bar(){
 }
 
 function render_response_create_lost_person_case(...args){
-    //debugger;
     const response_obj = args[0];
     let data = null;
-    if (data in response_obj){
+    if ("data" in response_obj){
         data = response_obj['data'];
+        display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000)
+       
+        // clear data from localstorage
+        setTimeout(() => {
+            window.localStorage.setItem('first_name',' ');
+            window.localStorage.setItem('gender',' ');
+            window.localStorage.setItem('country',' ');
+            window.localStorage.setItem('birthdate',' ');
+            window.localStorage.setItem('phone_1',' ');
+            window.localStorage.setItem('lost_address',' ');
+            window.localStorage.setItem('lost_date',' ');
+            window.localStorage.setItem('notes',' ');
+        }, 4000);
     }
-    document.getElementById('response_label').textContent = response_obj['error_message'];
-    ControlSubmission(is_disabled=false);
+    else
+    {
+        display_alert_with_timeout(msg=response_obj['error_message'], type="danger", timeout=3000);
+        ControlSubmission(is_disabled=false);
+    }
 }
 
-const convert_file_to_object = (file) => {
+function convert_file_to_object(file){
     return {
         lastModified: file.lastModified,
         lastModifiedDate: file.lastModifiedDate,
@@ -76,30 +89,74 @@ document.getElementById("SubmitImage").onclick = function (evt) {
     evt.preventDefault();
     ControlSubmission(is_disabled=true);
     let args = {};
-    //file_data_obj = convert_file_to_object(file_data_obj);
-    const file_data_obj = document.getElementById("UploadImage").files[0];
-    if (!file_data_obj) {
+    const file = document.getElementById("UploadImage").files[0];
+    const file_data_obj = convert_file_to_object(file);
+    if (!file) {
         alert('Please select a file.');
         return;
     }
-    debugger;
-    args = {
-    'args_obj': {
-         'pic': file_data_obj,
-         'first_name': "Ahmed",
-         'middle_name': "Mohamed",
-         'last_name': "Ali",
-         'gender': "Male",
-         'nationality': "Egypt",
-         'birthdate': "1980-01-01",
-         'lost_date': "2024-01-01",
-         'phone_1': "+2012345678",
-         }
-    }
-    run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
-                    type= "POST",
-                    async = false,
-                    args = args,
-                    function_render_response = render_response_create_lost_person_case
-               );
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const pic_base64Image = event.target.result;
+        args = {
+            'args_obj': {
+                    'pic': {'pic_base64Image': pic_base64Image,'file_data_obj': file_data_obj},
+                    'first_name': window.localStorage.getItem('first_name'),
+                    'middle_name': "",
+                    'last_name': "test",
+                    'gender': window.localStorage.getItem('gender'),
+                    'nationality': window.localStorage.getItem('country'),
+                    'birthdate': window.localStorage.getItem('birthdate'),
+                    'lost_date': window.localStorage.getItem('lost_date'),
+                    'phone_1': window.localStorage.getItem('phone_1'),
+                    'notes':window.localStorage.getItem('notes'),
+                    'email_Address':window.localStorage.getItem('email_Address')
+                    // /  'lost_address':window.localStorage.getItem('lost_address'),
+                }
+            }
+                // badry
+                if(window.localStorage.getItem('first_name') != ""
+                    &&window.localStorage.getItem('gender') != ""
+                    && window.localStorage.getItem('country') != ""
+                    &&window.localStorage.getItem('birthdate') != ""
+                    &&window.localStorage.getItem('lost_date') != ""
+                    &&window.localStorage.getItem('lost_address') != ""
+                    &&window.localStorage.getItem('phone_1') != "") {
+                    run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
+                        type= "POST",
+                        async = false,
+                        args = args,
+                        function_render_response = render_response_create_lost_person_case
+                    );
+                } 
+    };
+    reader.readAsDataURL(file);
 };
+function display_alert_with_timeout(msg, type, timeout=3000) {
+    setTimeout(() => {
+        $('#validationRules').text(msg).removeClass("hide").addClass("alert-" + type);
+        if(type == 'success') {
+            Swal.fire({
+                title: 'تم الحفظ!',
+                text: 'البيانات تم حفظها بنجاح.',
+                icon: 'success',
+                confirmButtonText: 'موافق'
+            });
+        }
+        else {
+            Swal.fire({
+                title: 'لم يتم الحفظ!',
+                text: 'البيانات لم يتم حفظها بنجاح.',
+                icon: 'error',
+                confirmButtonText: 'خطا'
+            });
+        }
+        setTimeout(() => {
+            document.getElementById("BachToHome").disabled = false;
+            document.getElementById("BachToHome").onclick = function () {
+                window.location.pathname = 'home'
+            }
+        }, 3000);
+    }, timeout);
+}

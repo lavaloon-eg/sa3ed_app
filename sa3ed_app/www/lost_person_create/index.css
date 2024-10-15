@@ -1,4 +1,13 @@
- .img-upload {
-            height: 300px;
-            width: auto;
-        }
+.img-upload {
+    height: 300px;
+    width: 300px;
+    border-radius: 20px;
+    cursor: pointer;
+    object-fit: fill;
+}
+.save.btn {
+    width: 120px
+}
+.swal2-title , .swal2-confirm ,.swal2-styled ,.swal2-html-container {
+    font-family: 'Changa';
+}

@@ -102,7 +102,8 @@
   {
    "fieldname": "pic_preview",
    "fieldtype": "Image",
-   "label": "Pic Preview"
+   "label": "Pic Preview",
+   "options": "pic"
   },
   {
    "fieldname": "tb_notes",
@@ -165,12 +166,12 @@
    "fieldname": "founded_person",
    "fieldtype": "Link",
    "label": "Founded Person",
-   "options": "Founded Person"
+   "options": "Found Person"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-25 19:58:30.293646",
+ "modified": "2024-09-23 19:17:47.911421",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
@@ -187,6 +188,11 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Guest"
   }
  ],
  "sort_field": "modified",
