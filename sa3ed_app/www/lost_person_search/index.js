@@ -1,12 +1,17 @@
 function get_lost_person_list(search_criteria={}){
     let args = {};
+    for (const key in search_criteria) {
+        if (search_criteria.hasOwnProperty(key)) {
+            args[key] = search_criteria[key];
+        }
+    }
     //TODO: map search_criteria to args
     run_api(method="sa3ed_app.api.LostPersonEndPoints.get_lost_persons",
                     type= "GET".
                     async = false,
-                    args = search_criteria,
+                    args = JSON.stringify(args),
                     function_render_response = render_response_get_lost_person_list
-               );
+            );
 }
 
 function render_response_get_lost_person_list(response){
@@ -16,7 +21,7 @@ function render_response_get_lost_person_list(response){
 
 //TODO: this is a temp code to be replaced by the final code of handling UI
 document.addEventListener("DOMContentLoaded", (event) => {
-    get_lost_person_list();
+    get_lost_persons_list();
     });
 
 

@@ -10,11 +10,11 @@ def get_lost_persons(args_obj: str = None):
     status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
     try:
-        current_lang = get_language()  # TODO: Apply the language
+        current_lang = get_language()  # s: Apply the language
         page_limit = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="page_limit",
                                                     default_value=20, raise_error_if_not_exist=False))
         start_index = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="start_index",
-                                                     default_value=0, raise_error_if_not_exist=False))
+                                                    default_value=0, raise_error_if_not_exist=False))
         age = ApiEndPoint.get_key_value(parent_obj=args_obj, key="age", raise_error_if_not_exist=False)
         lost_person_table = frappe.qb.DocType('Lost Person')
         query = (
