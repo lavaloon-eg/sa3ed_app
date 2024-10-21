@@ -14,6 +14,9 @@
   "address_line_1",
   "address_line_2",
   "postal_code",
+  "longitude",
+  "latitude",
+  "location",
   "notes_tab",
   "notes"
  ],
@@ -21,8 +24,7 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
-   "reqd": 1
+   "label": "Title"
   },
   {
    "fieldname": "country",
@@ -84,11 +86,28 @@
   {
    "fieldname": "column_break_ffib",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "longitude",
+   "fieldtype": "Float",
+   "label": "Longitude"
+  },
+  {
+   "fieldname": "latitude",
+   "fieldtype": "Float",
+   "label": "Latitude"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "is_virtual": 1,
+   "label": "Location",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-25 20:07:14.997858",
+ "modified": "2024-10-21 23:18:17.567645",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Sa3ed Address",

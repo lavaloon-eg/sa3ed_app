@@ -1,0 +1,84 @@
+form {
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-right: 15px;
+}
+label {
+    font-size: 18px;
+    font-weight: 400;
+    color: #053B4F;
+}
+input {
+    text-align: right;
+    width: 336px;
+    height: 36px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1.8px solid #053B4F;
+    margin-bottom: 44px;
+}
+#male,#female {
+    margin: 0;
+}
+input::placeholder {
+    color: #053B4F;
+    opacity: 20%;
+    font-size: 18px;
+}
+textarea {
+    padding: 20px;
+    border: none;
+    border-radius: 11px;
+    width: 336px;
+    height: 150px;
+    resize: none; 
+    text-align: right;
+    margin-bottom: 44px;
+}
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn div {
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 183px;
+    height: 56px;
+    padding: 12px 40px;
+    border-radius: 24px;
+    background-color: #FF476E;
+    color: white;
+    cursor: pointer;
+    gap: 5px;
+}
+.gender-options {
+    gap: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    flex-direction: row-reverse;
+    margin-bottom: 33px;
+}
+.form-control{
+    background-color: #f2efe6;
+    text-align: center;
+    margin-bottom: 33px;
+    color: #053B4F; 
+    border: 1px solid #053B4F; 
+    padding: 10px; 
+    border-radius: 4px; 
+    appearance: none; 
+    -moz-appearance: none; 
+    -webkit-appearance: none; 
+    width: 100%; 
+    
+}
+.swal2-title , .swal2-confirm ,.swal2-styled {
+    font-family: 'Changa';
+}

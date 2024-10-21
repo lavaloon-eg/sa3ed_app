@@ -5,7 +5,7 @@ from frappe import _
 def create_sa3ed_address(args_obj: {}) -> str:
     mandatory_args_csv = _("title,address_type,country,city,address_line_1")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
-                                                          mandatory_args_csv=mandatory_args_csv)
+                                                        mandatory_args_csv=mandatory_args_csv)
     new_doc = None
     if error_msg:
         frappe.throw(msg=error_msg)

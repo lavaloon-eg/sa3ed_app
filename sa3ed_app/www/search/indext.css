@@ -1,0 +1,13 @@
+
+#statusMessage p {
+    font-size: 1.2em;
+    margin-top: 10px;
+}
+
+.text-success {
+    color: green;
+}
+
+.text-danger {
+    color: red;
+}

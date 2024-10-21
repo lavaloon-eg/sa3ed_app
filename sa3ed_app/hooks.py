@@ -17,6 +17,9 @@ app_license = "agpl-3.0"
 web_include_css = "/assets/css/site.css"
 web_include_js = "/assets/js/site.js"
 
+
+
+
 # include custom scss in every website theme (without file extension ".scss")
 # website_theme_scss = "sa3ed_app/public/scss/website"
 

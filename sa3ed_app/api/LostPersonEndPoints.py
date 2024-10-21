@@ -10,11 +10,11 @@ def get_lost_persons(args_obj: str = None):
     status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
     try:
-        current_lang = get_language()  # TODO: Apply the language
+        current_lang = get_language()  # s: Apply the language
         page_limit = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="page_limit",
                                                     default_value=20, raise_error_if_not_exist=False))
         start_index = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="start_index",
-                                                     default_value=0, raise_error_if_not_exist=False))
+                                                    default_value=0, raise_error_if_not_exist=False))
         age = ApiEndPoint.get_key_value(parent_obj=args_obj, key="age", raise_error_if_not_exist=False)
         lost_person_table = frappe.qb.DocType('Lost Person')
         query = (
@@ -46,7 +46,7 @@ def create_lost_person_case(args_obj: str):
 
     mandatory_args_csv = _("first_name,middle_name,last_name,birthdate,nationality,gender,lost_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
-                                                          mandatory_args_csv=mandatory_args_csv)
+                                                        mandatory_args_csv=mandatory_args_csv)
     if error_msg:
         status_code = 400
         message = error_msg
@@ -66,9 +66,9 @@ def create_lost_person_case(args_obj: str):
             if args_obj.get("phone_2"):
                 new_doc.phone_2 = args_obj["phone_2"]
             if args_obj.get("email_Address"):
-                new_doc.phone_2 = args_obj["email_Address"]
+                new_doc.email_address = args_obj["email_Address"]
             if args_obj.get("notes"):
-                new_doc.phone_2 = args_obj["notes"]
+                new_doc.notes = args_obj["notes"]
             if args_obj.get("home_address"):
                 new_doc.home_address = create_sa3ed_address(args_obj["home_address"])
             if args_obj.get("lost_address"):
@@ -77,11 +77,11 @@ def create_lost_person_case(args_obj: str):
 
             if args_obj.get("pic"):
                 image_file_url = save_image_attachment(filedata=args_obj['pic'],
-                                                       target_doctype="Lost Person",
-                                                       target_doctype_id=new_doc.name,
-                                                       max_size_in_mb=2,
-                                                       target_field="pic_preview",
-                                                       is_private=0)
+                                                    target_doctype="Lost Person",
+                                                    target_doctype_id=new_doc.name,
+                                                    max_size_in_mb=2,
+                                                    target_field="pic_preview",
+                                                    is_private=0)
                 new_doc.pic = new_doc.pic_preview = image_file_url
                 # frappe.session.user.flags.ignore_permissions = True
                 new_doc.save(ignore_permissions=True)

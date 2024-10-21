@@ -8,5 +8,11 @@
   أخطاء لغوية، مولد النص العربى مفيد لمصممي .المواقع على وجه الخصوص كما يمكن
   استخدامه لتصاميم الجرافيكس')}}
 </p>
-<a class="btn close-disclaimer" href="home">إغلاق</a>
+<!-- change button from a anchor to div -->
+<div class="btn close-disclaimer">إغلاق</div>
+<script>
+  document.querySelector('.close-disclaimer').onclick = function() {
+    window.history.back();
+  }
+</script>
 {% endblock %}
