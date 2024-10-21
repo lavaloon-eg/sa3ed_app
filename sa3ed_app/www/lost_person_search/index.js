@@ -1,15 +1,11 @@
 function get_lost_person_list(search_criteria={}){
     let args = {};
-    for (const key in search_criteria) {
-        if (search_criteria.hasOwnProperty(key)) {
-            args[key] = search_criteria[key];
-        }
-    }
+    
     //TODO: map search_criteria to args
     run_api(method="sa3ed_app.api.LostPersonEndPoints.get_lost_persons",
                     type= "GET".
                     async = false,
-                    args = JSON.stringify(args),
+                    args = search_criteria,
                     function_render_response = render_response_get_lost_person_list
             );
 }

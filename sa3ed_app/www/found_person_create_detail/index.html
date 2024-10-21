@@ -5,16 +5,16 @@
 <!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <link rel="stylehsheet" href="index.css" />
-<script src="../lost_person_create_detail/index.js"></script>    
+<script src="../found_person_create_detail/index.js"></script>    
 <div id="app" class="container">
     <div class="row justify-content-start">
-        <img class="col-.75" src="/assets/img/favicon-32x32.png" alt="lost person" width="48px" />
+        <img class="col-.75" src="/assets/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
     <div class="row justify-content-end">
         <div>
             <p>
-                (٣/۱)فقد شخص
-            <img class="col-.75" src="/assets/img/miss.svg" alt="lost person" />
+                (٣/۱)وجد شخص
+            <img class="col-.75" src="/assets/img/found.svg" alt="found person" style="width: 35px;margin-bottom:10px;" />
             </p>
             <p style="color: #053B4F; 
                     opacity:0.8; 
@@ -24,23 +24,28 @@
     </div>
     <form class="row justify-content-left">
         <label for="" >اسم الطفل</label>
-        <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="lostpername" required>
+        <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="foundpername" required>
         <label for="">تاريخ ميلاد الطفل</label>
         <input class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
-        <label for="">منطقه الفقدان</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  المنطقه اللتي فقد فيها الطفل" v-model="lostperloca" required>
-        <!-- home adress -->
-        <label for="">عنوان البيت</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  عنوان البيت" v-model="homeperloca" required>
-       
-        <label for="">تاريخ الفقدان</label>
-        <input  @mouseleave="changeline()" type="date" ref="lostdate" placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
+        <label for="">منطقه التواجد</label>
+        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  المنطقه اللتي فقد فيها الطفل" v-model="foundperloca" required>
+        <label for="">تاريخ رؤية الطفل </label>
+        <input  @mouseleave="changeline()" type="date" ref="founddate" placeholder="ادخل  التاريخ الذي وجد فيها الطفل" v-model="foundperdate" required>
         <label for="" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
         <!-- Gender -->
         <select v-model="selectedGender" class="form-control" required>
             <option value="" disabled>اختر الجنس</option>
             <option value="Male" class="test">ذكر</option>
             <option value="Female">انثي</option>
+        </select>
+
+        <!-- Case Status  -->
+        <label for="" style="margin-bottom: 33px;">اختر حاله الطفل</label>
+        <select v-model="selectedStatus" class="form-control" required>
+            <option value="" disabled>اختر حاله الطفل </option>
+            <option value="Seen" class="test">رايته</option>
+            <option value="Hospitality">مستضيفه لدي في المنزل</option>
+            <option value="Closed">الحاله اغلقت</option>
         </select>
         <!-- Country -->
         <label for="" style="margin-bottom: 33px;">الدوله</label>
@@ -55,7 +60,7 @@
         <!-- btn to send data -->
     <div class="d-flex btn row" @click="btnevent" >
         <div ref="btn"> 
-            <img class="col-.75" src="/assets/img/arrow-white.svg" alt="lost person" />
+            <img class="col-.75" src="/assets/img/arrow-white.svg" alt="found person" />
                 ارسال
         </div>
     </div>
