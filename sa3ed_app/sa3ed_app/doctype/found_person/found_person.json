@@ -118,8 +118,7 @@
    "fieldname": "seen_address",
    "fieldtype": "Link",
    "label": "Seen Address",
-   "options": "Sa3ed Address",
-   "reqd": 1
+   "options": "Sa3ed Address"
   },
   {
    "fieldname": "tab_5_tab",
@@ -165,7 +164,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-07-26 00:26:32.541482",
+ "modified": "2024-10-21 23:03:23.915728",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Found Person",

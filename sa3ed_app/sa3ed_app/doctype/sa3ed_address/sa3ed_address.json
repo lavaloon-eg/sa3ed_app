@@ -24,8 +24,7 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
-   "reqd": 1
+   "label": "Title"
   },
   {
    "fieldname": "country",
@@ -90,12 +89,12 @@
   },
   {
    "fieldname": "longitude",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "label": "Longitude"
   },
   {
    "fieldname": "latitude",
-   "fieldtype": "Data",
+   "fieldtype": "Float",
    "label": "Latitude"
   },
   {
@@ -108,7 +107,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-23 19:05:36.915301",
+ "modified": "2024-10-21 23:18:17.567645",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Sa3ed Address",

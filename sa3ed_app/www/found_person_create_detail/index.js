@@ -2,12 +2,12 @@ var app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
         return {
-            lostpername:'',
-            perdate:'',
-            lostperloca:'',
-            homeperloca:'',// home address
-            lostperdate:'',
+            foundpername:'',
+            perdate:'', // brith of baby
+            foundperloca:'',
+            foundperdate:'',
             selectedGender: '',// This will hold the selected gender value 
+            selectedStatus:'', // status of this child
             country:'',
             notes:'',
             countries : [
@@ -261,21 +261,20 @@ var app = Vue.createApp({
     methods:{
         btnevent() {
             const isBirthdateValid = this.validateBirthdate();
-            const isLostdateValid = this.validateLostdate();
-            if( !(isBirthdateValid && isLostdateValid) ) {
+            const isfounddateValid = this.validatefounddate();
+            if( !(isBirthdateValid && isfounddateValid) ) {
                 return;
             }   
-            if(this.lostpername != '' && this.perdate != '' && this.lostperloca != '' &&this.homeperloca!= '' && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
-                window.localStorage.setItem('first_name',this.lostpername);
-                window.localStorage.setItem('lost_date',this.lostperdate);
-                window.localStorage.setItem('lost_address',this.lostperloca)
-                window.localStorage.setItem('home_address',this.homeperloca)
-                
-                window.localStorage.setItem('birthdate',this.perdate)
-                window.localStorage.setItem('gender',this.selectedGender)
-                window.localStorage.setItem('country',this.country)
-                window.localStorage.setItem('notes',this.notes)
-                window.location.pathname ='/lost_person_create_detail_2'
+            if(this.foundpername != '' && this.perdate != '' && this.foundperloca != '' && this.foundperdate != '' && this.selectedGender != '' && this.country !='' && this.selectedStatus != '')  {
+                window.localStorage.setItem('fndfirst_name',this.foundpername);
+                window.localStorage.setItem('found_date',this.foundperdate);
+                window.localStorage.setItem('found_address',this.foundperloca)
+                window.localStorage.setItem('fndbirthdate',this.perdate)
+                window.localStorage.setItem('fndgender',this.selectedGender)
+                window.localStorage.setItem('fndstatus',this.selectedStatus)
+                window.localStorage.setItem('fndcountry',this.country)
+                window.localStorage.setItem('fndnotes',this.notes)
+                window.location.pathname ='/found_person_create_detail_2'
             } else {
                 Swal.fire({
                     title: 'يرجي ادخال البيانات',
@@ -298,8 +297,8 @@ var app = Vue.createApp({
                 this.$refs.loc.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             }
-            if(this.$refs.lostdate.value != '') {
-                this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
+            if(this.$refs.founddate.value != '') {
+                this.$refs.founddate.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
         },
@@ -318,9 +317,9 @@ var app = Vue.createApp({
                 return true;
             }
         },
-        validateLostdate() {
-            const lostdate = this.lostperdate;
-            if (new Date(lostdate) > new Date()) {
+        validatefounddate() {
+            const founddate = this.foundperdate;
+            if (new Date(founddate) > new Date()) {
                 Swal.fire({
                     title: 'تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم',
                     text: '',
@@ -328,7 +327,7 @@ var app = Vue.createApp({
                     confirmButtonText: 'خطا'
                 });
                 return false;
-            } else if(new Date(this.perdate) >= new Date(lostdate)){
+            } else if(new Date(this.perdate) >= new Date(founddate)){
                 Swal.fire({
                     title: 'تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد',
                     text: '',

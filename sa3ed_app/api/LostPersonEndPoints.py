@@ -77,11 +77,11 @@ def create_lost_person_case(args_obj: str):
 
             if args_obj.get("pic"):
                 image_file_url = save_image_attachment(filedata=args_obj['pic'],
-                                                       target_doctype="Lost Person",
-                                                       target_doctype_id=new_doc.name,
-                                                       max_size_in_mb=2,
-                                                       target_field="pic_preview",
-                                                       is_private=0)
+                                                    target_doctype="Lost Person",
+                                                    target_doctype_id=new_doc.name,
+                                                    max_size_in_mb=2,
+                                                    target_field="pic_preview",
+                                                    is_private=0)
                 new_doc.pic = new_doc.pic_preview = image_file_url
                 # frappe.session.user.flags.ignore_permissions = True
                 new_doc.save(ignore_permissions=True)
