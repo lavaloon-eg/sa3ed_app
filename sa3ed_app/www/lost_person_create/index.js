@@ -54,7 +54,6 @@ function render_response_create_lost_person_case(...args){
     if ("data" in response_obj){
         data = response_obj['data'];
         display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000)
-       
         // clear data from localstorage
         setTimeout(() => {
             window.localStorage.setItem('first_name',' ');
@@ -65,6 +64,8 @@ function render_response_create_lost_person_case(...args){
             window.localStorage.setItem('lost_address',' ');
             window.localStorage.setItem('lost_date',' ');
             window.localStorage.setItem('notes',' ');
+            window.localStorage.setItem('lost_address',' ');
+            window.localStorage.setItem('home_address',' ');
         }, 4000);
     }
     else
@@ -112,9 +113,9 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     'phone_1': window.localStorage.getItem('phone_1'),
                     'notes':window.localStorage.getItem('notes'),
                     'email_Address':window.localStorage.getItem('email_Address'),
-                    'lost_address':window.localStorage.getItem('lost_address'),
-                    // home address
-                    'home_address':window.localStorage.getItem('home_address'),
+                    // lost & home  address
+                    'lost_address':JSON.parse(window.localStorage.getItem('lost_address')),
+                    'home_address':JSON.parse(window.localStorage.getItem('home_address'))
                 }
             }
                 // badry
@@ -124,7 +125,9 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     &&window.localStorage.getItem('birthdate') != ""
                     &&window.localStorage.getItem('lost_date') != ""
                     &&window.localStorage.getItem('lost_address') != ""
-                    &&window.localStorage.getItem('phone_1') != "") {
+                    &&window.localStorage.getItem('phone_1') != ""
+                    &&window.localStorage.getItem('lost_address')!=""
+                    &&window.localStorage.getItem('home_address')!="") {
                     run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
                         type= "POST",
                         async = false,

@@ -1,0 +1,48 @@
+{% extends base_template_path %}
+<link rel="stylesheet" href="index.css" />
+<script src="index.js"></script>
+
+{% block content %} 
+<!-- Sweat alert -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Sweat alert -->
+ <!-- phone validation -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app" class="container">
+        <div class="row justify-content-start">
+            <img class="col-.75" src="/assets/img/favicon-32x32.png" alt="lost person" width="48px" />
+        </div>
+        <div class="row justify-content-end">
+            <div class="">
+                <p>
+                    (٤/۳)فقد شخص
+                    <img class="col-.75" src="/assets/img/miss.svg" alt="lost person" />
+                </p>
+                <p style="color: #053B4F; 
+                    opacity:0.8; 
+                    font-size:20px;
+                    font-weight: 400;">قم بادخال بيانات التواصل
+                </p>
+            </div>
+        </div>
+        <form class="row justify-content-left"> 
+            <label for="" >اسمك</label>
+            <input @mouseleave="changeline()" type="text" ref="name" placeholder="ادخل اسمك" v-model="user_name" required>
+            <label for="">البريد الالكتروني</label>
+            <input @mouseleave="changeline()" type="text" ref="date" placeholder="example@test.com" v-model="email" required>
+            <label for="">رقم الهاتف</label>
+            <input @mouseleave="changeline()" type="tel" ref="phone" placeholder="**********" v-model="phone_number" required>
+        </form>
+        <div class="d-flex clickbtn row" @click="btnevent">
+            <div ref="btn"> 
+                <img class="col-.75" src="/assets/img/arrow-white.svg" alt="lost person" />
+                ارسال
+            </div>
+        </div>
+    </div>
+{% endblock %}
