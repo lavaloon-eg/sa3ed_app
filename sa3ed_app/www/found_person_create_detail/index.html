@@ -27,8 +27,11 @@
         <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="foundpername" required>
         <label for="">تاريخ ميلاد الطفل</label>
         <input class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
-        <label for="">منطقه التواجد</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  المنطقه اللتي فقد فيها الطفل" v-model="foundperloca" required>
+        <label for="">  مدينه اللي وجد فيها الطفل</label>
+        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي وجد فيها الطفل" v-model="city" required>
+        <!-- address line -->
+        <label for="">  الخط الارضي</label>
+        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان الموجود" v-model="found_address_line" required>
         <label for="">تاريخ رؤية الطفل </label>
         <input  @mouseleave="changeline()" type="date" ref="founddate" placeholder="ادخل  التاريخ الذي وجد فيها الطفل" v-model="foundperdate" required>
         <label for="" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
@@ -38,7 +41,6 @@
             <option value="Male" class="test">ذكر</option>
             <option value="Female">انثي</option>
         </select>
-
         <!-- Case Status  -->
         <label for="" style="margin-bottom: 33px;">اختر حاله الطفل</label>
         <select v-model="selectedStatus" class="form-control" required>
@@ -56,6 +58,8 @@
             </option>
         </select>
         <textarea name="" id="" placeholder="ادخل بعض البيانات مثل الحذاء" v-model ='notes'></textarea>
+        <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
+
     </form>
         <!-- btn to send data -->
     <div class="d-flex btn row" @click="btnevent" >
