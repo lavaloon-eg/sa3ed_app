@@ -1,0 +1,24 @@
+#searchbar{
+    border: 1px #8f8f8f solid;
+    border-radius: 7px;
+    padding: 15px;
+}
+
+.err{
+    color: #e82529;
+}
+
+.message{
+    color: #04294b;
+}
+
+.person{
+    padding: 5px;
+    border: 1px #8f8f8f solid;
+    border-radius: 7px;
+    margin: 20px;
+}
+
+.person h4,.person p{
+    margin: 0;
+}
