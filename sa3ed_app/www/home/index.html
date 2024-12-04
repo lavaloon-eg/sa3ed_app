@@ -1,7 +1,7 @@
 {% extends base_template_path %}
 {% block content %}
 <div class="d-flex flex-column justify-content-center align-items-center">
-    <img class="logo" src="/assets/img/android-chrome-192x192.png" alt="sa3ed logo">
+    <img class="logo" src="/static/img/android-chrome-192x192.png" alt="sa3ed logo">
     <h2 class="mt-1 mb-3">{{_('ساعد')}}</h2>
     <a class="res btn" href="disclaimer">{{_('إخلاء مسئولية')}} 🤚</a>
 </div>
@@ -10,21 +10,21 @@
     <div class="row align-items-center mt-3">
         <div class="col mt-3 text-center">
             <a class="miss btn btn-secondary btn-home" href="lost_person_create_detail">
-                <img src="/assets/img/lost.svg"/>
+                <img src="/static/img/lost.svg"/>
                 <br/>{{_('فقد شخص')}}
             </a>
             <br/>
         </div>
         <div class="col mt-3 text-center">
             <a class="miss btn btn-secondary btn-home" href="lost_person_search">
-                <img src="/assets/img/lost.svg"/>
+                <img src="/static/img/lost.svg"/>
                 <br/>{{_('أشخاص مفقودون')}}
             </a>
             <br/>
         </div>
         <div class="col mt-3 text-center">
             <a class="find btn btn-secondary btn-home" href="found_person_create_detail">
-                <img src="/assets/img/foundhome.svg"/>
+                <img src="/static/img/foundhome.svg"/>
                 <br/>
                 {{_('وجد شخص')}}
             </a>
@@ -34,7 +34,7 @@
     <div class="row">
        <div class="col mt-3 text-center">
             <a class="follow btn btn-home" href="search">
-              <img src="/assets/img/arrow-pink.svg" width="45px" height="44px" />
+              <img src="/static/img/arrow-pink.svg" width="45px" height="44px" />
                 <br/>{{_('متابعة حالة')}}
             </a>
         </div>

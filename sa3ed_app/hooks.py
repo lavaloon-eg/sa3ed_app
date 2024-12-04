@@ -10,12 +10,12 @@ app_license = "agpl-3.0"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/sa3ed_app/css/sa3ed_app.css"
-# app_include_js = "/assets/sa3ed_app/js/sa3ed_app.js"
+# app_include_css = "/static/sa3ed_app/css/sa3ed_app.css"
+# app_include_js = "/static/sa3ed_app/js/sa3ed_app.js"
 
 # include js, css files in header of web template
-web_include_css = "/assets/css/site.css"
-web_include_js = "/assets/js/site.js"
+web_include_css = "/static/css/site.css"
+web_include_js = "/static/js/site.js"
 
 
 
