@@ -4,12 +4,14 @@ var app = Vue.createApp({
         return {
             lostpername:'',
             perdate:'',
-            lostperloca:'',
-            homeperloca:'',// home address
+            cityperloca:'',
+            lost_address_line:'',
+            // homeperloca:'',// home address
             lostperdate:'',
             selectedGender: '',// This will hold the selected gender value 
             country:'',
             notes:'',
+            notesloc:'',
             countries : [
                 { code: 'AF', name: 'Afghanistan' },
                 { code: 'AL', name: 'Albania' },
@@ -265,16 +267,27 @@ var app = Vue.createApp({
             if( !(isBirthdateValid && isLostdateValid) ) {
                 return;
             }   
-            if(this.lostpername != '' && this.perdate != '' && this.lostperloca != '' &&this.homeperloca!= '' && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
+            if(this.lost_address_line!=''&& this.notesloc!= ''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
                 window.localStorage.setItem('first_name',this.lostpername);
                 window.localStorage.setItem('lost_date',this.lostperdate);
-                window.localStorage.setItem('lost_address',this.lostperloca)
-                window.localStorage.setItem('home_address',this.homeperloca)
-                
                 window.localStorage.setItem('birthdate',this.perdate)
                 window.localStorage.setItem('gender',this.selectedGender)
                 window.localStorage.setItem('country',this.country)
                 window.localStorage.setItem('notes',this.notes)
+                window.localStorage.setItem('notesloc',this.notesloc)
+                window.localStorage.setItem('lost_addres_type','Lost Place');
+                // send lost_address data os object
+                let lost_address_object = {
+                    title:'test',
+                    city: (this.cityperloca).toString(),
+                    country:(this.country).toString(),
+                    address_type:'Lost Place',
+                    address_line_1:this.lost_address_line.toString(),
+                    notes:this.notesloc.toString(),
+                    address_line_2: '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
+                    postal_code:  ''
+                }
+                window.localStorage.setItem('lost_address',JSON.stringify(lost_address_object))                
                 window.location.pathname ='/lost_person_create_detail_2'
             } else {
                 Swal.fire({

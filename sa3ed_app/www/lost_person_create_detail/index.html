@@ -13,7 +13,7 @@
     <div class="row justify-content-end">
         <div>
             <p>
-                (٣/۱)فقد شخص
+                (٤/۱)فقد شخص
             <img class="col-.75" src="/assets/img/miss.svg" alt="lost person" />
             </p>
             <p style="color: #053B4F; 
@@ -27,12 +27,11 @@
         <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="lostpername" required>
         <label for="">تاريخ ميلاد الطفل</label>
         <input class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
-        <label for="">منطقه الفقدان</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  المنطقه اللتي فقد فيها الطفل" v-model="lostperloca" required>
-        <!-- home adress -->
-        <label for="">عنوان البيت</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  عنوان البيت" v-model="homeperloca" required>
-       
+        <label for="">  مدينه الفقدان</label>
+        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
+        <!-- address line -->
+        <label for="">  الخط الارضي</label>
+        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="lost_address_line" required>    
         <label for="">تاريخ الفقدان</label>
         <input  @mouseleave="changeline()" type="date" ref="lostdate" placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
         <label for="" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
@@ -50,7 +49,8 @@
                 [[ boon.name ]]
             </option>
         </select>
-        <textarea name="" id="" placeholder="ادخل بعض البيانات مثل الحذاء" v-model ='notes'></textarea>
+        <textarea name="" id="" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model ='notes'></textarea>
+        <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
     </form>
         <!-- btn to send data -->
     <div class="d-flex btn row" @click="btnevent" >

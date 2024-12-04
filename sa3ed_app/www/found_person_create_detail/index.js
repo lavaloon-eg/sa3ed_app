@@ -9,7 +9,10 @@ var app = Vue.createApp({
             selectedGender: '',// This will hold the selected gender value 
             selectedStatus:'', // status of this child
             country:'',
+            city:'',
+            found_address_line:'',
             notes:'',
+            notesloc:'',
             countries : [
                 { code: 'AF', name: 'Afghanistan' },
                 { code: 'AL', name: 'Albania' },
@@ -265,15 +268,31 @@ var app = Vue.createApp({
             if( !(isBirthdateValid && isfounddateValid) ) {
                 return;
             }   
-            if(this.foundpername != '' && this.perdate != '' && this.foundperloca != '' && this.foundperdate != '' && this.selectedGender != '' && this.country !='' && this.selectedStatus != '')  {
+            if(this.found_address_line!=''&&this.city!=''&&this.foundpername != '' && this.perdate != '' &&  this.foundperdate != '' && this.selectedGender != '' && this.country !='' && this.selectedStatus != '')  {
                 window.localStorage.setItem('fndfirst_name',this.foundpername);
                 window.localStorage.setItem('found_date',this.foundperdate);
-                window.localStorage.setItem('found_address',this.foundperloca)
                 window.localStorage.setItem('fndbirthdate',this.perdate)
                 window.localStorage.setItem('fndgender',this.selectedGender)
                 window.localStorage.setItem('fndstatus',this.selectedStatus)
                 window.localStorage.setItem('fndcountry',this.country)
                 window.localStorage.setItem('fndnotes',this.notes)
+                window.localStorage.setItem('fndcity',this.city)
+                let found_address_obj = {
+                    title:"test",
+                    address_type:"",
+                    city:this.city,
+                    country:this.country,
+                    address_line_1:this.found_address_line,
+                    notes:this.notesloc,
+                    address_line_2:"",
+                    postal_code:""
+                }
+                if(this.selectedStatus == 'Seen') {
+                    found_address_obj.address_type = "Seen Place"
+                } else {
+                    found_address_obj.address_type = "Hospitality Address"
+                }
+                window.localStorage.setItem('found_address',JSON.stringify(found_address_obj));
                 window.location.pathname ='/found_person_create_detail_2'
             } else {
                 Swal.fire({

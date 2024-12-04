@@ -68,7 +68,7 @@ function render_response_create_found_person_case(...args){
             window.localStorage.setItem('fndemail_Address',' ');
             window.localStorage.setItem('fndstatus',' ');
             window.localStorage.setItem('fnduser_name',' ');
-
+            window.localStorage.setItem('found_address',' ');
         }, 4000);
     }
     else
@@ -117,7 +117,7 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     'notes':window.localStorage.getItem('fndnotes'),
                     'email_Address':window.localStorage.getItem('fndemail_Address'),
                     'case_status':window.localStorage.getItem('fndstatus'),
-                    'seen_address':window.localStorage.getItem('found_address'),
+                    'seen_address':JSON.parse(window.localStorage.getItem('found_address')),
                 }
             }
                 // badry

@@ -44,8 +44,6 @@ def create_found_person_case(args_obj: str):
             else:
                 if args_obj.get("seen_address"):
                     new_doc.hospitality_address = create_sa3ed_address(args_obj["seen_address"])
-            
-        
             new_doc.insert()
 
             if args_obj.get("pic"):

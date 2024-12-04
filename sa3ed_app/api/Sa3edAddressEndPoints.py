@@ -1,6 +1,6 @@
 from sa3ed_app.api.ApiEndPoint import *
 from frappe import _
-
+import json
 
 def create_sa3ed_address(args_obj: {}) -> str:
     mandatory_args_csv = _("title,address_type,country,city,address_line_1")
@@ -10,6 +10,8 @@ def create_sa3ed_address(args_obj: {}) -> str:
     if error_msg:
         frappe.throw(msg=error_msg)
     else:
+        if isinstance(args_obj, str):
+            args_obj = json.loads(args_obj)
         new_doc = frappe.new_doc("Sa3ed Address")
         new_doc.title = args_obj['title']
         new_doc.address_type = args_obj['address_type']
