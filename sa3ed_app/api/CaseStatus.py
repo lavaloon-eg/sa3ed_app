@@ -1,6 +1,6 @@
 import frappe
 
-@frappe.whitelist()
+@frappe.whitelist(allow_guest=True)
 def follow_up_case(case_id):
     lost_person = frappe.db.get_value('Lost Person', {'name': case_id}, ['case_status'], as_dict=True)
     if lost_person:
