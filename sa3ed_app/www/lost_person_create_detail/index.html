@@ -43,11 +43,8 @@
         </select>
         <!-- Country -->
         <label for="" style="margin-bottom: 33px;">الدوله</label>
-        <select  required v-model="country" class="form-control">
+        <select id="country_select" required v-model="country" class="form-control">
             <option value="" disabled>اختر الدوله</option>
-            <option v-for="boon in countries" :value="boon.name">
-                [[ boon.name ]]
-            </option>
         </select>
         <textarea name="" id="" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model ='notes'></textarea>
         <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>

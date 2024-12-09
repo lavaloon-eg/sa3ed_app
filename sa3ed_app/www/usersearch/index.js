@@ -1,5 +1,6 @@
 function UserSearch() {
     document.getElementById("resultdiv").innerHTML = "";
+    document.getElementById("err").innerHTML = "";
     var input = document.getElementById("searchbar").value;
     document.getElementById("searchbar").value = "";
     if ((input.toString()).trim() == "") {
@@ -10,7 +11,7 @@ function UserSearch() {
             method: "sa3ed_app.api.UserSearch.search_people",
             args: {input:input},
             callback: function(result) {            
-                message = result.message;
+                var message = result.message;
                 if (message.length == 0) {
                     document.getElementById("err").className = "message";
                     document.getElementById("err").innerHTML = "ليس هناك شيء متتابق للبحث";
