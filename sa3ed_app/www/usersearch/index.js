@@ -18,23 +18,26 @@ function UserSearch() {
                 } else {
                     for (let index in message) {
                         var person = message[index];
-                        var div = document.createElement("div");
-                        div.className = "person";
-                        div.innerHTML = "<h4>Result " + (Number(index) + 1) + " of " + message.length + "</h4>";
-                        for (const key in person) {
-                            var value = person[key];
-                            if (value == null) {
-                            } else if (value == "") {
-                            } else {
-                                var text = document.createElement("p");
-                                var keytext = key.replaceAll("_"," ");
-                                let capitalkey = keytext.at(0).toUpperCase();
-                                keytext = keytext.replace(keytext.at(0), capitalkey);
-                                text.innerHTML = keytext + ": " + value;
-                                div.append(text);
+                        if (typeof person !== "object") {
+                        } else {
+                            var div = document.createElement("div");
+                            div.className = "person";
+                            div.innerHTML = "<h4>Result " + (Number(index) + 1) + " of " + message.length + "</h4>";
+                            for (const key in person) {
+                                var value = person[key];
+                                if (value == null) {
+                                } else if (value == "") {
+                                } else {
+                                    var text = document.createElement("p");
+                                    var keytext = key.replaceAll("_"," ");
+                                    let capitalkey = keytext.at(0).toUpperCase();
+                                    keytext = keytext.replace(keytext.at(0), capitalkey);
+                                    text.innerHTML = keytext + ": " + value;
+                                    div.append(text);
+                                }
                             }
+                            document.getElementById("resultdiv").append(div);
                         }
-                        document.getElementById("resultdiv").append(div)
                     }  
                 }
             },

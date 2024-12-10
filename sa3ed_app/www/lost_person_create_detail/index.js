@@ -8,10 +8,13 @@ var app = Vue.createApp({
                 var select = document.getElementById("country_select");
                 for (let index in message) {
                     const country = message[index];
-                    var option = document.createElement("option")
-                    option.value = country.name;
-                    option.innerHTML = country.name;
-                    select.append(option);
+                    if (typeof country !== "object") {
+                    } else {
+                        var option = document.createElement("option")
+                        option.value = country.name;
+                        option.innerHTML = country.name;
+                        select.append(option);
+                    }
                 }
             },
         })
