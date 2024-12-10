@@ -1,4 +1,5 @@
 import frappe
+from pypika import Order
 
 @frappe.whitelist(allow_guest=True)
 def search_people(input):
@@ -9,11 +10,11 @@ def search_people(input):
     input = (str(input).lower()).strip()
     key = "%" + input + "%"
 
-    # Search Filter
+    # SQL Search Query
     if input == "":
         err = "There is no input given"
         return err
-    lost_query = (
+    query = (
         frappe.qb.from_(lost_people)
         .select(
         lost_people.name,
@@ -21,18 +22,18 @@ def search_people(input):
         lost_people.first_name,
         lost_people.middle_name,
         lost_people.last_name,
-        lost_people.birthdate,
-        lost_people.gender,
         lost_people.nationality,
+        lost_people.gender,
+        lost_people.birthdate.as_("birthdate/age"), #Lost Person has no age (Conflict)
         lost_people.phone_1,
         lost_people.phone_2,
         lost_people.email_address,
         lost_people.notes,
         lost_people.case_status,
-        lost_people.lost_date,
-        lost_people.founded_person,
-        lost_people.home_address,
-        lost_people.lost_address
+        lost_people.lost_date.as_("lost/seen_date"),
+        lost_people.founded_person.as_("founded/lost_person"),
+        lost_people.lost_address.as_("founded/lost_person"),
+        lost_people.home_address.as_("home/hospitality_address")
         )
         .where(
         (lost_people.name.like(key)) |
@@ -53,8 +54,7 @@ def search_people(input):
         (lost_people.home_address.like(key)) |
         (lost_people.lost_address.like(key))
         )
-    )
-    found_query = (
+    ) * (
         frappe.qb.from_(found_people)
         .select(
         found_people.name,
@@ -64,13 +64,13 @@ def search_people(input):
         found_people.last_name,
         found_people.nationality,
         found_people.gender,
-        found_people.age,
+        found_people.age, #Found Person has no birthdate (Conflict)
         found_people.phone_1,
         found_people.phone_2,
         found_people.email_address,
         found_people.notes,
-        found_people.seen_date,
         found_people.case_status,
+        found_people.seen_date,
         found_people.lost_person,
         found_people.seen_address,
         found_people.hospitality_address
@@ -94,14 +94,11 @@ def search_people(input):
         (found_people.seen_address.like(key)) |
         (found_people.hospitality_address.like(key))
         )
+        .orderby(
+            "creation", order=Order.desc
+        )
     )
-    result.extend(lost_query.run(as_dict=True))
-    result.extend(found_query.run(as_dict=True))
-    
-    # Result Sort (Latest)
-    def creation_date(person):
-        return person["creation"]
-    result.sort(reverse=True, key=creation_date)
+    result = query.run(as_dict=True)
     
     #  Return Results
     return result

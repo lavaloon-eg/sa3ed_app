@@ -4,7 +4,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<link rel="stylehsheet" href="index.css" />
 <script src="../lost_person_create_detail/index.js"></script>    
 <div id="app" class="container">
     <div class="row justify-content-start">
@@ -43,11 +42,8 @@
         </select>
         <!-- Country -->
         <label for="" style="margin-bottom: 33px;">الدوله</label>
-        <select  required v-model="country" class="form-control">
+        <select id="country_select" required v-model="country" class="form-control">
             <option value="" disabled>اختر الدوله</option>
-            <option v-for="boon in countries" :value="boon.name">
-                [[ boon.name ]]
-            </option>
         </select>
         <textarea name="" id="" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model ='notes'></textarea>
         <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
