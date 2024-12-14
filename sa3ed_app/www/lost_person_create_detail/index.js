@@ -4,16 +4,21 @@ var app = Vue.createApp({
         frappe.call({
             method:"sa3ed_app.api.WhitelistBypass.get_country_list",
             callback: function(result) { 
-                message = result.message;
-                var select = document.getElementById("country_select");
-                for (let index in message) {
-                    const country = message[index];
-                    if (typeof country !== "object") {
-                    } else {
-                        var option = document.createElement("option")
-                        option.value = country.name;
-                        option.innerHTML = country.name;
-                        select.append(option);
+                const message = result.message;
+                let select = document.getElementById("country_select");
+                const data = message.data;
+                if (message.statuscode != 200) {
+                    console.error(data)
+                } else {
+                    for (let index in data) {
+                        const country = data[index];
+                        if (typeof country !== "object") {
+                        } else {
+                            let option = document.createElement("option")
+                            option.value = country.name;
+                            option.innerHTML = country.name;
+                            select.append(option);
+                        }
                     }
                 }
             },

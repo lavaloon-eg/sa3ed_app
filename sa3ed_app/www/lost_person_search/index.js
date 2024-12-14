@@ -10,25 +10,25 @@ function get_lost_person_list(search_criteria={}){
         method: "sa3ed_app.api.LostPersonEndPoints.get_lost_persons",
         args: {args_obj:args},
         callback: function(result) {
-            var err = document.getElementById("err");
-            var message = result.message;
-            var data = message.data;
+            let err = document.getElementById("err");
+            let message = result.message;
+            let data = message.data;
             if (message.data.length == 0) {
                 err.innerHTML = "لا يوجد اشخاص مفقودين";
             } else {
-                var container = document.createElement("ul");
+                let container = document.createElement("ul");
                 container.className = "col";
                 for (let index in data) {
-                    var lost_person = data[index];
-                    var div = document.createElement("li");
+                    let lost_person = data[index];
+                    let div = document.createElement("li");
                     div.className = "person";
                     div.innerHTML = "<h4>" + "Lost Person " + (Number(index) + 1) + " of " + data.length + "</h4>"
-                    var nested_list = document.createElement("ul");
+                    let nested_list = document.createElement("ul");
                     for (const key in lost_person) {
                         let value = lost_person[key];
                         let list_item = document.createElement("li");
                         let text = document.createElement("p");
-                        var keytext = key.replaceAll("_"," ");
+                        let keytext = key.replaceAll("_"," ");
                         let capitalkey = keytext.at(0).toUpperCase();
                         keytext = keytext.replace(keytext.at(0), capitalkey);
                         text.innerHTML = keytext + ": " + value;
