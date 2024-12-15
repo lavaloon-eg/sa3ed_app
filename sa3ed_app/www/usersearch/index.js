@@ -1,5 +1,6 @@
 function UserSearch() {
     document.getElementById("resultdiv").innerHTML = "";
+    document.getElementById("err").innerHTML = "";
     var input = document.getElementById("searchbar").value;
     document.getElementById("searchbar").value = "";
     if ((input.toString()).trim() == "") {
@@ -10,30 +11,33 @@ function UserSearch() {
             method: "sa3ed_app.api.UserSearch.search_people",
             args: {input:input},
             callback: function(result) {            
-                message = result.message;
+                var message = result.message;
                 if (message.length == 0) {
                     document.getElementById("err").className = "message";
                     document.getElementById("err").innerHTML = "ليس هناك شيء متتابق للبحث";
                 } else {
                     for (let index in message) {
                         var person = message[index];
-                        var div = document.createElement("div");
-                        div.className = "person";
-                        div.innerHTML = "<h4>Result " + (Number(index) + 1) + " of " + message.length + "</h4>";
-                        for (const key in person) {
-                            var value = person[key];
-                            if (value == null) {
-                            } else if (value == "") {
-                            } else {
-                                var text = document.createElement("p");
-                                var keytext = key.replaceAll("_"," ");
-                                let capitalkey = keytext.at(0).toUpperCase();
-                                keytext = keytext.replace(keytext.at(0), capitalkey);
-                                text.innerHTML = keytext + ": " + value;
-                                div.append(text);
+                        if (typeof person !== "object") {
+                        } else {
+                            var div = document.createElement("div");
+                            div.className = "person";
+                            div.innerHTML = "<h4>Result " + (Number(index) + 1) + " of " + message.length + "</h4>";
+                            for (const key in person) {
+                                var value = person[key];
+                                if (value == null) {
+                                } else if (value == "") {
+                                } else {
+                                    var text = document.createElement("p");
+                                    var keytext = key.replaceAll("_"," ");
+                                    let capitalkey = keytext.at(0).toUpperCase();
+                                    keytext = keytext.replace(keytext.at(0), capitalkey);
+                                    text.innerHTML = keytext + ": " + value;
+                                    div.append(text);
+                                }
                             }
+                            document.getElementById("resultdiv").append(div);
                         }
-                        document.getElementById("resultdiv").append(div)
                     }  
                 }
             },
