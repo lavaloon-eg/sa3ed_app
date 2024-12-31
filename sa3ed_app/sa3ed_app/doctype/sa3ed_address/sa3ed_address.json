@@ -107,7 +107,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-21 23:18:17.567645",
+ "modified": "2024-12-31 12:38:45.450794",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Sa3ed Address",
@@ -124,6 +124,11 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Guest"
   }
  ],
  "sort_field": "modified",
