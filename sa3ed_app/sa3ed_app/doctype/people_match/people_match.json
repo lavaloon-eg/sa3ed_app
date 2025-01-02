@@ -1,6 +1,6 @@
 {
  "actions": [],
- "allow_rename": 1,
+ "autoname": "autoincrement",
  "creation": "2024-12-31 22:38:43.528652",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -9,6 +9,9 @@
   "column_break_rflg",
   "found_person",
   "section_break_mnrk",
+  "face_similarity",
+  "gender_similarity",
+  "age_similarity",
   "similarity_score",
   "column_break_sqzx",
   "match_status",
@@ -19,6 +22,7 @@
   {
    "fieldname": "lost_person",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Lost Person",
    "options": "Lost Person"
   },
@@ -29,6 +33,7 @@
   {
    "fieldname": "found_person",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Found Person",
    "options": "Found Person"
   },
@@ -60,14 +65,34 @@
    "fieldname": "match_date",
    "fieldtype": "Datetime",
    "label": "Match Date"
+  },
+  {
+   "fieldname": "face_similarity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Image Similarity Score",
+   "precision": "3"
+  },
+  {
+   "fieldname": "gender_similarity",
+   "fieldtype": "Float",
+   "label": "Gender Similarity Score",
+   "precision": "3"
+  },
+  {
+   "fieldname": "age_similarity",
+   "fieldtype": "Float",
+   "label": "Age Similarity Score",
+   "precision": "3"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-31 22:43:17.740766",
+ "modified": "2025-01-02 04:37:32.969358",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "People Match",
+ "naming_rule": "Autoincrement",
  "owner": "Administrator",
  "permissions": [
   {

@@ -17,7 +17,7 @@ class AIPersonMatcher:
         self.gender_weight = 0.15
         self.location_weight = 0.1
         self.face_weight = 0.25
-        self.similarity_threshold = 0.7
+        self.similarity_threshold = 0.6
 
     def get_face_encoding(self, image_url):
         """Get face encoding from image URL"""
@@ -119,9 +119,9 @@ class AIPersonMatcher:
             face_sim * self.face_weight
         )
         
-        return overall_similarity
+        return [overall_similarity, face_sim, gender_sim, age_sim]
 
-    def create_people_match_record(self, lost_person_id, found_person_id, similarity_score):
+    def create_people_match_record(self, lost_person_id, found_person_id, similarity_score, face_sim, gender_sim, age_sim):
         """Create a record in People Match doctype"""
         try:
             existing_match = frappe.get_all(
@@ -135,6 +135,9 @@ class AIPersonMatcher:
             if existing_match:
                 match_doc = frappe.get_doc("People Match", existing_match[0].name)
                 match_doc.similarity_score = similarity_score
+                match_doc.face_similarity = face_sim
+                match_doc.gender_similarity = gender_sim
+                match_doc.age_similarity = age_sim
                 match_doc.save()
                 return match_doc.name
             else:
@@ -143,6 +146,9 @@ class AIPersonMatcher:
                     "lost_person": lost_person_id,
                     "found_person": found_person_id,
                     "similarity_score": similarity_score,
+                    "face_similarity": face_sim,
+                    "gender_similarity": gender_sim,
+                    "age_similarity": age_sim,
                     "match_status": "Pending",
                     "match_date": frappe.utils.now_datetime()
                 })
@@ -169,16 +175,19 @@ class AIPersonMatcher:
             lost_person = frappe.get_doc("Lost Person", lost_doc.name)
             similarity = self.calculate_overall_similarity(lost_person, found_person)
             
-            if similarity >= self.similarity_threshold:
+            if similarity[0] >= self.similarity_threshold:
                 match_id = self.create_people_match_record(
                     lost_person.name,
                     found_person_id,
-                    similarity
+                    similarity[0],
+                    similarity[1],
+                    similarity[2],
+                    similarity[3]
                 )
                 
                 matches.append({
                     "lost_person_id": lost_person.name,
-                    "similarity_score": similarity,
+                    "similarity_score": similarity[0],
                     "lost_person_name": f"{lost_person.first_name} {lost_person.middle_name} {lost_person.last_name}",
                     "lost_date": lost_person.lost_date,
                     "picture_url": lost_person.pic,
