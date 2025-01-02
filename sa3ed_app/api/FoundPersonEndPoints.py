@@ -2,8 +2,8 @@ import json
 from sa3ed_app.api.ApiEndPoint import *
 from frappe import _
 from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
-from sa3ed_app.Utils.FileHandler import save_image_attachment
-from sa3ed_app.Utils.DateHelper import calculate_age
+from sa3ed_app.utils.FileHandler import save_image_attachment
+from sa3ed_app.utils.DateHelper import calculate_age
 
 
 @frappe.whitelist(allow_guest=True)
