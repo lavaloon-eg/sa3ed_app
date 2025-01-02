@@ -8,6 +8,7 @@ import numpy as np
 import requests
 from io import BytesIO
 from PIL import Image
+from sa3ed_app.api.ApiEndPoint import create_response
 
 class AIPersonMatcher:
     def __init__(self):
@@ -194,17 +195,10 @@ def get_potential_matches(found_person_id):
         matcher = AIPersonMatcher()
         matches = matcher.find_matches(found_person_id)
         
-        return {
-            "status_code": 200,
-            "message": "Potential matches found successfully",
-            "data": matches
-        }
+        return create_response(200, "Potential matches found successfully", matches)
+        
     except Exception as ex:
-        return {
-            "status_code": 400,
-            "message": f"Error finding matches: {str(ex)}",
-            "data": None
-        }
+        return create_response(400, f"Error finding matches: {str(ex)}", None)
 
 @frappe.whitelist()
 def update_match_status(match_id, status):
@@ -212,11 +206,7 @@ def update_match_status(match_id, status):
     try:
         valid_statuses = ["Pending", "Confirmed", "Rejected"]
         if status not in valid_statuses:
-            return {
-                "status_code": 400,
-                "message": f"Invalid status. Must be one of: {', '.join(valid_statuses)}",
-                "data": None
-            }
+            return create_response(400, f"Invalid status. Must be one of: {', '.join(valid_statuses)}", None)
             
         match_doc = frappe.get_doc("People Match", match_id)
         match_doc.match_status = status
@@ -232,14 +222,7 @@ def update_match_status(match_id, status):
             lost_person.save()
             found_person.save()
         
-        return {
-            "status_code": 200,
-            "message": f"Match status updated to {status}",
-            "data": {"match_id": match_id}
-        }
+        return create_response(200, f"Match status updated to {status}", {"match_id": match_id})
     except Exception as ex:
-        return {
-            "status_code": 400,
-            "message": f"Error updating match status: {str(ex)}",
-            "data": None
-        }
+        return create_response(400, f"Error updating match status: {str(ex)}", None)
+
