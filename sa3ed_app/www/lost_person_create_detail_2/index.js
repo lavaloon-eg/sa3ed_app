@@ -1,44 +1,22 @@
-var app = Vue.createApp({
+const lost_person_form_2_app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
             cityperloca:'',
             home_address_line:'',
             // homeperloca:'',// home address
-            country:'',
+            selected_country:'',
             notesloc:'',
         }
     },
     methods:{
         btnevent() {
             
-            if(this.home_address_line!=''&& this.notesloc!= ''&& this.cityperloca != ''   && this.country !='')  {
+            if(this.home_address_line!=''&& this.notesloc!= ''&& this.cityperloca != ''   && this.selected_country !='')  {
                 let home_address_object = {
                     title:'test',
                     city:this.cityperloca,
-                    country:this.country,
+                    country:this.selected_country,
                     address_type:'Home',
                     address_line_1:this.home_address_line,
                     notes:this.notesloc,
@@ -73,7 +51,22 @@ var app = Vue.createApp({
                 this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
+        },
+        async get_countries() {
+            frappe.call({
+                method:"sa3ed_app.api.countries.get_country_list",
+                callback: (res) => {
+                    if (res.message.status_code === 200) {
+                        this.countries = res.message.data.countries
+                    } else {
+                        frappe.throw(res.message.message);
+                    }
+                },
+            })
         }
-    }
+    },
+    mounted() {
+        this.get_countries()
+    },
 })
-app.mount("#app")
+lost_person_form_2_app.mount("#lost_person_form_2")

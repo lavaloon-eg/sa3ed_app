@@ -1,28 +1,6 @@
-var app = Vue.createApp({
+const lost_person_form_app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
             lostpername:'',
             perdate:'',
@@ -31,7 +9,7 @@ var app = Vue.createApp({
             // homeperloca:'',// home address
             lostperdate:'',
             selectedGender: '',// This will hold the selected gender value 
-            country:'',
+            selected_country:'',
             notes:'',
             notesloc:'',
         }
@@ -43,12 +21,12 @@ var app = Vue.createApp({
             if( !(isBirthdateValid && isLostdateValid) ) {
                 return;
             }   
-            if(this.lost_address_line!=''&& this.notesloc!= ''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
+            if(this.lost_address_line!=''&& this.notesloc!= ''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.selected_country !='')  {
                 window.localStorage.setItem('first_name',this.lostpername);
                 window.localStorage.setItem('lost_date',this.lostperdate);
                 window.localStorage.setItem('birthdate',this.perdate)
                 window.localStorage.setItem('gender',this.selectedGender)
-                window.localStorage.setItem('country',this.country)
+                window.localStorage.setItem('country',this.selected_country)
                 window.localStorage.setItem('notes',this.notes)
                 window.localStorage.setItem('notesloc',this.notesloc)
                 window.localStorage.setItem('lost_addres_type','Lost Place');
@@ -56,7 +34,7 @@ var app = Vue.createApp({
                 let lost_address_object = {
                     title:'test',
                     city: (this.cityperloca).toString(),
-                    country:(this.country).toString(),
+                    country:(this.selected_country).toString(),
                     address_type:'Lost Place',
                     address_line_1:this.lost_address_line.toString(),
                     notes:this.notesloc.toString(),
@@ -130,6 +108,22 @@ var app = Vue.createApp({
                 return true;
             }
         },
-    }
+        async get_countries() {
+            frappe.call({
+                method:"sa3ed_app.api.countries.get_country_list",
+                callback: (res) => {
+                    if (res.message.status_code === 200) {
+                        this.countries = res.message.data.countries
+                    } else {
+                        frappe.throw(res.message.message);
+                    }
+                },
+            })
+        }
+    },
+    mounted() {
+        this.get_countries()
+    },
 })
-app.mount("#app")
+
+lost_person_form_app.mount("#lost_person_form")
