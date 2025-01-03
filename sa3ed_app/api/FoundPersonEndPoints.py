@@ -4,6 +4,7 @@ from frappe import _
 from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
 from sa3ed_app.utils.FileHandler import save_image_attachment
 from sa3ed_app.utils.DateHelper import calculate_age
+from sa3ed_app.api.ai_matcher import get_potential_matches
 
 
 @frappe.whitelist(allow_guest=True)
@@ -58,6 +59,18 @@ def create_found_person_case(args_obj: str):
                 new_doc.save(ignore_permissions=True)
             status_code = 200
             frappe.db.commit()
+
+
+            # Call AI matcher to find potential matches
+            try:
+                frappe.enqueue(
+                    'sa3ed_app.api.ai_matcher.get_potential_matches',
+                    queue='long',
+                    timeout=10000,
+                    found_person_id=new_doc.name
+                )
+            except Exception as ex:
+                frappe.logger().error(f"Error enqueueing AI matcher: {str(ex)}")
             message = _(f"Found Person Case has been created successfully.")
             data = {"found_person_case_id": new_doc.name,
                     "case_status": new_doc.case_status}

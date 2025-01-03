@@ -1,0 +1,114 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2024-12-31 22:38:43.528652",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "lost_person",
+  "column_break_rflg",
+  "found_person",
+  "section_break_mnrk",
+  "face_similarity",
+  "gender_similarity",
+  "age_similarity",
+  "similarity_score",
+  "column_break_sqzx",
+  "match_status",
+  "section_break_vknc",
+  "match_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "lost_person",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Lost Person",
+   "options": "Lost Person"
+  },
+  {
+   "fieldname": "column_break_rflg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "found_person",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Found Person",
+   "options": "Found Person"
+  },
+  {
+   "fieldname": "section_break_mnrk",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "similarity_score",
+   "fieldtype": "Float",
+   "label": "Similarity Score",
+   "precision": "3"
+  },
+  {
+   "fieldname": "column_break_sqzx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "match_status",
+   "fieldtype": "Select",
+   "label": "Match Status",
+   "options": "Pending\nConfirmed\nRejected"
+  },
+  {
+   "fieldname": "section_break_vknc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "match_date",
+   "fieldtype": "Datetime",
+   "label": "Match Date"
+  },
+  {
+   "fieldname": "face_similarity",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Image Similarity Score",
+   "precision": "3"
+  },
+  {
+   "fieldname": "gender_similarity",
+   "fieldtype": "Float",
+   "label": "Gender Similarity Score",
+   "precision": "3"
+  },
+  {
+   "fieldname": "age_similarity",
+   "fieldtype": "Float",
+   "label": "Age Similarity Score",
+   "precision": "3"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-02 04:37:32.969358",
+ "modified_by": "Administrator",
+ "module": "Sa3ed_App",
+ "name": "People Match",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
