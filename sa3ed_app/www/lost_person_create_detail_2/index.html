@@ -4,8 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="../lost_person_create_detail/index.js"></script>    
-<div id="app" class="container">
+<div id="lost_person_form_2" class="container">
     <div class="row justify-content-start">
         <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
     </div>
@@ -28,11 +27,13 @@
         <!-- address line -->
         <label for="">  الخط الارضي</label>
         <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
-        <!-- Country -->
-        <label for="" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="country" class="form-control">
-            <option value="" disabled>اختر الدوله</option>
+
+        <label for="country_select" style="margin-bottom: 33px;">{{_("الدوله")}}</label>
+        <select id="country_select" required v-model="selected_country" class="form-control">
+            <option hidden value="" disabled>{{_("اختر الدوله")}}</option>
+            <option v-for="country in countries" :value="country.id" :key="country.id"> [[ country.country_name ]] </option>
         </select>
+
         <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه" v-model ='notesloc'></textarea>
     </form>
         <!-- btn to send data -->

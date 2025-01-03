@@ -1,28 +1,6 @@
-var app = Vue.createApp({
+const found_person_form_app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
             foundpername:'',
             perdate:'', // brith of baby
@@ -30,11 +8,12 @@ var app = Vue.createApp({
             foundperdate:'',
             selectedGender: '',// This will hold the selected gender value 
             selectedStatus:'', // status of this child
-            country:'',
+            selected_country:'',
             city:'',
             found_address_line:'',
             notes:'',
             notesloc:'',
+            countries: []
         }
     },
     methods:{
@@ -44,20 +23,20 @@ var app = Vue.createApp({
             if( !(isBirthdateValid && isfounddateValid) ) {
                 return;
             }   
-            if(this.found_address_line!=''&&this.city!=''&&this.foundpername != '' && this.perdate != '' &&  this.foundperdate != '' && this.selectedGender != '' && this.country !='' && this.selectedStatus != '')  {
+            if(this.found_address_line!=''&&this.city!=''&&this.foundpername != '' && this.perdate != '' &&  this.foundperdate != '' && this.selectedGender != '' && this.selected_country !='' && this.selectedStatus != '')  {
                 window.localStorage.setItem('fndfirst_name',this.foundpername);
                 window.localStorage.setItem('found_date',this.foundperdate);
                 window.localStorage.setItem('fndbirthdate',this.perdate)
                 window.localStorage.setItem('fndgender',this.selectedGender)
                 window.localStorage.setItem('fndstatus',this.selectedStatus)
-                window.localStorage.setItem('fndcountry',this.country)
+                window.localStorage.setItem('fndcountry',this.selected_country)
                 window.localStorage.setItem('fndnotes',this.notes)
                 window.localStorage.setItem('fndcity',this.city)
                 let found_address_obj = {
                     title:"test",
                     address_type:"",
                     city:this.city,
-                    country:this.country,
+                    country:this.selected_country,
                     address_line_1:this.found_address_line,
                     notes:this.notesloc,
                     address_line_2:"",
@@ -135,6 +114,22 @@ var app = Vue.createApp({
                 return true;
             }
         },
-    }
+        async get_countries() {
+            frappe.call({
+                method:"sa3ed_app.api.countries.get_country_list",
+                callback: (res) => {
+                    if (res.message.status_code === 200) {
+                        this.countries = res.message.data.countries
+                    } else {
+                        frappe.throw(res.message.message);
+                    }
+                },
+            })
+        }
+    },
+    mounted() {
+        this.get_countries()
+    },
 })
-app.mount("#app")
+
+found_person_form_app.mount("#found_person_form")

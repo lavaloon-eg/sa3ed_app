@@ -4,8 +4,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="../found_person_create_detail/index.js"></script>    
-<div id="app" class="container">
+
+<div id="found_person_form" class="container">
     <div class="row justify-content-start">
         <img class="col-.75" src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
@@ -48,11 +48,13 @@
             <option value="Hospitality">مستضيفه لدي في المنزل</option>
             <option value="Closed">الحاله اغلقت</option>
         </select>
-        <!-- Country -->
-        <label for="" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="country" class="form-control">
-            <option value="" disabled>اختر الدوله</option>
+
+        <label for="country_select" style="margin-bottom: 33px;">{{_("الدوله")}}</label>
+        <select id="country_select" required v-model="selected_country" class="form-control">
+            <option hidden value="" disabled>{{_("اختر الدوله")}}</option>
+            <option v-for="country in countries" :value="country.id" :key="country.id"> [[ country.country_name ]] </option>
         </select>
+
         <textarea name="" id="" placeholder="ادخل بعض البيانات مثل الحذاء" v-model ='notes'></textarea>
         <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
 
