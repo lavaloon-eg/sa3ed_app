@@ -1,28 +1,6 @@
 var app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
             lostpername:'',
             perdate:'',
@@ -34,16 +12,53 @@ var app = Vue.createApp({
             country:'',
             notes:'',
             notesloc:'',
+            errors:{
+                lostpername:'',
+                perdate:'',
+                cityperloca:'',
+                lost_address_line:'',
+                lostperdate:'',
+                selectedGender:'',
+                country:'',
+                notes:'',
+                notesloc:'',
+            },
+            countries: this.getCountries(), // Initialize empty array
         }
     },
     methods:{
+        async getCountries() {
+            try {
+                const response = await fetch('/countries.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load countries');
+                }
+                this.countries = await response.json();
+            } catch (error) {
+                console.error('Error loading countries:', error);
+            }
+        },
+        validateForm() {
+            this.errors = {
+                lostpername: !this.lostpername,
+                perdate: !this.perdate,
+                cityperloca: !this.cityperloca,
+                lost_address_line: !this.lost_address_line,
+                lostperdate: !this.lostperdate,
+                selectedGender: !this.selectedGender,
+                country: !this.country,
+            };
+            console.log(this.errors)
+            return !Object.values(this.errors).some(error => error);
+        },
         btnevent() {
-            const isBirthdateValid = this.validateBirthdate();
+            if (this.validateForm()) {
+                const isBirthdateValid = this.validateBirthdate();
             const isLostdateValid = this.validateLostdate();
             if( !(isBirthdateValid && isLostdateValid) ) {
                 return;
             }   
-            if(this.lost_address_line!=''&& this.notesloc!= ''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
+            if(this.lost_address_line!=''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
                 window.localStorage.setItem('first_name',this.lostpername);
                 window.localStorage.setItem('lost_date',this.lostperdate);
                 window.localStorage.setItem('birthdate',this.perdate)
@@ -71,6 +86,12 @@ var app = Vue.createApp({
                     text: '',
                     icon: 'error',
                     confirmButtonText: 'خطا'
+                });
+            }
+            } else {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             }
         },

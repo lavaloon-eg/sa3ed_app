@@ -27,19 +27,28 @@
                 </p>
             </div>
         </div>
-        <form class="row justify-content-left"> 
+        <form class="row justify-content-left" @submit.prevent="btnevent"> 
             <label for="" >اسمك</label>
             <input @mouseleave="changeline()" type="text" ref="name" placeholder="ادخل اسمك" v-model="user_name" required>
+            <div class="invalid-feedback" v-if="errors.user_name">
+                يرجى إدخال اسمك
+            </div>
             <label for="">البريد الالكتروني</label>
             <input @mouseleave="changeline()" type="text" ref="date" placeholder="example@test.com" v-model="email" required>
+            <div class="invalid-feedback" v-if="errors.email">
+                يرجى إدخال البريد الالكتروني
+            </div>
             <label for="">رقم الهاتف</label>
             <input @mouseleave="changeline()" type="tel" ref="phone" placeholder="**********" v-model="phone_number" required>
+            <div class="invalid-feedback" v-if="errors.phone_number">
+                يرجى إدخال رقم الهاتف
+            </div>
         </form>
         <div class="d-flex clickbtn row" @click="btnevent">
-            <div ref="btn"> 
-                <img class="col-.75" src="/static/img/arrow-white.svg" alt="lost person" />
-                ارسال
-            </div>
+            <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>ارسال</span>
+            </button>
         </div>
     </div>
 {% endblock %}

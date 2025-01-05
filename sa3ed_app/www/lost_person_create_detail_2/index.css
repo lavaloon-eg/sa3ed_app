@@ -82,3 +82,50 @@ textarea {
 .swal2-title , .swal2-confirm ,.swal2-styled {
     font-family: 'Changa';
 }
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+    text-align: right;
+    margin-top: -2rem;
+    margin-bottom: 2rem;
+}
+.submit-button-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.submit-btn {
+    background-color: #FF4F7E;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 48px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #ff3868;
+}
+
+.submit-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.submit-btn span {
+    font-weight: 500;
+}

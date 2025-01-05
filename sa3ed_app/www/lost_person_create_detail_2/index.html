@@ -21,26 +21,36 @@
                     font-weight: 400;">قم بادخال بيانات عنوان البيت</p>
         </div>
     </div>
-    <form class="row justify-content-left">
+    <form class="row justify-content-left" @submit.prevent="btnevent">
         <!-- city -->
-        <label for="">  مدينه السكن </label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
+        <label for="cityperloca">  مدينه السكن </label>
+        <input id="cityperloca" @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
+        <div class="invalid-feedback" v-if="errors.cityperloca">
+            يرجى إدخال مدينه السكن
+        </div>
         <!-- address line -->
-        <label for="">  الخط الارضي</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
+        <label for="home_address_line">  الخط الارضي</label>
+        <input id="home_address_line" @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
+        <div class="invalid-feedback" v-if="errors.home_address_line">
+            يرجى إدخال الخط الارضي
+        </div>
         <!-- Country -->
-        <label for="" style="margin-bottom: 33px;">الدوله</label>
+        <label for="country_select" style="margin-bottom: 33px;">الدوله</label>
         <select id="country_select" required v-model="country" class="form-control">
             <option value="" disabled>اختر الدوله</option>
+            <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
         </select>
-        <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه" v-model ='notesloc'></textarea>
+        <div class="invalid-feedback" v-if="errors.country">
+            يرجى إدخال الدوله
+        </div>
+        <textarea name="" id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه" v-model ='notesloc'></textarea>
     </form>
         <!-- btn to send data -->
     <div class="d-flex btn row" @click="btnevent" >
-        <div ref="btn"> 
-            <img class="col-.75" src="/static/img/arrow-white.svg" alt="lost person" />
-                ارسال
-        </div>
+        <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
+            <img src="/static/img/arrow-white.svg" alt="found person" />
+            <span>ارسال</span>
+        </button>
     </div>
 </div>
 {% endblock %}
