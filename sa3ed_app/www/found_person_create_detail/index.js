@@ -1,28 +1,6 @@
-var app = Vue.createApp({
+const found_person_form_app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
             foundpername:'',
             perdate:'', // brith of baby
@@ -30,7 +8,7 @@ var app = Vue.createApp({
             foundperdate:'',
             selectedGender: '',// This will hold the selected gender value 
             selectedStatus:'', // status of this child
-            country:'',
+            selected_country:'',
             city:'',
             found_address_line:'',
             notes:'',
@@ -64,7 +42,6 @@ var app = Vue.createApp({
             return new Date().toISOString().split('T')[0];
         },
         validateForm() {
-            console.log(this.foundpername)
             let isValid = true;
             this.errors = {
                 name: !this.foundpername || this.foundpername.length < 3,
@@ -188,4 +165,5 @@ var app = Vue.createApp({
         this.getCountries();
     }
 })
-app.mount("#app")
+
+found_person_form_app.mount("#found_person_form")

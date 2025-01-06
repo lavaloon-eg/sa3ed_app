@@ -1,4 +1,4 @@
-var app = Vue.createApp({
+const lost_person_form_app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
         return {
@@ -9,7 +9,7 @@ var app = Vue.createApp({
             // homeperloca:'',// home address
             lostperdate:'',
             selectedGender: '',// This will hold the selected gender value 
-            country:'',
+            selected_country:'',
             notes:'',
             notesloc:'',
             errors:{
@@ -63,7 +63,7 @@ var app = Vue.createApp({
                 window.localStorage.setItem('lost_date',this.lostperdate);
                 window.localStorage.setItem('birthdate',this.perdate)
                 window.localStorage.setItem('gender',this.selectedGender)
-                window.localStorage.setItem('country',this.country)
+                window.localStorage.setItem('country',this.selected_country)
                 window.localStorage.setItem('notes',this.notes)
                 window.localStorage.setItem('notesloc',this.notesloc)
                 window.localStorage.setItem('lost_addres_type','Lost Place');
@@ -71,7 +71,7 @@ var app = Vue.createApp({
                 let lost_address_object = {
                     title:'test',
                     city: (this.cityperloca).toString(),
-                    country:(this.country).toString(),
+                    country:(this.selected_country).toString(),
                     address_type:'Lost Place',
                     address_line_1:this.lost_address_line.toString(),
                     notes:this.notesloc.toString(),
@@ -151,6 +151,22 @@ var app = Vue.createApp({
                 return true;
             }
         },
-    }
+        async get_countries() {
+            frappe.call({
+                method:"sa3ed_app.api.countries.get_country_list",
+                callback: (res) => {
+                    if (res.message.status_code === 200) {
+                        this.countries = res.message.data.countries
+                    } else {
+                        frappe.throw(res.message.message);
+                    }
+                },
+            })
+        }
+    },
+    mounted() {
+        this.get_countries()
+    },
 })
-app.mount("#app")
+
+lost_person_form_app.mount("#lost_person_form")

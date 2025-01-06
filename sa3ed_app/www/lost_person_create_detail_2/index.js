@@ -1,11 +1,11 @@
-var app = Vue.createApp({
+const lost_person_form_2_app = Vue.createApp({
     delimiters: ['[[', ']]'], // Change delimiters here
     data() {
         return {
             cityperloca:'',
             home_address_line:'',
             // homeperloca:'',// home address
-            country:'',
+            selected_country:'',
             notesloc:'',
             errors:{
                 cityperloca:false,
@@ -82,7 +82,22 @@ var app = Vue.createApp({
                 this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
+        },
+        async get_countries() {
+            frappe.call({
+                method:"sa3ed_app.api.countries.get_country_list",
+                callback: (res) => {
+                    if (res.message.status_code === 200) {
+                        this.countries = res.message.data.countries
+                    } else {
+                        frappe.throw(res.message.message);
+                    }
+                },
+            })
         }
-    }
+    },
+    mounted() {
+        this.get_countries()
+    },
 })
-app.mount("#app")
+lost_person_form_2_app.mount("#lost_person_form_2")
