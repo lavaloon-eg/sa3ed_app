@@ -27,22 +27,31 @@
                 </p>
             </div>
         </div>
-        <form class="row justify-content-left"> 
-            <label for="" >اسمك</label>
-            <input @mouseleave="changeline()" type="text" ref="name" placeholder="ادخل اسمك" v-model="user_name" required>
-            <label for="">البريد الالكتروني</label>
-            <input @mouseleave="changeline()" type="text" ref="date" placeholder="example@test.com" v-model="email" required>
-            <label for="">رقم الهاتف</label>
-            <input @mouseleave="changeline()" type="tel" ref="phone" placeholder="**********" v-model="phone_number" required>
+        <form class="row justify-content-left" @submit.prevent="btnevent"> 
+            <label for="user_name" >اسمك</label>
+            <input id="user_name" @mouseleave="changeline()" type="text" ref="name" placeholder="ادخل اسمك" v-model="user_name" required>
+            <div class="invalid-feedback" v-if="errors.name">
+                يرجى إدخال اسمك
+            </div>
+            <label for="email">البريد الالكتروني</label>
+            <input id="email" @mouseleave="changeline()" type="text" ref="date" placeholder="example@test.com" v-model="email" required>
+            <div class="invalid-feedback" v-if="errors.email">
+                يرجى إدخال البريد الالكتروني
+            </div>
+            <label for="phone_number">رقم الهاتف</label>
+            <input id="phone_number" @mouseleave="changeline()" type="tel" ref="phone" placeholder="**********" v-model="phone_number" required>
+            <div class="invalid-feedback" style="margin-top: 1rem;" v-if="errors.phone">
+                يرجى إدخال رقم الهاتف
+            </div>
         </form>
         <div class="d-flex justify-content-center row" style="margin-top: 45px ;">
             <a class="res btn" href="disclaimer">{{_('إخلاء مسئولية')}} 🤚</a>
         </div>
-        <div class="d-flex clickbtn row" @click="btnevent">
-            <div ref="btn"> 
-                <img class="col-.75" src="/static/img/arrow-white.svg" alt="found person" />
-                ارسال
-            </div>
+        <div class="d-flex clickbtn row" style="margin-top: 2rem;">
+            <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>ارسال</span>
+            </button>
         </div>
     </div>
 {% endblock %}

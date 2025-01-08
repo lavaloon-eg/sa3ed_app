@@ -4,7 +4,12 @@ var app = Vue.createApp({
             user_name: '',        
             email: '',           
             phone_number: '',    
-            phoneInput: null, 
+            phoneInput: null,
+            errors:{
+                user_name:false,
+                email:false,
+                phone_number:false,
+            }
         }
     },
 
@@ -22,20 +27,35 @@ var app = Vue.createApp({
         });
     },
     methods: {
+        validateForm() {
+            this.errors = {
+                user_name: !this.user_name,
+                email: !this.email,
+                phone_number: !this.phoneInput.isValidNumber(),
+            };
+            return !Object.values(this.errors).some(error => error);
+        },
         btnevent() { 
-            if (this.user_name && this.email && this.phoneInput.isValidNumber()) {
-                if (this.VailedEmail(this.email)) {
-                    window.localStorage.setItem('user_name', this.user_name);
-                    window.localStorage.setItem('email_Address', this.email);
-                    window.localStorage.setItem('phone_1', this.phoneInput.getNumber());
-                    window.location.pathname = '/lost_person_create';
+            if (this.validateForm()) {
+                if (this.user_name && this.email && this.phoneInput.isValidNumber()) {
+                    if (this.VailedEmail(this.email)) {
+                        window.localStorage.setItem('user_name', this.user_name);
+                        window.localStorage.setItem('email_Address', this.email);
+                        window.localStorage.setItem('phone_1', this.phoneInput.getNumber());
+                        window.location.pathname = '/lost_person_create';
+                    }
+                } else {
+                    Swal.fire({
+                        title: 'خطا في ادخال البيانات',
+                        text: '',
+                        icon: 'error',
+                        confirmButtonText: 'خطا'
+                    });
                 }
             } else {
-                Swal.fire({
-                    title: 'خطا في ادخال البيانات',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             }
         },
@@ -48,7 +68,6 @@ var app = Vue.createApp({
                     field.style.borderBottom = '1px solid #0ACCAD';
                     btn.style.backgroundColor = '#053B4F';
                 } else {
-                    field.style.borderBottom = 'none';
                 }
             });
         },

@@ -7,30 +7,61 @@ const lost_person_form_2_app = Vue.createApp({
             // homeperloca:'',// home address
             selected_country:'',
             notesloc:'',
+            errors:{
+                cityperloca:false,
+                home_address_line:false,
+                country:false,
+            },
+            countries:this.getCountries()
         }
     },
     methods:{
-        btnevent() {
-            
-            if(this.home_address_line!=''&& this.notesloc!= ''&& this.cityperloca != ''   && this.selected_country !='')  {
-                let home_address_object = {
-                    title:'test',
-                    city:this.cityperloca,
-                    country:this.selected_country,
-                    address_type:'Home',
-                    address_line_1:this.home_address_line,
-                    notes:this.notesloc,
-                    address_line_2:  '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
-                    postal_code: ''
+        async getCountries() {
+            try {
+                const response = await fetch('/countries.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load countries');
                 }
-                window.localStorage.setItem('home_address',JSON.stringify(home_address_object))
-                window.location.pathname ='/lost_person_create_detail_3'
+                this.countries = await response.json();
+            } catch (error) {
+                console.error('Error loading countries:', error);
+            }
+        },
+        validateForm() {
+            this.errors = {
+                cityperloca: !this.cityperloca,
+                home_address_line: !this.home_address_line,
+                country: !this.country,
+            };
+            return !Object.values(this.errors).some(error => error);
+        },
+        btnevent() {
+            if (this.validateForm()) {
+                if(this.home_address_line!='' && this.cityperloca != '' && this.country !='')  {
+                    let home_address_object = {
+                        title:'test',
+                        city:this.cityperloca,
+                        country:this.country,
+                        address_type:'Home',
+                        address_line_1:this.home_address_line,
+                        notes:this.notesloc,
+                        address_line_2:  '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
+                        postal_code: ''
+                    }
+                    window.localStorage.setItem('home_address',JSON.stringify(home_address_object))
+                    window.location.pathname ='/lost_person_create_detail_3'
+                } else {
+                    Swal.fire({
+                        title: 'يرجي ادخال البيانات',
+                        text: '',
+                        icon: 'error',
+                        confirmButtonText: 'خطا'
+                    });
+                }
             } else {
-                Swal.fire({
-                    title: 'يرجي ادخال البيانات',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             }
         },
