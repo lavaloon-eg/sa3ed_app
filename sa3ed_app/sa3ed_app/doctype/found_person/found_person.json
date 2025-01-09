@@ -32,7 +32,8 @@
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "First Name"
+   "label": "First Name",
+   "search_index": 1
   },
   {
    "fieldname": "middle_name",
@@ -42,7 +43,8 @@
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "search_index": 1
   },
   {
    "fieldname": "nationality",
@@ -164,7 +166,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-31 12:39:07.630422",
+ "modified": "2025-01-06 22:21:02.781898",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Found Person",
