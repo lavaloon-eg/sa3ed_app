@@ -1,7 +1,7 @@
 import frappe
 from fuzzywuzzy import fuzz
 from datetime import datetime
-from sa3ed_app.Utils.DateHelper import calculate_age
+from sa3ed_app.utils.DateHelper import calculate_age
 from geopy.distance import geodesic
 import face_recognition
 import numpy as np
