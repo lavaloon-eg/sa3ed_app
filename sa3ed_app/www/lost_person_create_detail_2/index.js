@@ -83,21 +83,6 @@ const lost_person_form_2_app = Vue.createApp({
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
         },
-        async get_countries() {
-            frappe.call({
-                method:"sa3ed_app.api.countries.get_country_list",
-                callback: (res) => {
-                    if (res.message.status_code === 200) {
-                        this.countries = res.message.data.countries
-                    } else {
-                        frappe.throw(res.message.message);
-                    }
-                },
-            })
-        }
-    },
-    mounted() {
-        this.get_countries()
-    },
+    }
 })
 lost_person_form_2_app.mount("#lost_person_form_2")

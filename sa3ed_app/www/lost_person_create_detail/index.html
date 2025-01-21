@@ -63,7 +63,7 @@
         
         <label for="country_select" style="margin-bottom: 33px;">الدوله</label>
         <select id="country_select" required v-model="country" class="form-control">
-            <option value="" disabled>اختر الدوله</option>
+            <option value="اختر الدوله" disabled>اختر الدوله</option>
             <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
         </select>
         <div class="invalid-feedback" v-if="errors.country">

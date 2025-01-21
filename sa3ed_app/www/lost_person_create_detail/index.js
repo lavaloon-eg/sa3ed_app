@@ -150,22 +150,7 @@ const lost_person_form_app = Vue.createApp({
             else {
                 return true;
             }
-        },
-        async get_countries() {
-            frappe.call({
-                method:"sa3ed_app.api.countries.get_country_list",
-                callback: (res) => {
-                    if (res.message.status_code === 200) {
-                        this.countries = res.message.data.countries
-                    } else {
-                        frappe.throw(res.message.message);
-                    }
-                },
-            })
         }
-    },
-    mounted() {
-        this.get_countries()
     },
 })
 
