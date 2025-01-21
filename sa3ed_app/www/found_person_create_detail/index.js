@@ -63,20 +63,20 @@ const found_person_form_app = Vue.createApp({
                 if( !(isBirthdateValid && isfounddateValid) ) {
                     return;
                 }   
-                if(this.found_address_line!=''&&this.city!=''&&this.foundpername != '' && this.perdate != '' &&  this.foundperdate != '' && this.selectedGender != '' && this.country !='' && this.selectedStatus != '')  {
+                if(this.found_address_line!=''&&this.city!=''&&this.foundpername != '' && this.perdate != '' &&  this.foundperdate != '' && this.selectedGender != '' && this.selected_country !='' && this.selectedStatus != '')  {
                     window.localStorage.setItem('fndfirst_name',this.foundpername);
                     window.localStorage.setItem('found_date',this.foundperdate);
                     window.localStorage.setItem('fndbirthdate',this.perdate)
                     window.localStorage.setItem('fndgender',this.selectedGender)
                     window.localStorage.setItem('fndstatus',this.selectedStatus)
-                    window.localStorage.setItem('fndcountry',this.country)
+                    window.localStorage.setItem('fndcountry',this.selected_country)
                     window.localStorage.setItem('fndnotes',this.notes)
                     window.localStorage.setItem('fndcity',this.city)
                     let found_address_obj = {
                         title:"test",
                         address_type:"",
                         city:this.city,
-                        country:this.country,
+                        country:this.selected_country,
                         address_line_1:this.found_address_line,
                         notes:this.notesloc,
                         address_line_2:"",

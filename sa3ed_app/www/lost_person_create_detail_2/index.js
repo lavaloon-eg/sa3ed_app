@@ -37,11 +37,11 @@ const lost_person_form_2_app = Vue.createApp({
         },
         btnevent() {
             if (this.validateForm()) {
-                if(this.home_address_line!='' && this.cityperloca != '' && this.country !='')  {
+                if(this.home_address_line!='' && this.cityperloca != '' && this.selected_country !='')  {
                     let home_address_object = {
                         title:'test',
                         city:this.cityperloca,
-                        country:this.country,
+                        country:this.selected_country,
                         address_type:'Home',
                         address_line_1:this.home_address_line,
                         notes:this.notesloc,

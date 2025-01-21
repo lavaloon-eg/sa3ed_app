@@ -58,7 +58,7 @@ const lost_person_form_app = Vue.createApp({
             if( !(isBirthdateValid && isLostdateValid) ) {
                 return;
             }   
-            if(this.lost_address_line!=''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
+            if(this.lost_address_line!=''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.selected_country !='')  {
                 window.localStorage.setItem('first_name',this.lostpername);
                 window.localStorage.setItem('lost_date',this.lostperdate);
                 window.localStorage.setItem('birthdate',this.perdate)
