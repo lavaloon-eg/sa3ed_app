@@ -1,6 +1,5 @@
 import frappe
 from fuzzywuzzy import fuzz
-from datetime import datetime
 from sa3ed_app.utils.DateHelper import calculate_age
 from geopy.distance import geodesic
 import face_recognition
@@ -8,7 +7,7 @@ import numpy as np
 import requests
 from io import BytesIO
 from PIL import Image
-from sa3ed_app.api.ApiEndPoint import create_response
+from sa3ed_app.api.ApiEndPoint import ApiEndPoint
 
 class AIPersonMatcher:
     def __init__(self):
@@ -204,10 +203,10 @@ def get_potential_matches(found_person_id):
         matcher = AIPersonMatcher()
         matches = matcher.find_matches(found_person_id)
         
-        return create_response(200, "Potential matches found successfully", matches)
+        return ApiEndPoint.create_response(200, "Potential matches found successfully", matches)
         
     except Exception as ex:
-        return create_response(400, f"Error finding matches: {str(ex)}", None)
+        return ApiEndPoint.create_response(400, f"Error finding matches: {str(ex)}", None)
 
 @frappe.whitelist()
 def update_match_status(match_id, status):
@@ -215,7 +214,7 @@ def update_match_status(match_id, status):
     try:
         valid_statuses = ["Pending", "Confirmed", "Rejected"]
         if status not in valid_statuses:
-            return create_response(400, f"Invalid status. Must be one of: {', '.join(valid_statuses)}", None)
+            return ApiEndPoint.create_response(400, f"Invalid status. Must be one of: {', '.join(valid_statuses)}", None)
             
         match_doc = frappe.get_doc("People Match", match_id)
         match_doc.match_status = status
@@ -231,7 +230,7 @@ def update_match_status(match_id, status):
             lost_person.save()
             found_person.save()
         
-        return create_response(200, f"Match status updated to {status}", {"match_id": match_id})
+        return ApiEndPoint.create_response(200, f"Match status updated to {status}", {"match_id": match_id})
     except Exception as ex:
-        return create_response(400, f"Error updating match status: {str(ex)}", None)
+        return ApiEndPoint.create_response(400, f"Error updating match status: {str(ex)}", None)
 
