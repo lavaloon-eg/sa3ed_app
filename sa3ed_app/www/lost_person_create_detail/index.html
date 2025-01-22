@@ -2,25 +2,24 @@
 {% block content %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<div id="lost_person_form" class="container">
-    <div class="row justify-content-start">
-        <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+
+<div id="lost_person_form">
+    <div class="row justify-content-between align-items-center mb-5">
+        <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
     </div>
-    <div class="row justify-content-end">
-        <div>
-            <p>
+    <form class="row justify-content-left" @submit.prevent="btnevent">
+        <div class="text-end">
+            <p class="mb-0">
                 (٤/۱)فقد شخص
-            <img class="col-.75" src="/static/img/miss.svg" alt="lost person" />
+            <img src="/static/img/miss.svg" alt="lost person" />
             </p>
-            <p style="color: #053B4F; 
+            <p style="color: #053B4F;
                     opacity:0.8; 
                     font-size:20px;
                     font-weight: 400;">قم بادخال بيانات الطفل</p>
         </div>
-    </div>
-    <form class="row justify-content-left" @submit.prevent="btnevent">
         <label for="child_name" >اسم الطفل</label>
         <input id="child_name"   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="lostpername" required>
         <div class="invalid-feedback" v-if="errors.lostpername">
@@ -36,8 +35,6 @@
         <div class="invalid-feedback" v-if="errors.cityperloca">
             يرجى إدخال مدينه الفقدان
         </div>
-        <!-- address line -->
-        
         <label for="lost_address_line" >  الخط الارضي</label>
         <input id="lost_address_line"  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="lost_address_line" required>    
         <div class="invalid-feedback" v-if="errors.lost_address_line">
@@ -48,8 +45,6 @@
         <div class="invalid-feedback" v-if="errors.lostperdate">
             يرجى إدخال تاريخ الفقدان
         </div>
-        <!-- Gender -->
-        
         <label for="lost_gender" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
         <select id="lost_gender" v-model="selectedGender" class="form-control" required>
             <option value="" disabled>اختر الجنس</option>
@@ -59,8 +54,6 @@
         <div class="invalid-feedback" v-if="errors.selectedGender">
             يرجى إدخال نوع الطفل المفقود
         </div>
-        <!-- Country -->
-        
         <label for="country_select" style="margin-bottom: 33px;">الدوله</label>
         <select id="country_select" required v-model="selected_country" class="form-control">
             <option value="اختر الدوله" disabled>اختر الدوله</option>
@@ -69,16 +62,15 @@
         <div class="invalid-feedback" v-if="errors.country">
             يرجى إدخال الدوله
         </div>
-        <textarea id="notes" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model ='notes'></textarea>
+        <textarea class="mb-5" id="notes" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model="notes"></textarea>
 
-        <textarea id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
+        <textarea id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model="notesloc"></textarea>
+        <div class="w-100 d-flex justify-content-center mt-6">
+            <button type="submit" class="submit-btn" ref="btn"> 
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>التالي</span>
+            </button>
+        </div>
     </form>
-        <!-- btn to send data -->
-    <div class="d-flex btn row" @click="btnevent" >
-        <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
-            <img src="/static/img/arrow-white.svg" alt="found person" />
-            <span>ارسال</span>
-        </button>
-    </div>
 </div>
 {% endblock %}

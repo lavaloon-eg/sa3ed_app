@@ -1,4 +1,4 @@
-var app = Vue.createApp({
+var lost_person_form_3_app = Vue.createApp({
     data() {
         return {
             user_name: '',        
@@ -99,8 +99,11 @@ var app = Vue.createApp({
                 });
                 return false;
             }
+        },
+        back_to_prev() {
+            window.history.back();
         }
     }
 });
 
-app.mount("#app");
+lost_person_form_3_app.mount("#lost_person_form_3");

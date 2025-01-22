@@ -7,67 +7,55 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-<div id="app" class="container">
-    <div class="row justify-content-start">
-        <img class="col-auto" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+<div id="lost_person_form_3">
+    <div class="row justify-content-between align-items-center mb-5">
+        <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
     </div>
-    <div class="row justify-content-end">
-        <div>
-            <p>
+    <form class="row justify-content-left" @submit.prevent="btnevent">
+        <div class="text-end">
+            <p class="mb-0">
                 (٤/۳)فقد شخص
-                <img class="col-auto" src="/static/img/miss.svg" alt="lost person" />
+            <img src="/static/img/miss.svg" alt="lost person" />
             </p>
-            <p style="color: #053B4F; opacity: 0.8; font-size: 20px; font-weight: 400;">
-                قم بادخال بيانات التواصل
-            </p>
+            <p style="color: #053B4F;
+                    opacity:0.8; 
+                    font-size:20px;
+                    font-weight: 400;">قم بادخال بياناتك للتواصل</p>
         </div>
-    </div>
+        <label class="w-100 text-end" for="name">اسمك</label>
+        <input 
+            type="text" 
+            id="name" 
+            placeholder="ادخل اسمك" 
+            v-model="user_name" 
+            required 
+        />
+        <div class="invalid-feedback" v-if="errors.user_name">يرجى إدخال اسمك</div>
+        <label class="w-100 text-end" for="email">البريد الالكتروني</label>
+        <input 
+            type="email" 
+            id="email" 
+            placeholder="example@test.com" 
+            v-model="email" 
+            required 
+        />
+        <div class="invalid-feedback" v-if="errors.email">يرجى إدخال البريد الالكتروني</div>
+        <label for="phone">رقم الهاتف</label>
+        <input 
+            type="tel" 
+            id="phone" 
+            placeholder="1xxxxxxxx" 
+            v-model="phone_number" 
+            ref="phone" 
+            required 
+        />
+        <div class="invalid-feedback" v-if="errors.phone_number">يرجى إدخال رقم الهاتف</div>
 
-    <form class="row justify-content-start" @submit.prevent="btnevent">
-        <div class="mb-3">
-            <label for="name">اسمك</label>
-            <input 
-                type="text" 
-                id="name" 
-                placeholder="ادخل اسمك" 
-                v-model="user_name" 
-                class="form-control" 
-                required 
-            />
-            <div class="invalid-feedback" v-if="errors.user_name">يرجى إدخال اسمك</div>
-        </div>
-
-        <div class="mb-3">
-            <label for="email">البريد الالكتروني</label>
-            <input 
-                type="email" 
-                id="email" 
-                placeholder="example@test.com" 
-                v-model="email" 
-                class="form-control" 
-                required 
-            />
-            <div class="invalid-feedback" v-if="errors.email">يرجى إدخال البريد الالكتروني</div>
-        </div>
-
-        <div class="mb-3">
-            <label for="phone">رقم الهاتف</label>
-            <input 
-                type="tel" 
-                id="phone" 
-                placeholder="**********" 
-                v-model="phone_number" 
-                class="form-control" 
-                ref="phone" 
-                required 
-            />
-            <div class="invalid-feedback" v-if="errors.phone_number">يرجى إدخال رقم الهاتف</div>
-        </div>
-
-        <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">
+        <div class="w-100 d-flex justify-content-center mt-6">
+            <button type="submit" class="submit-btn">
                 <img src="/static/img/arrow-white.svg" alt="submit" />
-                <span>ارسال</span>
+                <span>التالي</span>
             </button>
         </div>
     </form>

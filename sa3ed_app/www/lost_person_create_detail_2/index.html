@@ -4,23 +4,22 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<div id="lost_person_form_2" class="container">
-    <div class="row justify-content-start">
-        <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
-    </div>
-    <div class="row justify-content-end">
-        <div>
-            <p>
-                (٤/۲)فقد شخص
-            <img class="col-.75" src="/static/img/miss.svg" alt="lost person" />
-            </p>
-            <p style="color: #053B4F; 
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات عنوان البيت</p>
-        </div>
+<div id="lost_person_form_2">
+    <div class="row justify-content-between align-items-center mb-5">
+        <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
     </div>
     <form class="row justify-content-left" @submit.prevent="btnevent">
+        <div class="text-end">
+            <p class="mb-0">
+                (٤/۲)فقد شخص
+            <img src="/static/img/miss.svg" alt="lost person" />
+            </p>
+            <p style="color: #053B4F;
+                    opacity:0.8; 
+                    font-size:20px;
+                    font-weight: 400;">قم بادخال بيانات الطفل</p>
+        </div>
         <!-- city -->
         <label for="cityperloca">  مدينه السكن </label>
         <input id="cityperloca" @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
@@ -43,13 +42,12 @@
             يرجى إدخال الدوله
         </div>
         <textarea name="" id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه" v-model ='notesloc'></textarea>
+        <div class="w-100 d-flex justify-content-center mt-6">
+            <button type="submit" class="submit-btn" ref="btn"> 
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>التالي</span>
+            </button>
+        </div>
     </form>
-        <!-- btn to send data -->
-    <div class="d-flex btn row" @click="btnevent" >
-        <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
-            <img src="/static/img/arrow-white.svg" alt="found person" />
-            <span>ارسال</span>
-        </button>
-    </div>
 </div>
 {% endblock %}

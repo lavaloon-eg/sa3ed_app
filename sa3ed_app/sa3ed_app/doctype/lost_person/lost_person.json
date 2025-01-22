@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{first_name}-{last_name}-{####}",
  "creation": "2024-07-22 02:41:04.594121",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -173,10 +174,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-06 22:21:39.438101",
+ "modified": "2025-01-22 15:17:19.524286",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

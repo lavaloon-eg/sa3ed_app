@@ -6,17 +6,21 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md">
-            <div class="row justify-content-start">
-                <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+            <div class="row justify-content-between align-items-center mb-5">
+                <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+                <button type="button" class="btn btn-light" onclick="back_to_prev()"><img src="/static/img/backArrow.svg" alt="back"></button>
             </div>
-            <p>
-                (٤/٤)فقد شخص
-                <img class="col-.75" src="/static/img/miss.svg" alt="lost person" />
-            </p>
-            <p>
-                <h4> من فضلك قم برفع صورة الشخص للمطابقة</h4>
-            </p>
             <div class="row mt-5">
+                <div class="text-end">
+                    <p class="mb-0">
+                        (٤/٤)فقد شخص
+                        <img src="/static/img/miss.svg" alt="lost person" />
+                    </p>
+                    <p style="color: #053B4F;
+                            opacity:0.8; 
+                            font-size:20px;
+                            font-weight: 400;">قم برفع صورة واضحة لاستخدامها في المطابقة</p>
+                </div>
                 <div class="col-md">
                     <div>
                         <img class="img-upload" src="/static/img/upload.svg" onclick="OpenFileBrowser()" id="imagePreview" alt="image preview" />
@@ -26,7 +30,7 @@
                         <div>
                             <input type="file" id="UploadImage" style="display:none" accept=".png, .jpg, .jpeg">
                         </div>
-                        <button type="button" class="save btn btn-success mt-5" id="SubmitImage" disabled>حفظ</button>
+                        <button type="button" class="save btn btn-success mt-5" id="SubmitImage" disabled>إرسال</button>
                         <button type="button" class="btn btn-primary mt-5" id="BachToHome" disabled>العوده للريئسيه</button>
                         <div class="progress my-4" id="ProgressBar" style="width:20%;margin:auto" hidden>
                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>

@@ -83,6 +83,9 @@ const lost_person_form_2_app = Vue.createApp({
                 this.$refs.btn.style.backgroundColor = '#053B4F'
             } 
         },
+        back_to_prev() {
+            window.history.back();
+        }
     }
 })
 lost_person_form_2_app.mount("#lost_person_form_2")
