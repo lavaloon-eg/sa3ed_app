@@ -6,9 +6,8 @@ const lost_person_form_app = Vue.createApp({
             perdate:'',
             cityperloca:'',
             lost_address_line:'',
-            // homeperloca:'',// home address
             lostperdate:'',
-            selectedGender: '',// This will hold the selected gender value 
+            selectedGender: '', 
             selected_country:'',
             notes:'',
             notesloc:'',
@@ -23,7 +22,7 @@ const lost_person_form_app = Vue.createApp({
                 notes:'',
                 notesloc:'',
             },
-            countries: this.getCountries(), // Initialize empty array
+            countries: this.getCountries()
         }
     },
     methods:{
@@ -46,9 +45,8 @@ const lost_person_form_app = Vue.createApp({
                 lost_address_line: !this.lost_address_line,
                 lostperdate: !this.lostperdate,
                 selectedGender: !this.selectedGender,
-                country: !this.country,
+                country: !this.selected_country,
             };
-            console.log(this.errors)
             return !Object.values(this.errors).some(error => error);
         },
         btnevent() {

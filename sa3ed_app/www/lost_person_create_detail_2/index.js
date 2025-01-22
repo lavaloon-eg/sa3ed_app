@@ -31,7 +31,7 @@ const lost_person_form_2_app = Vue.createApp({
             this.errors = {
                 cityperloca: !this.cityperloca,
                 home_address_line: !this.home_address_line,
-                country: !this.country,
+                country: !this.selected_country,
             };
             return !Object.values(this.errors).some(error => error);
         },
