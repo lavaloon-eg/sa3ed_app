@@ -14,7 +14,6 @@ var app = Vue.createApp({
     },
 
     mounted() {
-        // Initialize intl-tel-input with GeoIP lookup
         this.phoneInput = window.intlTelInput(this.$refs.phone, {
             initialCountry: "auto",
             geoIpLookup: function(callback) {
@@ -101,6 +100,9 @@ var app = Vue.createApp({
                 });
                 return false;
             }
+        },
+        back_to_prev() {
+            window.history.back();
         }
     }
 });

@@ -8,48 +8,26 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
 <div id="lost_person_form_3">
-    <div class="row justify-content-between align-items-center mb-5">
-        <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+    <div class="row justify-content-between align-items-end mb-5">
         <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <form class="row justify-content-left" @submit.prevent="btnevent">
-        <div class="text-end">
-            <p class="mb-0">
+    <form class="row align-items-start" @submit.prevent="btnevent">
+        <div>
+            <p class="mb-0" style="width: fit-content;">
                 (٤/۳)فقد شخص
-            <img src="/static/img/miss.svg" alt="lost person" />
+                <img src="/static/img/miss.svg" alt="lost person" />
             </p>
-            <p style="color: #053B4F;
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بياناتك للتواصل</p>
+            <p class="desc">قم بادخال بياناتك للتواصل</p>
         </div>
-        <label class="w-100 text-end" for="name">اسمك</label>
-        <input 
-            type="text" 
-            id="name" 
-            placeholder="ادخل اسمك" 
-            v-model="user_name" 
-            required 
-        />
+        <label for="name">اسمك</label>
+        <input type="text" id="name" placeholder="ادخل اسمك" v-model="user_name" required />
         <div class="invalid-feedback" v-if="errors.user_name">يرجى إدخال اسمك</div>
-        <label class="w-100 text-end" for="email">البريد الالكتروني</label>
-        <input 
-            type="email" 
-            id="email" 
-            placeholder="example@test.com" 
-            v-model="email" 
-            required 
-        />
+        <label for="email">البريد الالكتروني</label>
+        <input type="email" id="email" placeholder="example@test.com" v-model="email" required />
         <div class="invalid-feedback" v-if="errors.email">يرجى إدخال البريد الالكتروني</div>
         <label for="phone">رقم الهاتف</label>
-        <input 
-            type="tel" 
-            id="phone" 
-            placeholder="1xxxxxxxx" 
-            v-model="phone_number" 
-            ref="phone" 
-            required 
-        />
+        <input type="tel" id="phone" placeholder="1xxxxxxxx" v-model="phone_number" ref="phone" required />
         <div class="invalid-feedback" v-if="errors.phone_number">يرجى إدخال رقم الهاتف</div>
 
         <div class="w-100 d-flex justify-content-center mt-6">

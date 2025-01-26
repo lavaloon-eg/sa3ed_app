@@ -5,45 +5,42 @@
 <!-- #TODO: sweat library -->
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <div id="lost_person_form_2">
-    <div class="row justify-content-between align-items-center mb-5">
-        <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+    <div class="row justify-content-between align-items-end mb-5">
         <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <form class="row justify-content-left" @submit.prevent="btnevent">
-        <div class="text-end">
-            <p class="mb-0">
+    <form class="row align-items-start" @submit.prevent="btnevent">
+        <div>
+            <p class="mb-0" style="width: fit-content;">
                 (٤/۲)فقد شخص
-            <img src="/static/img/miss.svg" alt="lost person" />
+                <img src="/static/img/miss.svg" alt="lost person" />
             </p>
-            <p style="color: #053B4F;
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات الطفل</p>
+            <p class="desc"قم بادخال بيانات الطفل</p>
         </div>
-        <!-- city -->
-        <label for="cityperloca">  مدينه السكن </label>
-        <input id="cityperloca" @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
+        <label for="cityperloca"> مدينه السكن </label>
+        <input id="cityperloca" @mouseleave="changeline()" type="text" ref="loc"
+            placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
         <div class="invalid-feedback" v-if="errors.cityperloca">
             يرجى إدخال مدينه السكن
         </div>
-        <!-- address line -->
-        <label for="home_address_line">  الخط الارضي</label>
-        <input id="home_address_line" @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
+        <label for="home_address_line"> الخط الارضي</label>
+        <input id="home_address_line" @mouseleave="changeline()" type="text" ref="loc"
+            placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
         <div class="invalid-feedback" v-if="errors.home_address_line">
             يرجى إدخال الخط الارضي
         </div>
-        <!-- Country -->
-        <label for="country_select" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="selected_country" class="form-control">
+        <label for="country_select">الدوله</label>
+        <select id="country_select" required v-model="selected_country">
             <option value="اختر الدوله" disabled>اختر الدوله</option>
             <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
         </select>
         <div class="invalid-feedback" v-if="errors.country">
             يرجى إدخال الدوله
         </div>
-        <textarea name="" id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه" v-model ='notesloc'></textarea>
+        <textarea name="" id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه"
+            v-model='notesloc'></textarea>
         <div class="w-100 d-flex justify-content-center mt-6">
-            <button type="submit" class="submit-btn" ref="btn"> 
+            <button type="submit" class="submit-btn" ref="btn">
                 <img src="/static/img/arrow-white.svg" alt="found person" />
                 <span>التالي</span>
             </button>

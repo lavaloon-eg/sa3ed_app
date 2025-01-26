@@ -11,8 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <div id="app" class="container">
-        <div class="row justify-content-start">
-            <img class="col-.75" src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
+        <div class="row justify-content-between align-items-end mb-5">
+            <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+            <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
         </div>
         <div class="row justify-content-end">
             <div class="">
@@ -20,10 +21,7 @@
                     (٣/٢)وجد شخص
                     <img class="col-.75" src="/static/img/found.svg" alt="found person"  style="width: 33px;margin-bottom:10px"/>
                 </p>
-                <p style="color: #053B4F; 
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات التواصل
+                <p class="desc">قم بادخال بيانات التواصل
                 </p>
             </div>
         </div>

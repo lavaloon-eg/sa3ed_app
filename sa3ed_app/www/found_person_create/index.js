@@ -54,8 +54,6 @@ function render_response_create_found_person_case(...args){
     if ("data" in response_obj){
         data = response_obj['data'];
         display_alert_with_timeout(msg=`found_person_case_id: ${data['found_person_case_id']}`, type="success", timeout=3000)
-       
-        // clear data from localstorage
         setTimeout(() => {
             window.localStorage.setItem('fndfirst_name',' ');
             window.localStorage.setItem('fndgender',' ');
@@ -120,7 +118,6 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     'seen_address':JSON.parse(window.localStorage.getItem('found_address')),
                 }
             }
-                // badry
                 if(window.localStorage.getItem('fndfirst_name') != ""
                     &&window.localStorage.getItem('fndgender') != ""
                     && window.localStorage.getItem('fndcountry') != ""
@@ -128,7 +125,6 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     &&window.localStorage.getItem('found_date') != ""
                     &&window.localStorage.getItem('found_address') != ""
                     &&window.localStorage.getItem('phone_1') != "") {
-                        // change the api to found and make api
                     run_api(method="sa3ed_app.api.FoundPersonEndPoints.create_found_person_case",
                         type= "POST",
                         async = false,
@@ -139,6 +135,7 @@ document.getElementById("SubmitImage").onclick = function (evt) {
     };
     reader.readAsDataURL(file);
 };
+
 function display_alert_with_timeout(msg, type, timeout=3000) {
     setTimeout(() => {
         $('#validationRules').text(msg).removeClass("hide").addClass("alert-" + type);
@@ -165,4 +162,8 @@ function display_alert_with_timeout(msg, type, timeout=3000) {
             }
         }, 3000);
     }, timeout);
+}
+
+function back_to_prev() {
+    window.history.back();
 }

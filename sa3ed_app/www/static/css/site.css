@@ -11,7 +11,7 @@ body {
 h3 {
     margin: 40px 0 0;
 }
- 
+
 ul {
     list-style-type: none;
     padding: 0;
@@ -24,6 +24,16 @@ li {
 
 a:hover {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.row, .form-section .section-body, .dialog-assignment-row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+div[data-v-app], #lost_person_create_form {
+    width: 100%;
+    margin: 0 auto;
 }
 
 .content {
@@ -110,19 +120,27 @@ footer.web-footer a:hover {
     box-shadow: none;
 }
 
+.desc {
+    color: #053B4F;
+    opacity:0.8; 
+    font-size:20px;
+    font-weight: 400;
+}
 
 @media (max-width: 1024px) {
     .content {
         width: 70%;
+        padding: 20px;
     }
 }
 
 @media (max-width: 768px) {
     .content {
-        width: 100%;
+        width: 90%;
         border: none;
         box-shadow: none;
         margin: 32px auto;
+        padding: 0!important;
     }
 }
 .is-invalid {
@@ -145,8 +163,7 @@ footer.web-footer a:hover {
     width: 100%;
 }
 
-.submit-btn {
-    background-color: #FF4F7E;
+.submit-btn, .back-btn {
     color: white;
     border: none;
     border-radius: 25px;
@@ -159,17 +176,29 @@ footer.web-footer a:hover {
     transition: background-color 0.3s ease;
 }
 
-.submit-btn:hover {
-    background-color: #ff3868;
-}
-
-.submit-btn img {
+.submit-btn img, .back-btn img {
     width: 20px;
     height: 20px;
 }
 
-.submit-btn span {
+.submit-btn span, .back-btn span {
     font-weight: 500;
+}
+
+.submit-btn {
+    background-color: #FF4F7E;
+}
+
+.submit-btn:hover {
+    background-color: #ff3868;
+}
+
+.back-btn {
+    background-color: #053B4F;
+}
+
+.back-btn:hover {
+    background-color: #1b3b4f;
 }
 
 .btn.btn-light {
@@ -182,4 +211,60 @@ footer.web-footer a:hover {
 
 .text-end {
     text-align: end;
+}
+
+form {
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-right: 15px;
+}
+
+label {
+    font-size: 18px;
+    font-weight: 400;
+    color: #053B4F;
+}
+
+input {
+    text-align: right;
+    width: 336px;
+    height: 36px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1.8px solid #053B4F;
+    margin-bottom: 44px;
+}
+
+input::placeholder {
+    color: #053B4F;
+    opacity: 20%;
+    font-size: 18px;
+}
+
+select {
+    text-align: right;
+    width: 336px;
+    height: 36px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1.8px solid #053B4F;
+    margin-bottom: 44px;
+}
+
+textarea {
+    padding: 20px;
+    border: none;
+    border-radius: 11px;
+    width: 336px;
+    height: 150px;
+    resize: none; 
+    text-align: right;
+}
+
+#male,#female {
+    margin: 0;
 }
