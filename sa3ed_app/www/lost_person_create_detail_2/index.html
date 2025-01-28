@@ -15,21 +15,21 @@
                 (٤/۲)فقد شخص
                 <img src="/static/img/miss.svg" alt="lost person" />
             </p>
-            <p class="desc"قم بادخال بيانات الطفل</p>
+            <p class="desc" قم بادخال بيانات الطفل</p>
         </div>
-        <label for="cityperloca"> مدينه السكن </label>
+        <label class="w-100 text-right" for="cityperloca"> مدينه السكن </label>
         <input id="cityperloca" @mouseleave="changeline()" type="text" ref="loc"
             placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
         <div class="invalid-feedback" v-if="errors.cityperloca">
             يرجى إدخال مدينه السكن
         </div>
-        <label for="home_address_line"> الخط الارضي</label>
+        <label class="w-100 text-right" for="home_address_line"> الخط الارضي</label>
         <input id="home_address_line" @mouseleave="changeline()" type="text" ref="loc"
             placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
         <div class="invalid-feedback" v-if="errors.home_address_line">
             يرجى إدخال الخط الارضي
         </div>
-        <label for="country_select">الدوله</label>
+        <label class="w-100 text-right" for="country_select">الدوله</label>
         <select id="country_select" required v-model="selected_country">
             <option value="اختر الدوله" disabled>اختر الدوله</option>
             <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>

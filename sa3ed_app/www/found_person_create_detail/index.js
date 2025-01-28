@@ -1,5 +1,5 @@
 const found_person_form_app = Vue.createApp({
-    delimiters: ['[[', ']]'], // Change delimiters here
+    delimiters: ['[[', ']]'],
     data() {
         return {
             foundpername:'',
@@ -42,7 +42,6 @@ const found_person_form_app = Vue.createApp({
             return new Date().toISOString().split('T')[0];
         },
         validateForm() {
-            let isValid = true;
             this.errors = {
                 name: !this.foundpername || this.foundpername.length < 3,
                 birthDate: !this.perdate,
@@ -51,7 +50,7 @@ const found_person_form_app = Vue.createApp({
                 foundDate: !this.foundperdate,
                 gender: !this.selectedGender,
                 status: !this.selectedStatus,
-                country: !this.country
+                country: !this.selected_country
             };
     
             return !Object.values(this.errors).some(error => error);

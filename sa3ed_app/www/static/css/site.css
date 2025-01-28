@@ -154,8 +154,8 @@ footer.web-footer a:hover {
     font-size: 80%;
     color: #dc3545;
     text-align: right;
-    margin-bottom: 2rem;
 }
+
 .submit-button-container {
     margin-top: 2rem;
     display: flex;
@@ -235,7 +235,6 @@ input {
     outline: none;
     border: none;
     border-bottom: 1.8px solid #053B4F;
-    margin-bottom: 44px;
 }
 
 input::placeholder {
@@ -252,7 +251,6 @@ select {
     outline: none;
     border: none;
     border-bottom: 1.8px solid #053B4F;
-    margin-bottom: 44px;
 }
 
 textarea {
@@ -267,4 +265,13 @@ textarea {
 
 #male,#female {
     margin: 0;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+}
+
+.mb-6, .my-6 {
+    margin-bottom: 2.5rem !important;
 }
