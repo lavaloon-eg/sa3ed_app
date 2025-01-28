@@ -1,18 +1,15 @@
 {% extends base_template_path %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
 <div id="lost_person_form_3">
     <div class="row justify-content-between align-items-end mb-5">
         <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
         <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <form class="row align-items-start" @submit.prevent="btnevent">
+    <form class="row align-items-start" @submit.prevent="btn_event">
         <div>
             <p class="mb-0" style="width: fit-content;">
                 (٤/۳)فقد شخص
@@ -20,15 +17,23 @@
             </p>
             <p class="desc">قم بادخال بياناتك للتواصل</p>
         </div>
-        <label class="w-100 text-right" for="name">اسمك</label>
-        <input type="text" id="name" placeholder="ادخل اسمك" v-model="user_name" required />
-        <div class="invalid-feedback" v-if="errors.user_name">يرجى إدخال اسمك</div>
-        <label class="w-100 text-right" for="email">البريد الالكتروني</label>
-        <input type="email" id="email" placeholder="example@test.com" v-model="email" required />
-        <div class="invalid-feedback" v-if="errors.email">يرجى إدخال البريد الالكتروني</div>
-        <label class="w-100 text-right" for="phone">رقم الهاتف</label>
-        <input type="tel" id="phone" placeholder="1xxxxxxxx" v-model="phone_number" ref="phone" required />
-        <div class="invalid-feedback" v-if="errors.phone_number">يرجى إدخال رقم الهاتف</div>
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="name">اسمك</label>
+            <input class="w-100" type="text" id="name" placeholder="ادخل اسمك" v-model="user_name" required />
+            <div class="invalid-feedback" v-if="errors.user_name">يرجى إدخال اسمك</div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="email">البريد الالكتروني</label>
+            <input class="w-100" type="email" id="email" placeholder="example@test.com" v-model="email" required />
+            <div class="invalid-feedback" v-if="errors.email">يرجى إدخال البريد الالكتروني</div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="phone">رقم الهاتف</label>
+            <input class="w-100" type="tel" id="phone" placeholder="1xxxxxxxx" v-model="phone_number" ref="phone" required />
+            <div class="invalid-feedback" v-if="errors.phone_number">يرجى إدخال رقم الهاتف</div>
+        </div>
 
         <div class="w-100 d-flex justify-content-center mt-6">
             <button type="submit" class="submit-btn">

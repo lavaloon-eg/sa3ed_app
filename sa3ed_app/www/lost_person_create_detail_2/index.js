@@ -1,22 +1,21 @@
 const lost_person_form_2_app = Vue.createApp({
-    delimiters: ['[[', ']]'], // Change delimiters here
+    delimiters: ['[[', ']]'],
     data() {
         return {
-            cityperloca:'',
-            home_address_line:'',
-            // homeperloca:'',// home address
-            selected_country:'',
-            notesloc:'',
-            errors:{
-                cityperloca:false,
-                home_address_line:false,
-                country:false,
+            city: '',
+            home_address_line: '',
+            selected_country: '',
+            notes: '',
+            errors: {
+                city: false,
+                home_address_line: false,
+                country: false,
             },
-            countries:this.getCountries()
+            countries: this.get_countries()
         }
     },
-    methods:{
-        async getCountries() {
+    methods: {
+        async get_countries() {
             try {
                 const response = await fetch('/countries.json');
                 if (!response.ok) {
@@ -27,29 +26,29 @@ const lost_person_form_2_app = Vue.createApp({
                 console.error('Error loading countries:', error);
             }
         },
-        validateForm() {
+        validate_form() {
             this.errors = {
-                cityperloca: !this.cityperloca,
+                city: !this.city,
                 home_address_line: !this.home_address_line,
                 country: !this.selected_country,
             };
             return !Object.values(this.errors).some(error => error);
         },
-        btnevent() {
-            if (this.validateForm()) {
-                if(this.home_address_line!='' && this.cityperloca != '' && this.selected_country !='')  {
+        btn_event() {
+            if (this.validate_form()) {
+                if (this.home_address_line != '' && this.city != '' && this.selected_country != '') {
                     let home_address_object = {
-                        title:'test',
-                        city:this.cityperloca,
-                        country:this.selected_country,
-                        address_type:'Home',
-                        address_line_1:this.home_address_line,
-                        notes:this.notesloc,
-                        address_line_2:  '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
+                        title: 'test',
+                        city: this.city,
+                        country: this.selected_country,
+                        address_type: 'Home',
+                        address_line_1: this.home_address_line,
+                        notes: this.notes,
+                        address_line_2: '',
                         postal_code: ''
                     }
-                    window.localStorage.setItem('home_address',JSON.stringify(home_address_object))
-                    window.location.pathname ='/lost_person_create_detail_3'
+                    window.localStorage.setItem('home_address', JSON.stringify(home_address_object))
+                    window.location.pathname = '/lost_person_create_detail_3'
                 } else {
                     Swal.fire({
                         title: 'يرجي ادخال البيانات',
@@ -65,23 +64,10 @@ const lost_person_form_2_app = Vue.createApp({
                 });
             }
         },
-        changeline() {
-            if(this.$refs.name.value != '') {
-                this.$refs.name.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.date.value != '') {
-                this.$refs.date.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
-            if(this.$refs.loc.value != '') {
-                this.$refs.loc.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.lostdate.value != '') {
-                this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
+        change_line() {
+            const refs = [this.$refs.name, this.$refs.date, this.$refs.loc, this.$refs.lost_date].filter(ref => ref);
+            const btn = this.$refs.btn;
+            refs.forEach(ref => ref.value !== '' ? (ref.style.borderBottom = '1px solid #0ACCAD', btn.style.backgroundColor = '#053B4F') : null);
         },
         back_to_prev() {
             window.history.back();
