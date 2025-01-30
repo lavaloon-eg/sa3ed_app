@@ -7,7 +7,7 @@ import numpy as np
 import requests
 from io import BytesIO
 from PIL import Image
-from sa3ed_app.api.ApiEndPoint import ApiEndPoint
+from sa3ed_app.api.api_endpoint import ApiEndPoint
 
 class AIPersonMatcher:
     def __init__(self):

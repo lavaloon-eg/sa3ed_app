@@ -1,5 +1,5 @@
 const lost_person_form_app = Vue.createApp({
-    delimiters: ['[[', ']]'], // Change delimiters here
+    delimiters: ['[[', ']]'],
     data() {
         return {
             lostpername:'',

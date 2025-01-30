@@ -1,5 +1,5 @@
 import json
-from sa3ed_app.api.ApiEndPoint import *
+from sa3ed_app.api.api_endpoint import *
 from frappe import _
 from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
 from sa3ed_app.utils.FileHandler import save_image_attachment

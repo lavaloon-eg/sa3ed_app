@@ -1,6 +1,6 @@
 import frappe
 from frappe import _
-from sa3ed_app.api.ApiEndPoint import ApiEndPoint
+from sa3ed_app.api.api_endpoint import ApiEndPoint
 from sa3ed_app.utils.Localization import get_language
 
 
