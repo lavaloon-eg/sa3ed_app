@@ -5,7 +5,8 @@ const search_form_app = Vue.createApp({
             case_id: "",
             res_list: [],
             error: false,
-            show_results: false
+            show_results: false,
+            selected_case: null,
         }
     },
     methods: {
@@ -39,6 +40,9 @@ const search_form_app = Vue.createApp({
             this.res_list = [];
             this.error = false;
             this.show_results = false;
+        },
+        toggle_details(match_id) {
+            this.selected_case = this.selected_case === match_id ? null : match_id;
         }
     }
 });

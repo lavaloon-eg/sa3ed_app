@@ -9,7 +9,7 @@ function UserSearch() {
         document.getElementById("err").innerHTML = "ادخل قيمة للبحث";
     } else {
         frappe.call({
-            method: "sa3ed_app.api.UserSearch.search_people",
+            method: "sa3ed_app.api.user_search.search_people",
             args: {input:input},
             callback: function(result) {            
                 let message = result.message;

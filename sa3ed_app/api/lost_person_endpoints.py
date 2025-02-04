@@ -1,8 +1,8 @@
 import json
 from sa3ed_app.api.api_endpoint import *
 from frappe import _
-from sa3ed_app.api.Sa3edAddressEndPoints import create_sa3ed_address
-from sa3ed_app.utils.FileHandler import save_image_attachment
+from sa3ed_app.api.sa3ed_address_endpoints import create_sa3ed_address
+from sa3ed_app.utils.file_handler import save_image_attachment
 
 
 @frappe.whitelist(allow_guest=True)

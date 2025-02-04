@@ -107,7 +107,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-31 12:38:45.450794",
+ "modified": "2025-01-30 10:58:06.997162",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Sa3ed Address",
@@ -131,7 +131,10 @@
    "role": "Guest"
   }
  ],
+ "search_fields": "title",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }

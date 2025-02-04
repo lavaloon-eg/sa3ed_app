@@ -1,6 +1,6 @@
 import frappe
 from fuzzywuzzy import fuzz
-from sa3ed_app.utils.DateHelper import calculate_age
+from sa3ed_app.utils.date_helper import calculate_age
 from geopy.distance import geodesic
 import face_recognition
 import numpy as np
@@ -9,21 +9,23 @@ from io import BytesIO
 from PIL import Image
 from sa3ed_app.api.api_endpoint import ApiEndPoint
 
+
 class AIPersonMatcher:
     def __init__(self):
-        self.name_weight = 0.3
+        self.name_weight = 0.1
         self.age_weight = 0.2
         self.gender_weight = 0.15
-        self.location_weight = 0.1
-        self.face_weight = 0.25
+        self.location_weight = 0.05
+        self.face_weight = 0.5
         self.similarity_threshold = 0.6
 
     def get_face_encoding(self, image_url):
         """Get face encoding from image URL"""
         try:
+            image_url = f"http://{frappe.local.request.host}{image_url}"
             response = requests.get(image_url)
             img = Image.open(BytesIO(response.content))
-            
+
             img_array = np.array(img)
             
             face_locations = face_recognition.face_locations(img_array)
@@ -65,12 +67,12 @@ class AIPersonMatcher:
 
     def calculate_age_similarity(self, lost_person, found_person):
         """Calculate similarity based on age/birthdate"""
-        if lost_person.birthdate == found_person.birthdate:
-            return 1.0
-            
         lost_age = calculate_age(lost_person.birthdate)
-        found_age = calculate_age(found_person.birthdate)
-        
+        found_age = found_person.age
+
+        if lost_age == found_age:
+            return 1.0
+
         age_diff = abs(lost_age - found_age)
         return max(0, 1 - (age_diff / 3))
 
@@ -109,7 +111,7 @@ class AIPersonMatcher:
         gender_sim = self.calculate_gender_similarity(lost_person, found_person)
         location_sim = self.calculate_location_similarity(lost_person, found_person)
         face_sim = self.calculate_face_similarity(lost_person, found_person)
-        
+
         overall_similarity = (
             name_sim * self.name_weight +
             age_sim * self.age_weight +
@@ -202,10 +204,11 @@ def get_potential_matches(found_person_id):
     try:
         matcher = AIPersonMatcher()
         matches = matcher.find_matches(found_person_id)
-        
+
         return ApiEndPoint.create_response(200, "Potential matches found successfully", matches)
-        
+
     except Exception as ex:
+        frappe.logger().error(f"Error finding matches: {str(ex)}")
         return ApiEndPoint.create_response(400, f"Error finding matches: {str(ex)}", None)
 
 @frappe.whitelist()

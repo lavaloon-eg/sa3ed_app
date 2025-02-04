@@ -13,17 +13,17 @@
         <div>
             <h3 class="page-title">
                 <img src="/static/img/miss.svg" alt="lost person" />
-                متابعة حالة فقدان
+                {{ _("متابعة حالة فقدان") }}
             </h3>
-            <p class="desc">قم بادخال رقم الحالة</p>
+            <p class="desc">{{ _("قم بادخال رقم الحالة") }}</p>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="case_id">اسم الطفل</label>
-            <input class="w-100" id="case_id" type="text" ref="name" placeholder="ادخل رقم الحالة" v-model="case_id"
-                required>
+            <label class="w-100 text-right" for="case_id">{{ _("اسم الطفل") }}</label>
+            <input class="w-100" id="case_id" type="text" ref="name" placeholder="{{ _('ادخل رقم الحالة')}}"
+                v-model="case_id" required>
             <div class="invalid-feedback" v-if="error">
-                يرجى إدخال رقم الحالة
+                {{ _("يرجى إدخال رقم الحالة") }}
             </div>
         </div>
 
@@ -37,23 +37,41 @@
     <div v-else>
         <div v-if="res_list.length == 0" class="not_found d-flex flex-column align-items-center">
             <img src="/static/img/not-found.png" alt="not found" width="210px" height="170px">
-            <h3 class="page-title text-center">لا يوجد حالة مسجلة</h3>
-            <p class="desc text-center">لا يوجد حالة مسجلة برقم الحالة المدخل, قم بادخال رقم حالة صحيح</p>
+            <h3 class="page-title text-center">{{ _("لا يوجد حالة مسجلة") }}</h3>
+            <p class="desc text-center">{{ _("لا يوجد حالة مسجلة برقم الحالة المدخل, قم بادخال رقم حالة صحيح") }}</p>
             <button class="submit-btn mt-2" @click="reset_search">
-                <span>حاول مرة اخرى</span>
+                <span>{{ _("حاول مرة اخرى") }}</span>
                 <img src="/static/img/arrow-white.svg" alt="search" />
             </button>
         </div>
-
         <div v-if="res_list.length > 0" class="found">
-            <button class="btn btn-light" @click="reset_search">
-                <img src="/static/img/backArrow.svg" alt="back">
-            </button>
-            <div v-for="res in res_list" :key="res.case_id" class="case_details">
-                <img src="/static/img/matched-icon.svg" alt="matched">
-                <p>اسم الطفل: [[ res.name ]]</p>
-                <p>تاريخ الفقدان: [[ res.missing_date ]]</p>
+            <h3 class="page-title text-center">{{ _("تم العثور علي تطابق") }}</h3>
+            <div class="case-list mt-6">
+                <div v-for="res in res_list" :key="res.match_id" class="case-details">
+                    <div class="person-container p-1">
+                        <img :src="res.lost_person_pic" alt="lost person" class="person-img">
+                        <img :src="res.found_person_pic" alt="found person" class="person-img">
+                        <div class="matched-icon">
+                            <img src="/static/img/matched-icon.svg" alt="matched">
+                        </div>
+                    </div>
+                    <button class="btn expand my-2" type="button" @click="toggle_details(res.match_id)">
+                        <img :src="selected_case === res.match_id ? '/static/img/arrow-up.svg' : '/static/img/arrow-down.svg'"
+                            alt="arrow">
+                    </button>
+
+                    <div v-show="selected_case === res.match_id" class="finder-details mt-2">
+                        <h4 class="finder-title">{{ _("بيانات من وجد الطفل للتواصل") }}</h4>
+                        <p><strong>[[ res.finder_name ]]</strong></p>
+                        <p>[[ res.finder_email ]]</p>
+                        <p>[[ res.finder_phone ]]</p>
+                    </div>
+                </div>
             </div>
+            <button class="submit-btn mt-2" @click="reset_search">
+                <span>{{ _("بحث مرة اخرى") }}</span>
+                <img src="/static/img/arrow-white.svg" alt="search" />
+            </button>
         </div>
     </div>
 </div>

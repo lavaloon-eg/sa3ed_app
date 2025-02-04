@@ -7,7 +7,7 @@ function get_lost_person_list(search_criteria={}){
         }
     }
     frappe.call({
-        method: "sa3ed_app.api.LostPersonEndPoints.get_lost_persons",
+        method: "sa3ed_app.api.lost_person_endpoints.get_lost_persons",
         args: {args_obj:args},
         callback: function(result) {
             let err = document.getElementById("err");

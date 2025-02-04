@@ -1,7 +1,7 @@
 let found_person_form_2_app = Vue.createApp({
     data() {
         return {
-            user_name: '',        
+            finder_name: '',        
             email: '',           
             phone_number: '',    
             phoneInput: null,
@@ -31,7 +31,7 @@ let found_person_form_2_app = Vue.createApp({
     methods: {
         validate_form() {
             this.errors = {
-                name: !this.user_name,
+                name: !this.finder_name,
                 email: !this.email,
                 phone: !this.phone_number
             };
@@ -39,8 +39,8 @@ let found_person_form_2_app = Vue.createApp({
         },
         btn_event() { 
             if (this.validate_form()) {
-                if (this.user_name && this.validate_email(this.email) && this.validate_phone()) {
-                    window.localStorage.setItem('fnduser_name', this.user_name);
+                if (this.finder_name && this.validate_email(this.email) && this.validate_phone()) {
+                    window.localStorage.setItem('fnduser_name', this.finder_name);
                     window.localStorage.setItem('fndemail_Address', this.email);
                     window.localStorage.setItem('fndphone_1', this.phoneInput.getNumber());
                     window.location.pathname = '/found_person_create';
