@@ -157,7 +157,8 @@
   {
    "fieldname": "pic_preview",
    "fieldtype": "Image",
-   "label": "Pic Preview"
+   "label": "Pic Preview",
+   "options": "pic"
   },
   {
    "fieldname": "hospitality_address",
@@ -177,7 +178,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 10:26:49.798094",
+ "modified": "2025-02-04 11:43:14.908950",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Found Person",
