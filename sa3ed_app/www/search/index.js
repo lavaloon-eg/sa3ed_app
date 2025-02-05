@@ -1,35 +1,50 @@
-function followUpCase() {
-    var caseID = document.getElementById('caseID').value;
-
-    if (!caseID) {
-        document.getElementById('statusMessage').innerHTML = '<p class="text-danger">من فضلك أدخل رقم الحالة.</p>';
-        return;
-    }
-
-    document.getElementById("SearchCaseButton").disabled = true;
-    document.getElementById("ProgressBar").hidden = false;
-
-    frappe.call({
-        method: 'sa3ed_app.api.CaseStatus.follow_up_case',  
-        args: { case_id: caseID },
-        callback: function(response) {
-            document.getElementById("SearchCaseButton").disabled = false;
-            document.getElementById("ProgressBar").hidden = true;
-
-            if (response.message && response.message.success) {
-                if (response.message.data && response.message.data.case_status) {
-                    document.getElementById('statusMessage').innerHTML = '<p class="text-success">الحالة: ' + response.message.data.case_status + '</p>';
-                } else {
-                    document.getElementById('statusMessage').innerHTML = '<p class="text-danger">لم يتم العثور على الحالة.</p>';
-                }
-            } else {
-                document.getElementById('statusMessage').innerHTML = '<p class="text-danger">' + (response.message.error || 'حدث خطأ أثناء التحقق من الحالة.') + '</p>';
-            }
-        },
-        error: function(error) {
-            document.getElementById("SearchCaseButton").disabled = false;
-            document.getElementById("ProgressBar").hidden = true;
-            document.getElementById('statusMessage').innerHTML = '<p class="text-danger">حدث خطأ أثناء التحقق من الحالة.</p>';
+const search_form_app = Vue.createApp({
+    delimiters: ['[[', ']]'],
+    data() {
+        return {
+            case_id: "",
+            res_list: [],
+            error: false,
+            show_results: false,
+            selected_case: null,
         }
-    });
-}
+    },
+    methods: {
+        back_to_prev() {
+            window.history.back();
+        },
+        search() {
+            if (!this.case_id) {
+                this.error = true;
+                return;
+            }
+
+            frappe.call({
+                method: "sa3ed_app.api.user_search.get_matched_cases",
+                args: {
+                    case_id: this.case_id
+                },
+                callback: (r) => {
+                    if (r.message.status_code == 200) {
+                        this.res_list = r.message.data;
+                        this.show_results = true;
+                    } else {
+                        this.res_list = [];
+                        this.show_results = true;
+                    }
+                }
+            })
+        },
+        reset_search() {
+            this.case_id = "";
+            this.res_list = [];
+            this.error = false;
+            this.show_results = false;
+        },
+        toggle_details(match_id) {
+            this.selected_case = this.selected_case === match_id ? null : match_id;
+        }
+    }
+});
+
+search_form_app.mount("#search_form");

@@ -15,9 +15,11 @@
   "pic",
   "pic_preview",
   "tab_5_tab",
+  "finder_name",
+  "email_address",
+  "column_break_opim",
   "phone_1",
   "phone_2",
-  "email_address",
   "notes_tab",
   "notes",
   "case_status_tab",
@@ -155,18 +157,28 @@
   {
    "fieldname": "pic_preview",
    "fieldtype": "Image",
-   "label": "Pic Preview"
+   "label": "Pic Preview",
+   "options": "pic"
   },
   {
    "fieldname": "hospitality_address",
    "fieldtype": "Link",
    "label": "Hospitality Address",
    "options": "Sa3ed Address"
+  },
+  {
+   "fieldname": "column_break_opim",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "finder_name",
+   "fieldtype": "Data",
+   "label": "Finder Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-06 22:21:02.781898",
+ "modified": "2025-02-04 11:43:14.908950",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Found Person",

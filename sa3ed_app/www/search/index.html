@@ -1,27 +1,77 @@
-{% extends base_template_path %}
+{% extends "templates/web.html" %}
+
 {% block content %}
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md">
-            <img class="col-.75" src="/static/img/found.svg" />
-            <h4>من فضلك أدخل رقم الحالة للتحقق من حالتها</h4>
+<div id="search_form">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev">
+            <img src="/static/img/backArrow.svg" alt="back">
+        </button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
+    </div>
 
-            <div class="row mt-5">
-                <div class="col-md">
-                    <div>
-                        <label for="caseID">رقم الحالة:</label>
-                        <input type="text" id="caseID" class="form-control" placeholder="أدخل رقم الحالة">
-                    </div>
-                    <div class="mt-3">
-                        <button class="btn btn-primary" id="SearchCaseButton" onclick="followUpCase()">تحقق من الحالة</button>
-                    </div>
+    <form v-if="!show_results" class="row align-items-start" @submit.prevent="search">
+        <div>
+            <h3 class="page-title">
+                <img src="/static/img/miss.svg" alt="lost person" />
+                {{ _("متابعة حالة فقدان") }}
+            </h3>
+            <p class="desc">{{ _("قم بادخال رقم الحالة") }}</p>
+        </div>
 
-                    <div class="progress my-4" id="ProgressBar" style="width:20%;margin:auto" hidden>
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="case_id">{{ _("اسم الطفل") }}</label>
+            <input class="w-100" id="case_id" type="text" ref="name" placeholder="{{ _('ادخل رقم الحالة')}}"
+                v-model="case_id" required>
+            <div class="invalid-feedback" v-if="error">
+                {{ _("يرجى إدخال رقم الحالة") }}
+            </div>
+        </div>
+
+        <div class="w-100 d-flex justify-content-center">
+            <button type="submit" class="submit-btn" ref="btn">
+                <span>متابعة</span>
+                <img src="/static/img/arrow-white.svg" alt="search" />
+            </button>
+        </div>
+    </form>
+    <div v-else>
+        <div v-if="res_list.length == 0" class="not_found d-flex flex-column align-items-center">
+            <img src="/static/img/not-found.png" alt="not found" width="210px" height="170px">
+            <h3 class="page-title text-center">{{ _("لا يوجد حالة مسجلة") }}</h3>
+            <p class="desc text-center">{{ _("لا يوجد حالة مسجلة برقم الحالة المدخل, قم بادخال رقم حالة صحيح") }}</p>
+            <button class="submit-btn mt-2" @click="reset_search">
+                <span>{{ _("حاول مرة اخرى") }}</span>
+                <img src="/static/img/arrow-white.svg" alt="search" />
+            </button>
+        </div>
+        <div v-if="res_list.length > 0" class="found">
+            <h3 class="page-title text-center">{{ _("تم العثور علي تطابق") }}</h3>
+            <div class="case-list mt-6">
+                <div v-for="res in res_list" :key="res.match_id" class="case-details">
+                    <div class="person-container p-1">
+                        <img :src="res.lost_person_pic" alt="lost person" class="person-img">
+                        <img :src="res.found_person_pic" alt="found person" class="person-img">
+                        <div class="matched-icon">
+                            <img src="/static/img/matched-icon.svg" alt="matched">
+                        </div>
                     </div>
-                    <div id="statusMessage" class="mt-3"></div>
+                    <button class="btn expand my-2" type="button" @click="toggle_details(res.match_id)">
+                        <img :src="selected_case === res.match_id ? '/static/img/arrow-up.svg' : '/static/img/arrow-down.svg'"
+                            alt="arrow">
+                    </button>
+
+                    <div v-show="selected_case === res.match_id" class="finder-details mt-2">
+                        <h4 class="finder-title">{{ _("بيانات من وجد الطفل للتواصل") }}</h4>
+                        <p><strong>[[ res.finder_name ]]</strong></p>
+                        <p>[[ res.finder_email ]]</p>
+                        <p>[[ res.finder_phone ]]</p>
+                    </div>
                 </div>
             </div>
+            <button class="submit-btn mt-2" @click="reset_search">
+                <span>{{ _("بحث مرة اخرى") }}</span>
+                <img src="/static/img/arrow-white.svg" alt="search" />
+            </button>
         </div>
     </div>
 </div>

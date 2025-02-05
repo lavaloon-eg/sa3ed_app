@@ -1,4 +1,4 @@
-var app = Vue.createApp({
+var lost_person_form_3_app = Vue.createApp({
     data() {
         return {
             user_name: '',        
@@ -24,9 +24,12 @@ var app = Vue.createApp({
             },
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
         });
+
+        const wrapper = this.$refs.phone.parentNode;
+        wrapper.classList.add("w-100");
     },
     methods: {
-        validateForm() {
+        validate_form() {
             this.errors = {
                 user_name: !this.user_name,
                 email: !this.email,
@@ -34,8 +37,8 @@ var app = Vue.createApp({
             };
             return !Object.values(this.errors).some(error => error);
         },
-        btnevent() { 
-            if (this.validateForm()) {
+        btn_event() { 
+            if (this.validate_form()) {
                 if (this.user_name && this.email && this.phoneInput.isValidNumber()) {
                     if (this.VailedEmail(this.email)) {
                         window.localStorage.setItem('user_name', this.user_name);
@@ -99,8 +102,11 @@ var app = Vue.createApp({
                 });
                 return false;
             }
+        },
+        back_to_prev() {
+            window.history.back();
         }
     }
 });
 
-app.mount("#app");
+lost_person_form_3_app.mount("#lost_person_form_3");

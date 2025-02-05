@@ -1,55 +1,57 @@
 {% extends base_template_path %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- #TODO: sweat library -->
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<div id="lost_person_form_2" class="container">
-    <div class="row justify-content-start">
-        <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+<div id="lost_person_form_2">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <div class="row justify-content-end">
+    <form class="row align-items-start" @submit.prevent="btn_event">
         <div>
-            <p>
-                (٤/۲)فقد شخص
-            <img class="col-.75" src="/static/img/miss.svg" alt="lost person" />
-            </p>
-            <p style="color: #053B4F; 
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات عنوان البيت</p>
+            <h3 class="page-title">
+                <img src="/static/img/miss.svg" alt="lost person" />
+                (٤/۲) فقد شخص
+            </h3>
+            <p class="desc">قم بادخال بيانات الطفل</p>
         </div>
-    </div>
-    <form class="row justify-content-left" @submit.prevent="btnevent">
-        <!-- city -->
-        <label for="cityperloca">  مدينه السكن </label>
-        <input id="cityperloca" @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
-        <div class="invalid-feedback" v-if="errors.cityperloca">
-            يرجى إدخال مدينه السكن
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="city"> مدينه السكن </label>
+            <input class="w-100" id="city" @mouseleave="change_line()" type="text" ref="loc"
+                placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="city" required>
+            <div class="invalid-feedback" v-if="errors.city">
+                يرجى إدخال مدينه السكن
+            </div>
         </div>
-        <!-- address line -->
-        <label for="home_address_line">  الخط الارضي</label>
-        <input id="home_address_line" @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
-        <div class="invalid-feedback" v-if="errors.home_address_line">
-            يرجى إدخال الخط الارضي
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="home_address_line"> الخط الارضي</label>
+            <input class="w-100" id="home_address_line" @mouseleave="change_line()" type="text" ref="loc"
+                placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
+            <div class="invalid-feedback" v-if="errors.home_address_line">
+                يرجى إدخال الخط الارضي
+            </div>
         </div>
-        <!-- Country -->
-        <label for="country_select" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="selected_country" class="form-control">
-            <option value="اختر الدوله" disabled>اختر الدوله</option>
-            <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
-        </select>
-        <div class="invalid-feedback" v-if="errors.country">
-            يرجى إدخال الدوله
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="country_select">الدوله</label>
+            <select class="w-100" id="country_select" required v-model="selected_country">
+                <option value="" disabled>اختر الدوله</option>
+                <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
+            </select>
+            <div class="invalid-feedback" v-if="errors.country">
+                يرجى إدخال الدوله
+            </div>
         </div>
-        <textarea name="" id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه" v-model ='notesloc'></textarea>
+
+        <textarea class="w-100 mb-6" id="notes" placeholder="ادخل بعض البيانات للمكان الذي يعيش فيه"
+            v-model='notes'></textarea>
+
+        <div class="w-100 d-flex justify-content-center">
+            <button type="submit" class="submit-btn" ref="btn">
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>التالي</span>
+            </button>
+        </div>
     </form>
-        <!-- btn to send data -->
-    <div class="d-flex btn row" @click="btnevent" >
-        <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
-            <img src="/static/img/arrow-white.svg" alt="found person" />
-            <span>ارسال</span>
-        </button>
-    </div>
 </div>
 {% endblock %}

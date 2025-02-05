@@ -1,8 +1,8 @@
-function OpenFileBrowser() {
+function open_file_browser() {
     $('#UploadImage').click();
 }
 
-function ControlSubmission(is_disabled){
+function control_submission(is_disabled){
     $("#SubmitImage").attr("disabled", true);
     $("#ProgressBar").attr("hidden", !is_disabled);
 }
@@ -53,7 +53,7 @@ function render_response_create_lost_person_case(...args){
     let data = null;
     if ("data" in response_obj){
         data = response_obj['data'];
-        display_alert_with_timeout(msg=`lost_person_case_id: ${data['lost_person_case_id']}`, type="success", timeout=3000)
+        display_alert_with_timeout(msg=`رمز الحالة: ${data['lost_person_case_id']}`, type="success", timeout=3000)
         setTimeout(() => {
             window.localStorage.setItem('first_name',' ');
             window.localStorage.setItem('gender',' ');
@@ -70,7 +70,7 @@ function render_response_create_lost_person_case(...args){
     else
     {
         display_alert_with_timeout(msg=response_obj['error_message'], type="danger", timeout=3000);
-        ControlSubmission(is_disabled=false);
+        control_submission(is_disabled=false);
     }
 }
 
@@ -87,7 +87,7 @@ function convert_file_to_object(file){
 
 document.getElementById("SubmitImage").onclick = function (evt) {
     evt.preventDefault();
-    ControlSubmission(is_disabled=true);
+    control_submission(is_disabled=true);
     let args = {};
     const file = document.getElementById("UploadImage").files[0];
     const file_data_obj = convert_file_to_object(file);
@@ -125,7 +125,7 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     &&window.localStorage.getItem('phone_1') != ""
                     &&window.localStorage.getItem('lost_address')!=""
                     &&window.localStorage.getItem('home_address')!="") {
-                    run_api(method="sa3ed_app.api.LostPersonEndPoints.create_lost_person_case",
+                    run_api(method="sa3ed_app.api.lost_person_endpoints.create_lost_person_case",
                         type= "POST",
                         async = false,
                         args = args,
@@ -161,4 +161,9 @@ function display_alert_with_timeout(msg, type, timeout=3000) {
             }
         }, 3000);
     }, timeout);
+}
+
+function back_to_prev() {
+    console.log("back to prev");
+    window.history.back();
 }

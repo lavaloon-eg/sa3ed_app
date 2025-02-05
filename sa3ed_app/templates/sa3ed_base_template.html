@@ -1,37 +1,41 @@
 <!DOCTYPE html>
 <!-- Built on Frappe. https://frappeframework.com/ -->
-<html lang="{{boot.lang}}">
+<html lang="{{boot.lang}}" dir="rtl">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="generator" content="frappe">
 
 	{% block meta_block %}
-		{% include "templates/includes/meta_block.html" %}
+	{% include "templates/includes/meta_block.html" %}
 	{% endblock %}
 
 	<title>{% block title %}{{ title | striptags }}{% endblock %}</title>
 
 	{% block favicon %}
-	<link
-		rel="shortcut icon"
-		href="{{ "/static/img/favicon.ico" | abs_url }}"
-		type="image/x-icon"
-	>
+	<link rel="shortcut icon" href="{{ " /static/img/favicon.ico" | abs_url }}" type="image/x-icon">
 	{% endblock %}
-	
+
 	{%- block head -%}
-		{% include "templates/includes/head.html" %}
+	{% include "templates/includes/head.html" %}
 	{%- endblock -%}
 
 	{%- block head_include %}
-		{{ head_include or "" }}
+	{{ head_include or "" }}
 	{% endblock -%}
 
 	{%- block style %}
-		{% if colocated_css -%}
-			<style>{{ colocated_css }}</style>
-		{%- endif %}
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+	{% if colocated_css -%}
+	<style>
+		{
+				{
+				colocated_css
+			}
+		}
+	</style>
+	{%- endif %}
 	{%- endblock -%}
 
 	{% if boot.lang == "eo" %}
@@ -45,7 +49,7 @@
 	<script>
 		window.frappe = {};
 		frappe.ready_events = [];
-		frappe.ready = function(fn) {
+		frappe.ready = function (fn) {
 			frappe.ready_events.push(fn);
 		}
 		window.dev_server = {{ dev_server }};
@@ -53,40 +57,43 @@
 		window.show_language_picker = {{ show_language_picker or 'false' }};
 	</script>
 </head>
-<body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
-{% include "public/icons/timeless/icons.svg" %}
+
+<body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}"
+	data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif
+	%} class="{{ body_class or ''}}">
+	{% include "public/icons/timeless/icons.svg" %}
 	{% include "public/icons/espresso/icons.svg" %}
 	{%- block banner -%}
-		{% include "templates/includes/banner_extension.html" ignore missing %}
+	{% include "templates/includes/banner_extension.html" ignore missing %}
 
-		{% if banner_html -%}
-		{{ banner_html or "" }}
-		{%- endif %}
+	{% if banner_html -%}
+	{{ banner_html or "" }}
+	{%- endif %}
 	{%- endblock -%}
 
 	{%- block navbar -%}
-		{{ web_block(
-			navbar_template or 'Standard Navbar',
-			values=_context_dict,
-			add_container=0,
-			add_top_padding=0,
-			add_bottom_padding=0,
-		) }}
+	{{ web_block(
+	navbar_template or 'Standard Navbar',
+	values=_context_dict,
+	add_container=0,
+	add_top_padding=0,
+	add_bottom_padding=0,
+	) }}
 	{%- endblock -%}
-    <div class="content p-6 d-flex flex-column justify-content-center align-items-center rounded">
-	{% block content %}
+	<div class="content p-6 d-flex flex-column justify-content-center align-items-center rounded">
+		{% block content %}
 		{{ content }}
-	{% endblock %}
-</div>
+		{% endblock %}
+	</div>
 
 	{%- block footer -%}
-		{{ web_block(
-			footer_template or 'Standard Footer',
-			values=_context_dict,
-			add_container=0,
-			add_top_padding=0,
-			add_bottom_padding=0
-		) }}
+	{{ web_block(
+	footer_template or 'Standard Footer',
+	values=_context_dict,
+	add_container=0,
+	add_top_padding=0,
+	add_bottom_padding=0
+	) }}
 	{%- endblock -%}
 
 	{% block base_scripts %}
@@ -96,6 +103,8 @@
 		// for backward compatibility of some libs
 		frappe.sys_defaults = frappe.boot.sysdefaults;
 	</script>
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	{{ include_script('frappe-web.bundle.js') }}
 	{% endblock %}
 
@@ -104,11 +113,12 @@
 	{%- endfor -%}
 
 	{%- block script %}
-		{% if colocated_js -%}
+	{% if colocated_js -%}
 			<script>{{ colocated_js }}</script>
 		{%- endif %}
 	{%- endblock %}
 	<!-- csrf_token -->
 	{%- block body_include %}{{ body_include or "" }}{% endblock -%}
 </body>
+
 </html>

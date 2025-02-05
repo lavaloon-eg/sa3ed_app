@@ -1,7 +1,7 @@
-var app = Vue.createApp({
+let found_person_form_2_app = Vue.createApp({
     data() {
         return {
-            user_name: '',        
+            finder_name: '',        
             email: '',           
             phone_number: '',    
             phoneInput: null,
@@ -14,7 +14,6 @@ var app = Vue.createApp({
     },
 
     mounted() {
-        // Initialize intl-tel-input with GeoIP lookup
         this.phoneInput = window.intlTelInput(this.$refs.phone, {
             initialCountry: "auto",
             geoIpLookup: function(callback) {
@@ -25,25 +24,26 @@ var app = Vue.createApp({
             },
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
         });
+
+        const wrapper = this.$refs.phone.parentNode;
+        wrapper.classList.add("w-100");
     },
     methods: {
-        validateForm() {
+        validate_form() {
             this.errors = {
-                name: !this.user_name,
+                name: !this.finder_name,
                 email: !this.email,
-                phone: !this.phoneInput.isValidNumber()
+                phone: !this.phone_number
             };
             return !Object.values(this.errors).some(error => error);
         },
-        btnevent() { 
-            if (this.validateForm()) {
-                if (this.user_name && this.email && this.phoneInput.isValidNumber()) {
-                    if (this.VailedEmail(this.email)) {
-                        window.localStorage.setItem('fnduser_name', this.user_name);
-                        window.localStorage.setItem('fndemail_Address', this.email);
-                        window.localStorage.setItem('fndphone_1', this.phoneInput.getNumber());
-                        window.location.pathname = '/found_person_create';
-                    }
+        btn_event() { 
+            if (this.validate_form()) {
+                if (this.finder_name && this.validate_email(this.email) && this.validate_phone()) {
+                    window.localStorage.setItem('fnduser_name', this.finder_name);
+                    window.localStorage.setItem('fndemail_Address', this.email);
+                    window.localStorage.setItem('fndphone_1', this.phoneInput.getNumber());
+                    window.location.pathname = '/found_person_create';
                 } else {
                     Swal.fire({
                         title: 'خطا في ادخال البيانات',
@@ -60,7 +60,7 @@ var app = Vue.createApp({
             }
         },
 
-        changeline() {
+        change_line() {
             const fields = [this.$refs.name, this.$refs.date, this.$refs.phone];
             const btn = this.$refs.btn;
             fields.forEach(field => {
@@ -73,9 +73,9 @@ var app = Vue.createApp({
             });
         },
 
-        VailedEmail(email) {
-            let emailtest = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
-            if (emailtest.test(email)) {
+        validate_email(email) {
+            let email_test = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+            if (email_test.test(email)) {
                 return true;
             } else {
                 Swal.fire({
@@ -88,9 +88,10 @@ var app = Vue.createApp({
             }
         },
 
-        validatePhone() {
+        validate_phone() {
             if (this.phoneInput.isValidNumber()) {
                 this.phone_number = this.phoneInput.getNumber();
+                return true;
             } else {
                 this.phone_number = '';
                 Swal.fire({
@@ -101,8 +102,11 @@ var app = Vue.createApp({
                 });
                 return false;
             }
+        },
+        back_to_prev() {
+            window.history.back();
         }
     }
 });
 
-app.mount("#app");
+found_person_form_2_app.mount("#found_person_form_2");

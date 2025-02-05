@@ -1,8 +1,8 @@
-from sa3ed_app.api.ApiEndPoint import *
+from sa3ed_app.api.api_endpoint import *
 from frappe import _
 import json
 
-def create_sa3ed_address(args_obj: {}) -> str:
+def create_sa3ed_address(args_obj: dict) -> str:
     mandatory_args_csv = _("title,address_type,country,city,address_line_1")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                         mandatory_args_csv=mandatory_args_csv)

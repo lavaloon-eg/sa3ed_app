@@ -1,84 +1,97 @@
 {% extends base_template_path %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- #TODO: sweat library -->
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<div id="lost_person_form" class="container">
-    <div class="row justify-content-start">
-        <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+<div id="lost_person_form">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <div class="row justify-content-end">
+    <form class="row align-items-start" @submit.prevent="btnevent">
         <div>
-            <p>
-                (٤/۱)فقد شخص
-            <img class="col-.75" src="/static/img/miss.svg" alt="lost person" />
-            </p>
-            <p style="color: #053B4F; 
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات الطفل</p>
+            <h3 class="page-title">
+                <img src="/static/img/miss.svg" alt="lost person" />
+                (٤/۱) فقد شخص
+            </h3>
+            <p class="desc">قم بادخال بيانات الطفل</p>
         </div>
-    </div>
-    <form class="row justify-content-left" @submit.prevent="btnevent">
-        <label for="child_name" >اسم الطفل</label>
-        <input id="child_name"   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="lostpername" required>
-        <div class="invalid-feedback" v-if="errors.lostpername">
-            يرجى إدخال اسم الطفل
-        </div>
-        <label for="child_birthdate" >تاريخ ميلاد الطفل</label>
-        <input id="child_birthdate" class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
-        <div class="invalid-feedback" v-if="errors.perdate">
-            يرجى إدخال تاريخ ميلاد الطفل
-        </div>
-        <label for="lost_city" >  مدينه الفقدان</label>
-        <input id="lost_city"  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
-        <div class="invalid-feedback" v-if="errors.cityperloca">
-            يرجى إدخال مدينه الفقدان
-        </div>
-        <!-- address line -->
-        
-        <label for="lost_address_line" >  الخط الارضي</label>
-        <input id="lost_address_line"  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="lost_address_line" required>    
-        <div class="invalid-feedback" v-if="errors.lost_address_line">
-            يرجى إدخال الخط الارضي
-        </div>
-        <label for="lost_date" >تاريخ الفقدان</label>
-        <input id="lost_date"  @mouseleave="changeline()" type="date" ref="lostdate" placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
-        <div class="invalid-feedback" v-if="errors.lostperdate">
-            يرجى إدخال تاريخ الفقدان
-        </div>
-        <!-- Gender -->
-        
-        <label for="lost_gender" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
-        <select id="lost_gender" v-model="selectedGender" class="form-control" required>
-            <option value="" disabled>اختر الجنس</option>
-            <option value="Male" class="test">ذكر</option>
-            <option value="Female">انثي</option>
-        </select>
-        <div class="invalid-feedback" v-if="errors.selectedGender">
-            يرجى إدخال نوع الطفل المفقود
-        </div>
-        <!-- Country -->
-        
-        <label for="country_select" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="selected_country" class="form-control">
-            <option value="اختر الدوله" disabled>اختر الدوله</option>
-            <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
-        </select>
-        <div class="invalid-feedback" v-if="errors.country">
-            يرجى إدخال الدوله
-        </div>
-        <textarea id="notes" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model ='notes'></textarea>
 
-        <textarea id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_name">اسم الطفل</label>
+            <input class="w-100" id="child_name" @mouseleave="changeline()" type="text" ref="name"
+                placeholder="ادخل اسم الطفل" v-model="lostpername" required>
+            <div class="invalid-feedback" v-if="errors.lostpername">
+                يرجى إدخال اسم الطفل
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_birthdate">تاريخ ميلاد الطفل</label>
+            <input class="w-100" id="child_birthdate" class="testing" @mouseleave="changeline()" type="date" ref="date"
+                placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
+            <div class="invalid-feedback" v-if="errors.perdate">
+                يرجى إدخال تاريخ ميلاد الطفل
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_city"> مدينه الفقدان</label>
+            <input class="w-100" id="lost_city" @mouseleave="changeline()" type="text" ref="loc"
+                placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
+            <div class="invalid-feedback" v-if="errors.cityperloca">
+                يرجى إدخال مدينه الفقدان
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_address_line"> الخط الارضي</label>
+            <input class="w-100" id="lost_address_line" @mouseleave="changeline()" type="text" ref="loc"
+                placeholder="الخط الارضي لشخص في المكان المفقود" v-model="lost_address_line" required>
+            <div class="invalid-feedback" v-if="errors.lost_address_line">
+                يرجى إدخال الخط الارضي
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_date">تاريخ الفقدان</label>
+            <input class="w-100" id="lost_date" @mouseleave="changeline()" type="date" ref="lostdate"
+                placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
+            <div class="invalid-feedback" v-if="errors.lostperdate">
+                يرجى إدخال تاريخ الفقدان
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_gender">نوع الطفل المفقود</label>
+            <select class="w-100" id="lost_gender" v-model="selectedGender" required>
+                <option value="" disabled>اختر الجنس</option>
+                <option value="Male" class="test">ذكر</option>
+                <option value="Female">انثي</option>
+            </select>
+            <div class="invalid-feedback" v-if="errors.selectedGender">
+                يرجى إدخال نوع الطفل المفقود
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="country_select">الدوله</label>
+            <select class="w-100" id="country_select" required v-model="selected_country">
+                <option value="" disabled>اختر الدوله</option>
+                <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
+            </select>
+            <div class="invalid-feedback" v-if="errors.country">
+                يرجى إدخال الدوله
+            </div>
+        </div>
+
+        <textarea class="w-100 mb-6" id="notes" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه"
+            v-model="notes"></textarea>
+
+        <textarea class="w-100 mb-6" id="notesloc" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model="notesloc"></textarea>
+        <div class="w-100 d-flex justify-content-center">
+            <button type="submit" class="submit-btn" ref="btn">
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>التالي</span>
+            </button>
+        </div>
     </form>
-        <!-- btn to send data -->
-    <div class="d-flex btn row" @click="btnevent" >
-        <button type="submit" class="submit-btn" ref="btn" @click="btnevent"> 
-            <img src="/static/img/arrow-white.svg" alt="found person" />
-            <span>ارسال</span>
-        </button>
-    </div>
 </div>
 {% endblock %}

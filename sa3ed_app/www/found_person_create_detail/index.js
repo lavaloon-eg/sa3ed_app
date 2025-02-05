@@ -1,13 +1,13 @@
 const found_person_form_app = Vue.createApp({
-    delimiters: ['[[', ']]'], // Change delimiters here
+    delimiters: ['[[', ']]'],
     data() {
         return {
             foundpername:'',
-            perdate:'', // brith of baby
+            perdate:'',
             foundperloca:'',
             foundperdate:'',
-            selectedGender: '',// This will hold the selected gender value 
-            selectedStatus:'', // status of this child
+            selectedGender: '', 
+            selectedStatus:'',
             selected_country:'',
             city:'',
             found_address_line:'',
@@ -23,7 +23,7 @@ const found_person_form_app = Vue.createApp({
                 status: false,
                 country: false
             },
-            countries: [], // Initialize empty array
+            countries: [],
         }
     },
     methods:{
@@ -42,7 +42,6 @@ const found_person_form_app = Vue.createApp({
             return new Date().toISOString().split('T')[0];
         },
         validateForm() {
-            let isValid = true;
             this.errors = {
                 name: !this.foundpername || this.foundpername.length < 3,
                 birthDate: !this.perdate,
@@ -51,7 +50,7 @@ const found_person_form_app = Vue.createApp({
                 foundDate: !this.foundperdate,
                 gender: !this.selectedGender,
                 status: !this.selectedStatus,
-                country: !this.country
+                country: !this.selected_country
             };
     
             return !Object.values(this.errors).some(error => error);
@@ -160,6 +159,9 @@ const found_person_form_app = Vue.createApp({
                 return true;
             }
         },
+        back_to_prev() {
+            window.history.back();
+        }
     },
     mounted() {
         this.getCountries();
