@@ -7,6 +7,7 @@ import numpy as np
 import requests
 from io import BytesIO
 from PIL import Image
+from frappe.utils import get_url
 from sa3ed_app.api.api_endpoint import ApiEndPoint
 
 
@@ -22,7 +23,7 @@ class AIPersonMatcher:
     def get_face_encoding(self, image_url):
         """Get face encoding from image URL"""
         try:
-            image_url = f"http://{frappe.local.request.host}{image_url}"
+            image_url = f"{get_url}{image_url}"
             response = requests.get(image_url)
             img = Image.open(BytesIO(response.content))
 
