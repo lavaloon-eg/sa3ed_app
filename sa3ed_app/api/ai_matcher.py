@@ -23,7 +23,7 @@ class AIPersonMatcher:
     def get_face_encoding(self, image_url):
         """Get face encoding from image URL"""
         try:
-            image_url = f"{get_url}{image_url}"
+            image_url = f"{get_url()}{image_url}"
             response = requests.get(image_url)
             img = Image.open(BytesIO(response.content))
 
