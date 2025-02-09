@@ -23,9 +23,19 @@ class AIPersonMatcher:
     def get_face_encoding(self, image_url):
         """Get face encoding from image URL"""
         try:
-            image_url = f"{get_url()}{image_url}"
-            response = requests.get(image_url)
-            img = Image.open(BytesIO(response.content))
+            # Handle both relative and absolute URLs
+            if not image_url.startswith(('http://', 'https://')):
+                image_url = get_url(image_url)
+            
+            try:
+                # First try to get image directly from Frappe's public files
+                file_path = frappe.get_site_path('public', image_url.split('/files/')[-1])
+                img = Image.open(file_path)
+            except:
+                # Fallback to HTTP request if file not found locally
+                response = requests.get(image_url, timeout=10)
+                response.raise_for_status()
+                img = Image.open(BytesIO(response.content))
 
             img_array = np.array(img)
             
@@ -36,28 +46,28 @@ class AIPersonMatcher:
             face_encodings = face_recognition.face_encodings(img_array, face_locations)
             return face_encodings[0] if face_encodings else None
         except Exception as e:
-            frappe.logger().error(f"Error processing image {image_url}: {str(e)}")
+            frappe.log_error(f"Error processing image {image_url}: {str(e)}")
             return None
 
     def calculate_face_similarity(self, lost_person, found_person):
         """Calculate similarity between face images"""
         try:
             if not (lost_person.pic and found_person.pic):
-                return 0.5
+                return 0
 
             lost_encoding = self.get_face_encoding(lost_person.pic)
             found_encoding = self.get_face_encoding(found_person.pic)
 
             if lost_encoding is None or found_encoding is None:
-                return 0.5
+                return 0
 
             face_distance = face_recognition.face_distance([lost_encoding], found_encoding)[0]
             face_similarity = max(0, 1 - (face_distance / 0.6))
             
             return face_similarity
         except Exception as e:
-            frappe.logger().error(f"Face comparison error: {str(e)}")
-            return 0.5
+            frappe.log_error(f"Face comparison error: {str(e)}")
+            return 0
 
     def calculate_name_similarity(self, lost_person, found_person):
         """Calculate similarity between full names using fuzzy matching"""
