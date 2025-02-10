@@ -47,7 +47,6 @@
    "fieldname": "last_name",
    "fieldtype": "Data",
    "label": "Last Name",
-   "reqd": 1,
    "search_index": 1
   },
   {
@@ -174,7 +173,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-22 15:17:19.524286",
+ "modified": "2025-02-10 15:02:39.798364",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
