@@ -99,12 +99,18 @@ document.getElementById("SubmitImage").onclick = function (evt) {
     const reader = new FileReader();
     reader.onload = function(event) {
         const pic_base64Image = event.target.result;
+        let lost_person_name = window.localStorage.getItem('lost_person_name') || "";
+        let name_parts = lost_person_name.trim().split(/\s+/);
+        let first_name = name_parts[0] || "";
+        let last_name = name_parts.length > 1 ? name_parts[name_parts.length - 1] : "";
+        let middle_name = name_parts.length > 2 ? name_parts.slice(1, -1).join(' ') : "";
+
         args = {
             'args_obj': {
                     'pic': {'pic_base64Image': pic_base64Image,'file_data_obj': file_data_obj},
-                    'first_name': window.localStorage.getItem('first_name'),
-                    'middle_name': "",
-                    'last_name': "test",
+                    'first_name': first_name,
+                    'middle_name': middle_name,
+                    'last_name': last_name,
                     'gender': window.localStorage.getItem('gender'),
                     'nationality': window.localStorage.getItem('country'),
                     'birthdate': window.localStorage.getItem('birthdate'),
@@ -116,7 +122,7 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                     'home_address':JSON.parse(window.localStorage.getItem('home_address'))
                 }
             }
-                if(window.localStorage.getItem('first_name') != ""
+                if(window.localStorage.getItem('lost_person_name') != ""
                     &&window.localStorage.getItem('gender') != ""
                     && window.localStorage.getItem('country') != ""
                     &&window.localStorage.getItem('birthdate') != ""

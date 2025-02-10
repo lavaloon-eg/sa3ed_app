@@ -2,7 +2,7 @@ const lost_person_form_app = Vue.createApp({
     delimiters: ['[[', ']]'],
     data() {
         return {
-            lostpername:'',
+            lost_person_name:'',
             perdate:'',
             cityperloca:'',
             lost_address_line:'',
@@ -12,7 +12,7 @@ const lost_person_form_app = Vue.createApp({
             notes:'',
             notesloc:'',
             errors:{
-                lostpername:'',
+                lost_person_name:'',
                 perdate:'',
                 cityperloca:'',
                 lost_address_line:'',
@@ -39,7 +39,7 @@ const lost_person_form_app = Vue.createApp({
         },
         validateForm() {
             this.errors = {
-                lostpername: !this.lostpername,
+                lost_person_name: !this.lost_person_name,
                 perdate: !this.perdate,
                 cityperloca: !this.cityperloca,
                 lost_address_line: !this.lost_address_line,
@@ -56,8 +56,8 @@ const lost_person_form_app = Vue.createApp({
             if( !(isBirthdateValid && isLostdateValid) ) {
                 return;
             }   
-            if(this.lost_address_line!=''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.selected_country !='')  {
-                window.localStorage.setItem('first_name',this.lostpername);
+            if(this.lost_address_line!=''&&this.lost_person_name != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.selected_country !='')  {
+                window.localStorage.setItem('lost_person_name',this.lost_person_name);
                 window.localStorage.setItem('lost_date',this.lostperdate);
                 window.localStorage.setItem('birthdate',this.perdate)
                 window.localStorage.setItem('gender',this.selectedGender)
