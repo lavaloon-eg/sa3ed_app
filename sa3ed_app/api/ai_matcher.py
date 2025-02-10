@@ -29,7 +29,9 @@ class AIPersonMatcher:
             
             try:
                 # First try to get image directly from Frappe's public files
-                file_path = frappe.get_site_path('public', image_url.split('/files/')[-1])
+                file_name = image_url.split('/files/')[-1]
+                file_path = frappe.get_site_path('public', 'files', file_name)
+
                 img = Image.open(file_path)
             except:
                 # Fallback to HTTP request if file not found locally
@@ -38,11 +40,11 @@ class AIPersonMatcher:
                 img = Image.open(BytesIO(response.content))
 
             img_array = np.array(img)
-            
+
             face_locations = face_recognition.face_locations(img_array)
             if not face_locations:
                 return None
-            
+
             face_encodings = face_recognition.face_encodings(img_array, face_locations)
             return face_encodings[0] if face_encodings else None
         except Exception as e:
