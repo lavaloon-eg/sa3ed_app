@@ -336,7 +336,14 @@ textarea {
     width: 48%;
     height: 10rem;
     border-radius: 1rem;
-    object-fit: cover;
+    object-fit: fill;
+}
+
+#lost_persons .case-details .person-img {
+    width: 100%;
+    height: 10rem;
+    border-radius: 1rem;
+    object-fit: fill;
 }
 
 .matched-icon {
