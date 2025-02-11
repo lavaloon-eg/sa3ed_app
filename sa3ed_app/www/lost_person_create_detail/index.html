@@ -17,8 +17,8 @@
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="child_name">اسم الطفل</label>
             <input class="w-100" id="child_name" @mouseleave="changeline()" type="text" ref="name"
-                placeholder="ادخل اسم الطفل" v-model="lostpername" required>
-            <div class="invalid-feedback" v-if="errors.lostpername">
+                placeholder="ادخل اسم الطفل" v-model="lost_person_name" required>
+            <div class="invalid-feedback" v-if="errors.lost_person_name">
                 يرجى إدخال اسم الطفل
             </div>
         </div>

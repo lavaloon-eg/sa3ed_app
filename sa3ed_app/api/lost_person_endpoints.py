@@ -38,61 +38,68 @@ def get_lost_persons(args_obj: str = None):
 
     return ApiEndPoint.create_response(status_code=status_code, message=message, data=data)
 
-
 @frappe.whitelist(allow_guest=True)
 def create_lost_person_case(args_obj: str):
     status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
 
-    mandatory_args_csv = _("first_name,middle_name,last_name,birthdate,nationality,gender,lost_date")
+    mandatory_args_csv = _("first_name,last_name,birthdate,nationality,gender,lost_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                         mandatory_args_csv=mandatory_args_csv)
     if error_msg:
         status_code = 400
         message = error_msg
-    else:
-        try:
-            frappe.db.begin()
-            new_doc = frappe.new_doc("Lost Person")
-            new_doc.first_name = args_obj["first_name"]
-            new_doc.middle_name = args_obj["middle_name"]
-            new_doc.last_name = args_obj["last_name"]
-            new_doc.nationality = args_obj["nationality"]
-            new_doc.gender = args_obj["gender"]
-            new_doc.birthdate = args_obj["birthdate"]
-            new_doc.case_status = "Open"
-            new_doc.lost_date = args_obj["lost_date"]
-            new_doc.phone_1 = args_obj["phone_1"]
-            if args_obj.get("phone_2"):
-                new_doc.phone_2 = args_obj["phone_2"]
-            if args_obj.get("email_Address"):
-                new_doc.email_address = args_obj["email_Address"]
-            if args_obj.get("notes"):
-                new_doc.notes = args_obj["notes"]
-            if args_obj.get("home_address"):
-                new_doc.home_address = create_sa3ed_address(args_obj["home_address"])
-            if args_obj.get("lost_address"):
-                new_doc.lost_address = create_sa3ed_address(args_obj["lost_address"])
-            new_doc.insert()
+        return ApiEndPoint.create_response(status_code=status_code, message=error_msg, data=data)
 
-            if args_obj.get("pic"):
-                image_file_url = save_image_attachment(filedata=args_obj['pic'],
-                                                    target_doctype="Lost Person",
-                                                    target_doctype_id=new_doc.name,
-                                                    max_size_in_mb=2,
-                                                    target_field="pic_preview",
-                                                    is_private=0)
-                new_doc.pic = new_doc.pic_preview = image_file_url
-                # frappe.session.user.flags.ignore_permissions = True
-                new_doc.save(ignore_permissions=True)
-            status_code = 200
-            frappe.db.commit()
-            message = _(f"Lost Person Case has been created successfully.")
-            data = {"lost_person_case_id": new_doc.name,
-                    "case_status": new_doc.case_status}
-        except Exception as ex:
-            frappe.db.rollback()
-            message = f"creating a lost person case, error: '{str(ex)}'"
-            status_code = 400
+    try:
+        new_doc = frappe.new_doc("Lost Person")
+        new_doc.first_name = args_obj["first_name"]
+        new_doc.last_name = args_obj["last_name"]
+        new_doc.nationality = args_obj["nationality"]
+        new_doc.gender = args_obj["gender"]
+        new_doc.birthdate = args_obj["birthdate"]
+        new_doc.case_status = "Open"
+        new_doc.lost_date = args_obj["lost_date"]
+        new_doc.phone_1 = args_obj["phone_1"]
+
+        if args_obj.get("middle_name"):
+            new_doc.middle_name = args_obj["middle_name"]
+
+        if args_obj.get("phone_2"):
+            new_doc.phone_2 = args_obj["phone_2"]
+
+        if args_obj.get("email_Address"):
+            new_doc.email_address = args_obj["email_Address"]
+
+        if args_obj.get("notes"):
+            new_doc.notes = args_obj["notes"]
+
+        if args_obj.get("home_address"):
+            new_doc.home_address = create_sa3ed_address(args_obj["home_address"])
+
+        if args_obj.get("lost_address"):
+            new_doc.lost_address = create_sa3ed_address(args_obj["lost_address"])
+
+        new_doc.insert()
+
+        if args_obj.get("pic"):
+            image_file_url = save_image_attachment(filedata=args_obj['pic'],
+                                                target_doctype="Lost Person",
+                                                target_doctype_id=new_doc.name,
+                                                max_size_in_mb=2,
+                                                target_field="pic_preview",
+                                                is_private=0)
+            new_doc.pic = new_doc.pic_preview = image_file_url
+
+            new_doc.save()
+        status_code = 200
+
+        message = _(f"Lost Person Case has been created successfully.")
+        data = {"lost_person_case_id": new_doc.name,
+                "case_status": new_doc.case_status}
+    except Exception as ex:
+        frappe.db.rollback()
+        message = f"creating a lost person case, error: '{str(ex)}'"
+        status_code = 400
 
     return ApiEndPoint.create_response(status_code=status_code, message=message, data=data)

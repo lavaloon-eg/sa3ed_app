@@ -6,8 +6,12 @@
  "engine": "InnoDB",
  "field_order": [
   "lost_person",
+  "lost_person_pic",
+  "lost_person_pic_preview",
   "column_break_rflg",
   "found_person",
+  "found_person_pic",
+  "found_person_pic_preview",
   "section_break_mnrk",
   "face_similarity",
   "gender_similarity",
@@ -91,11 +95,37 @@
    "label": "Age Similarity Score",
    "precision": "3",
    "read_only": 1
+  },
+  {
+   "fetch_from": "lost_person.pic",
+   "fieldname": "lost_person_pic",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Lost Person Pic"
+  },
+  {
+   "fieldname": "lost_person_pic_preview",
+   "fieldtype": "Image",
+   "label": "Lost Person Pic Preview",
+   "options": "lost_person_pic"
+  },
+  {
+   "fetch_from": "found_person.pic",
+   "fieldname": "found_person_pic",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Found Person Pic"
+  },
+  {
+   "fieldname": "found_person_pic_preview",
+   "fieldtype": "Image",
+   "label": "Found Person Pic Preview",
+   "options": "found_person_pic"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-30 13:00:42.528128",
+ "modified": "2025-02-10 12:09:44.597248",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "People Match",
