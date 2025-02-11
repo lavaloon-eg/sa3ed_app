@@ -18,7 +18,7 @@ class AIPersonMatcher:
         self.gender_weight = 0.15
         self.location_weight = 0.05
         self.face_weight = 0.5
-        self.similarity_threshold = 0.6
+        self.similarity_threshold = 0.5
 
     def get_face_encoding(self, image_url):
         """Get face encoding from image URL"""
@@ -64,7 +64,7 @@ class AIPersonMatcher:
                 return 0
 
             face_distance = face_recognition.face_distance([lost_encoding], found_encoding)[0]
-            face_similarity = max(0, 1 - (face_distance / 0.6))
+            face_similarity = max(0, 1 - (face_distance / 0.8))
             
             return face_similarity
         except Exception as e:
