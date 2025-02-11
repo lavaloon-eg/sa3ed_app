@@ -99,13 +99,13 @@ document.getElementById("SubmitImage").onclick = function (evt) {
 
     const reader = new FileReader();
     reader.onload = function (event) {
-        const pic_base64Image = event.target.result;
+        const pic_base64_image = event.target.result;
         let found_address = window.localStorage.getItem('found_address');
         let parsed_address = found_address ? JSON.parse(found_address) : null;
 
         args = {
             'args_obj': {
-                'pic': {'pic_base64Image': pic_base64Image, 'file_data_obj': file_data_obj},
+                'pic': {'pic_base64_image': pic_base64_image, 'file_data_obj': file_data_obj},
                 'first_name': window.localStorage.getItem('fndfirst_name'),
                 'middle_name': "",
                 'last_name': "test",

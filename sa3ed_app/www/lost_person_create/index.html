@@ -3,8 +3,7 @@
 <div class="w-100" id="lost_person_create_form">
     <div class="row justify-content-center">
         <div class="row justify-content-between align-items-center mb-5 w-100">
-            <button type="button" class="btn btn-light" onclick="back_to_prev()"><img src="/static/img/backArrow.svg"
-                    alt="back"></button>
+            <button type="button" class="btn btn-light" onclick="back_to_prev()"><img src="/static/img/backArrow.svg" alt="back"></button>
             <img src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
         </div>
         <div class="d-flex flex-column justify-content-center">
@@ -16,21 +15,15 @@
                 <p class="desc">{{ _("قم برفع صورة واضحة لاستخدامها في المطابقة") }}</p>
             </div>
             <div>
-                <img class="img-upload" src="/static/img/upload.svg" onclick="open_file_browser()" id="imagePreview"
-                    alt="image preview" />
+                <img class="img-upload" src="/static/img/upload.svg" onclick="open_file_browser()" id="image_preview" alt="image preview" />
             </div>
             <form method="post" id="form_img_upload" enctype="multipart/form-data">
-                <div class="hide alert mt-4 mx-auto w-75" id="validationRules"></div>
                 <div>
-                    <input type="file" id="UploadImage" style="display:none" accept=".png, .jpg, .jpeg">
+                    <input type="file" id="upload_image" style="display:none" accept=".png, .jpg, .jpeg">
                 </div>
                 <div class="w-100 d-flex flex-column align-items-center">
-                    <button type="button" class="submit-btn mt-5" id="SubmitImage" disabled>{{ _("إرسال") }}</button>
-                    <button type="button" class="back-btn mt-5" id="BachToHome" disabled>{{ _("العوده للرئيسية") }}</button>
-                </div>
-                <div class="progress my-4" id="ProgressBar" style="width:20%;margin:auto" hidden>
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                    <button type="button" class="submit-btn mt-5" id="submit_image" disabled>{{ _("إرسال") }}</button>
+                    <button type="button" class="back-btn mt-5" id="back_to_home" disabled>{{ _("العوده للرئيسية") }}</button>
                 </div>
             </form>
         </div>
