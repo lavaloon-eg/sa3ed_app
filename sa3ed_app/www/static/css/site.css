@@ -288,6 +288,13 @@ textarea {
     margin-bottom: 2.5rem !important;
 }
 
+.img-upload {
+    width: 20.5rem;
+    height: 20.5rem;
+    object-fit: fill;
+    border-radius: 0.5rem;
+}
+
 .not_found, .found {
     margin-top: 4rem;
 }

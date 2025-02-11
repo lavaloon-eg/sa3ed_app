@@ -11,35 +11,35 @@
                 <img src="/static/img/miss.svg" alt="lost person" />
                 (٤/۲) فقد شخص
             </h3>
-            <p class="desc">قم بادخال بيانات الطفل</p>
+            <p class="desc">{{_('قم بإدخال بيانات سكن الطفل')}}</p>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="city"> مدينه السكن </label>
-            <input class="w-100" id="city" @mouseleave="change_line()" type="text" ref="loc"
-                placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="city" required>
+            <label class="w-100 text-right" for="city">{{_('مدينه السكن')}}</label>
+            <input class="w-100" id="city" @mouseleave="change_line()" type="text" ref="city"
+                placeholder="{{_('ادخل  مدينه السكن للطفل')}}" v-model="city" required>
             <div class="invalid-feedback" v-if="errors.city">
-                يرجى إدخال مدينه السكن
+                {{_('يرجى إدخال مدينه السكن')}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="home_address_line"> الخط الارضي</label>
-            <input class="w-100" id="home_address_line" @mouseleave="change_line()" type="text" ref="loc"
-                placeholder="الخط الارضي لشخص في المكان المفقود" v-model="home_address_line" required>
+            <label class="w-100 text-right" for="home_address_line">{{_('العنوان')}}</label>
+            <input class="w-100" id="home_address_line" @mouseleave="change_line()" type="text" ref="address"
+                placeholder="{{_('ادخل العنوان')}}" v-model="home_address_line" required>
             <div class="invalid-feedback" v-if="errors.home_address_line">
-                يرجى إدخال الخط الارضي
+                {{_('يرجى ادخال العنوان')}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="country_select">الدوله</label>
-            <select class="w-100" id="country_select" required v-model="selected_country">
-                <option value="" disabled>اختر الدوله</option>
+            <label class="w-100 text-right" for="country_select">{{_('الدوله')}}</label>
+            <select class="w-100" id="country_select" required v-model="country">
+                <option value="" disabled>{{_('اختر الدوله')}}</option>
                 <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
             </select>
             <div class="invalid-feedback" v-if="errors.country">
-                يرجى إدخال الدوله
+                {{_('يرجى ادخال الدوله')}}
             </div>
         </div>
 
@@ -49,7 +49,7 @@
         <div class="w-100 d-flex justify-content-center">
             <button type="submit" class="submit-btn" ref="btn">
                 <img src="/static/img/arrow-white.svg" alt="found person" />
-                <span>التالي</span>
+                <span>{{_('التالي')}}</span>
             </button>
         </div>
     </form>

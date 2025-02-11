@@ -93,7 +93,7 @@ def create_lost_person_case(args_obj: str):
                                                 is_private=0)
             new_doc.pic = new_doc.pic_preview = image_file_url
 
-            new_doc.save()
+            new_doc.save(ignore_permissions=True)
         status_code = 200
 
         message = _(f"Lost Person Case has been created successfully.")
