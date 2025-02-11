@@ -1,0 +1,43 @@
+{% extends base_template_path %}
+{% block content %}
+<div id="lost_persons">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev">
+            <img src="/static/img/backArrow.svg" alt="back">
+        </button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
+    </div>
+    <h3>{{ _("المفقودون") }}</h3>
+    <div v-if="lost_persons.length > 0" id="lost_persons_list" class="found">
+        <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details mb-5">
+            <div class="w-75 d-flex flex-column gap-2 p-1">
+                <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'" alt="lost person" class="person-img">
+            </div>
+
+            <button class="btn expand my-2" type="button" @click="toggle_details(person.lost_person_id)">
+                <img :src="selected_case === person.lost_person_id ? '/static/img/arrow-up.svg' : '/static/img/arrow-down.svg'"
+                    alt="arrow">
+            </button>
+
+            <div v-show="selected_case === person.lost_person_id" class="person-details mt-2">
+                <h4 class="person-title">{{ _("مزيد من التفاصيل") }}</h4>
+                <p>{{ _("الاسم الكامل") }}: <strong>[[ person.full_name ]]</strong></p>
+                <p>{{ _("تاريخ الميلاد") }}: [[ person.birthdate ]]</p>
+                <p>{{ _("الجنس") }}: [[ person.gender ]]</p>
+            </div>
+        </div>
+    </div>
+
+    <div v-else class="not_found d-flex flex-column align-items-center">
+        <img src="/static/img/not-found.png" alt="not found" width="210px" height="170px">
+        <h3 class="page-title text-center">{{ _("لا يوجد أشخاص مفقودين") }}</h3>
+        <p class="desc text-center">{{ _("لم يتم الإبلاغ عن أي حالات مفقودة حتى الآن.") }}</p>
+    </div>
+
+    <div class="load-more text-center my-3" v-if="lost_persons.length > 0 && !no_more_data">
+        <button class="btn btn-primary" @click="get_lost_persons">
+            {{ _("تحميل المزيد") }}
+        </button>
+    </div>
+</div>
+{% endblock %}

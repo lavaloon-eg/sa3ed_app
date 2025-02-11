@@ -336,7 +336,14 @@ textarea {
     width: 48%;
     height: 10rem;
     border-radius: 1rem;
-    object-fit: cover;
+    object-fit: fill;
+}
+
+#lost_persons .case-details .person-img {
+    width: 100%;
+    height: 10rem;
+    border-radius: 1rem;
+    object-fit: fill;
 }
 
 .matched-icon {
@@ -359,7 +366,7 @@ textarea {
     height: 1.5rem;
 }
 
-.finder-details {
+.finder-details, .person-details {
     width: 100%;
     padding: 12px;
     border-radius: 8px;
@@ -368,7 +375,7 @@ textarea {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.finder-title {
+.finder-title, .person-title {
     font-size: 1rem;
     color: #0ACCAD;
     margin: 0.5rem 0;

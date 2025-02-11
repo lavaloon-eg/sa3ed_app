@@ -1,42 +1,44 @@
 import json
 from sa3ed_app.api.api_endpoint import *
 from frappe import _
+from frappe.query_builder.functions import Concat_ws
 from sa3ed_app.api.sa3ed_address_endpoints import create_sa3ed_address
 from sa3ed_app.utils.file_handler import save_image_attachment
 
 
 @frappe.whitelist(allow_guest=True)
 def get_lost_persons(args_obj: str = None):
-    status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
     try:
-        current_lang = get_language()  # s: Apply the language
         page_limit = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="page_limit",
                                                     default_value=20, raise_error_if_not_exist=False))
         start_index = cint(ApiEndPoint.get_key_value(parent_obj=args_obj, key="start_index",
                                                     default_value=0, raise_error_if_not_exist=False))
-        age = ApiEndPoint.get_key_value(parent_obj=args_obj, key="age", raise_error_if_not_exist=False)
-        lost_person_table = frappe.qb.DocType('Lost Person')
+        # age = ApiEndPoint.get_key_value(parent_obj=args_obj, key="age", raise_error_if_not_exist=False)
+        lost_person = frappe.qb.DocType('Lost Person')
         query = (
-            frappe.qb.from_(lost_person_table)
-            .select(lost_person_table.name.as_("lost_person_id"),
-                    lost_person_table.birthdate)
-            .where(Lower(lost_person_table.case_status) == 'open')
+            frappe.qb.from_(lost_person)
+            .select(
+                lost_person.name.as_("lost_person_id"),
+                Concat_ws(' ', lost_person.first_name, lost_person.middle_name, lost_person.last_name).as_("full_name"),
+                lost_person.birthdate,
+                lost_person.gender,
+                lost_person.pic.as_("lost_person_pic"),
+            )
+            .where(Lower(lost_person.case_status) == 'open')
             .limit(page_limit)
             .offset(start_index)
-            .orderby(lost_person_table.creation, order=Order.desc)
+            .orderby(lost_person.creation, order=Order.desc)
         )
         data = query.run(as_dict=True)
-        if data:
-            status_code = 200
-        else:
-            status_code = 404
-            message = "No data found"
-    except Exception as ex:
-        message = f"getting lost persons, error: '{str(ex)}'"
-        status_code = 400
 
-    return ApiEndPoint.create_response(status_code=status_code, message=message, data=data)
+        if data:
+            return ApiEndPoint.create_response(status_code=200, message=_("Success"), data=data)
+        else:
+            return ApiEndPoint.create_response(status_code=404, message=_("No data found"))
+    except Exception as ex:
+        message = _("getting lost persons, error: '{0}'").format(str(ex))
+        return ApiEndPoint.create_response(status_code=400, message=message, data=data)
 
 @frappe.whitelist(allow_guest=True)
 def create_lost_person_case(args_obj: str):
