@@ -1,6 +1,6 @@
 {% extends base_template_path %}
 {% block content %}
-<div id="lost_persons" @scroll="handle_scroll">
+<div id="lost_persons">
     <div class="row justify-content-between align-items-end mb-5">
         <button class="btn btn-light" @click="back_to_prev">
             <img src="/static/img/backArrow.svg" alt="back">
@@ -12,7 +12,6 @@
         <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details mb-5">
             <div class="w-75 d-flex flex-column gap-2 p-1">
                 <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'" alt="lost person" class="person-img">
-                <p v-show="selected_case !== person.lost_person_id" class="person-name text-center">[[ person.full_name ]]</p>
             </div>
 
             <button class="btn expand my-2" type="button" @click="toggle_details(person.lost_person_id)">
@@ -33,6 +32,12 @@
         <img src="/static/img/not-found.png" alt="not found" width="210px" height="170px">
         <h3 class="page-title text-center">{{ _("لا يوجد أشخاص مفقودين") }}</h3>
         <p class="desc text-center">{{ _("لم يتم الإبلاغ عن أي حالات مفقودة حتى الآن.") }}</p>
+    </div>
+
+    <div class="load-more text-center my-3" v-if="lost_persons.length > 0 && !no_more_data">
+        <button class="btn btn-primary" @click="get_lost_persons">
+            {{ _("تحميل المزيد") }}
+        </button>
     </div>
 </div>
 {% endblock %}

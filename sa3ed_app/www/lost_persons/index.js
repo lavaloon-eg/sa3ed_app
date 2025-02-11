@@ -5,7 +5,8 @@ const lost_persons_app = Vue.createApp({
             lost_persons: [],
             start_index: 0,
             page_limit: 3,
-            selected_case: null
+            selected_case: null,
+            no_more_data: false
         }
     },
     methods: {
@@ -25,19 +26,18 @@ const lost_persons_app = Vue.createApp({
                         })
                     }
                 });
-
                 if (res.message && res.message.status_code === 200) {
-                    this.lost_persons.push(...res.message.data);
-                    this.start_index += this.page_limit;
+                    if (res.message.data.length > 0) {
+                        this.lost_persons.push(...res.message.data);
+                        this.start_index += this.page_limit;
+                    } else {
+                        this.no_more_data = true;
+                    }
+                } else {
+                    this.no_more_data = true;
                 }
             } catch (error) {
                 console.error("Error fetching lost persons:", error);
-            }
-        },
-        handle_window_scroll() {
-            const near_bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
-            if (near_bottom) {
-                this.get_lost_persons();
             }
         },
         toggle_details(match_id) {
@@ -46,10 +46,6 @@ const lost_persons_app = Vue.createApp({
     },
     mounted() {
         this.get_lost_persons();
-        window.addEventListener('scroll', this.handle_window_scroll);
-    },
-    beforeUnmount() {
-        window.removeEventListener('scroll', this.handle_window_scroll);
     }
 });
 

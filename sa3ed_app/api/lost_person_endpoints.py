@@ -28,7 +28,7 @@ def get_lost_persons(args_obj: str = None):
             .where(Lower(lost_person.case_status) == 'open')
             .limit(page_limit)
             .offset(start_index)
-            .orderby(lost_person.name, order=Order.desc)
+            .orderby(lost_person.creation, order=Order.desc)
         )
         data = query.run(as_dict=True)
 
