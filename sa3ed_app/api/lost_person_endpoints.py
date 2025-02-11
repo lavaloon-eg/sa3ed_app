@@ -6,7 +6,7 @@ from sa3ed_app.api.sa3ed_address_endpoints import create_sa3ed_address
 from sa3ed_app.utils.file_handler import save_image_attachment
 
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist(allow_guest=True, methods=['GET'])
 def get_lost_persons(args_obj: str = None):
     args_obj = json.loads(args_obj)
     try:

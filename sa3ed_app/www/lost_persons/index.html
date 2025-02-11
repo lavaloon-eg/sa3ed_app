@@ -8,22 +8,25 @@
         <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
     <h3>{{ _("المفقودون") }}</h3>
-    <div v-if="lost_persons.length > 0" id="lost_persons_list" class="found">
-        <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details mb-5">
-            <div class="w-75 d-flex flex-column gap-2 p-1">
-                <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'" alt="lost person" class="person-img">
-            </div>
+    <div v-if="lost_persons.length > 0" id="lost_persons_list" class="lost-persons">
+        <div class="case-list">
+            <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details mb-5">
+                <div class="w-75 d-flex flex-column gap-2 p-1">
+                    <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'"
+                        alt="lost person" class="person-img">
+                </div>
 
-            <button class="btn expand my-2" type="button" @click="toggle_details(person.lost_person_id)">
-                <img :src="selected_case === person.lost_person_id ? '/static/img/arrow-up.svg' : '/static/img/arrow-down.svg'"
-                    alt="arrow">
-            </button>
+                <button class="btn expand my-2" type="button" @click="toggle_details(person.lost_person_id)">
+                    <img :src="selected_case === person.lost_person_id ? '/static/img/arrow-up.svg' : '/static/img/arrow-down.svg'"
+                        alt="arrow">
+                </button>
 
-            <div v-show="selected_case === person.lost_person_id" class="person-details mt-2">
-                <h4 class="person-title">{{ _("مزيد من التفاصيل") }}</h4>
-                <p>{{ _("الاسم الكامل") }}: <strong>[[ person.full_name ]]</strong></p>
-                <p>{{ _("تاريخ الميلاد") }}: [[ person.birthdate ]]</p>
-                <p>{{ _("الجنس") }}: [[ person.gender ]]</p>
+                <div v-show="selected_case === person.lost_person_id" class="person-details mt-2">
+                    <h4 class="person-title">{{ _("مزيد من التفاصيل") }}</h4>
+                    <p>{{ _("الاسم الكامل") }}: <strong>[[ person.full_name ]]</strong></p>
+                    <p>{{ _("تاريخ الميلاد") }}: [[ person.birthdate ]]</p>
+                    <p>{{ _("الجنس") }}: [[ person.gender ]]</p>
+                </div>
             </div>
         </div>
     </div>

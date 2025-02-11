@@ -17,6 +17,7 @@ const lost_persons_app = Vue.createApp({
             try {
                 const res = await frappe.call({
                     method: "sa3ed_app.api.lost_person_endpoints.get_lost_persons",
+                    type: "GET",
                     freeze: true,
                     freeze_message: __("...تحميل المزيد"),
                     args: {
