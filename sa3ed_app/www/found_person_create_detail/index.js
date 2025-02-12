@@ -90,7 +90,6 @@ const found_person_form_app = Vue.createApp({
             window.localStorage.setItem('found_status', this.status);
             window.localStorage.setItem('found_country', this.country);
             window.localStorage.setItem('found_notes', this.notes);
-            window.localStorage.setItem('found_city', this.city);
             window.localStorage.setItem('found_address', JSON.stringify(found_address_obj));
 
             window.location.pathname = '/found_person_create_detail_2';
