@@ -31,6 +31,18 @@ a:hover {
     margin-right: 0 !important;
 }
 
+.g-1 {
+    gap: 0.5rem;
+}
+
+.g-2 {
+    gap: 1rem;
+}
+
+.g-3 {
+    gap: 1.5rem;
+}
+
 div[data-v-app], #lost_person_create_form {
     width: 100%;
     margin: 0 auto;
@@ -315,6 +327,10 @@ textarea {
     width: 50%;
 }
 
+.lost-persons .case-list {
+    width: 70%;
+}
+
 .case-details {
     background: #ffffff;
     display: flex;
@@ -346,11 +362,60 @@ textarea {
     object-fit: fill;
 }
 
-#lost_persons .case-details .person-img {
-    width: 100%;
-    height: 10rem;
+#lost_persons .case-details .case-img {
     border-radius: 1rem;
     object-fit: fill;
+}
+
+#lost_persons .case-details .info .info-title {
+    font-size: 1rem;
+    color: #053B4F;
+    margin: 0;
+}
+
+#lost_persons .case-details .info .highlight {
+    font-size: 1.2rem;
+    color: #876BFA;
+    margin: 0;
+}
+
+#lost_persons .case-details .notes {
+    font-size: 1rem;
+    color: #053B4F;
+    opacity: 0.8;
+}
+
+.contact-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #876BFA;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.contact-info {
+    text-align: center;
+}
+
+.contact-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #053B4F;
+    opacity: 0.8;
+    margin-bottom: 5px;
+}
+
+.contact-details {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 1.2rem;
+    color: #053B4F;
+    opacity: 0.8;
+}
+
+.text {
+    white-space: nowrap;
 }
 
 .matched-icon {
@@ -406,6 +471,34 @@ textarea {
 
     .found .case-list, .lost-persons .case-list {
         width: 100%;
+    }
+
+    .lost-persons {
+        padding: 0;
+    }
+
+    #lost_persons .case-details .info .info-title {
+        font-size: 0.6rem;
+    }
+
+    #lost_persons .case-details .info .highlight {
+        font-size: 0.8rem;
+    }
+
+    #lost_persons .case-details .notes {
+        font-size: 0.8rem;
+    }
+
+    #lost_persons .case-details .contact-header {
+        font-size: 1.2rem;
+    }
+
+    #lost_persons .case-details .contact-name {
+        font-size: 1rem;
+    }
+
+    #lost_persons .case-details .contact-details {
+        font-size: 0.8rem;
     }
 
     .person-container {

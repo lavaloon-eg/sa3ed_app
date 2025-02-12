@@ -30,5 +30,6 @@ class LostPerson(Document):
 		phone_1: DF.Data
 		phone_2: DF.Data | None
 		pic: DF.AttachImage | None
+		reporter_name: DF.Data
 	# end: auto-generated types
 	pass

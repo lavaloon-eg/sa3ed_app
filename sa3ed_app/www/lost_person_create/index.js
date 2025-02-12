@@ -78,6 +78,7 @@ document.getElementById("submit_image").onclick = function (evt) {
                 'first_name': first_name,
                 'middle_name': middle_name,
                 'last_name': last_name,
+                'reporter_name': window.localStorage.getItem('user_name'),
                 'gender': window.localStorage.getItem('gender'),
                 'nationality': window.localStorage.getItem('country'),
                 'birthdate': window.localStorage.getItem('birthdate'),
@@ -90,46 +91,36 @@ document.getElementById("submit_image").onclick = function (evt) {
             }
         };
 
-        if (window.localStorage.getItem('lost_person_name') != ""
-            && window.localStorage.getItem('gender') != ""
-            && window.localStorage.getItem('country') != ""
-            && window.localStorage.getItem('birthdate') != ""
-            && window.localStorage.getItem('lost_date') != ""
-            && window.localStorage.getItem('lost_address') != ""
-            && window.localStorage.getItem('phone_1') != ""
-            && window.localStorage.getItem('lost_address') != ""
-            && window.localStorage.getItem('home_address') != "") {
-            frappe.call({
-                method: "sa3ed_app.api.lost_person.create_lost_person_case",
-                type: "POST",
-                args: args,
-                callback: function (response) {
-                    if (response.message) {
-                        Swal.fire({
-                            title: __('تم الحفظ!'),
-                            text: __('البيانات تم حفظها بنجاح, رمز الحالة هو {0}', [response.message.data.lost_person_case_id]),
-                            icon: 'success',
-                            confirmButtonText: __('موافق')
-                        })
-                        reset_form();
-                        setTimeout(() => {
-                            window.localStorage.clear();
-                            document.getElementById("back_to_home").disabled = false;
-                            document.getElementById("back_to_home").onclick = function () {
-                                window.location.pathname = 'home'
-                            }
-                        }, 3000);
-                    } else {
-                        Swal.fire({
-                            title: __('لم يتم الحفظ!'),
-                            text: __('البيانات لم يتم حفظها بنجاح.'),
-                            icon: 'error',
-                            confirmButtonText: __('حسنا')
-                        });
-                    }
+        frappe.call({
+            method: "sa3ed_app.api.lost_person.create_lost_person_case",
+            type: "POST",
+            args: args,
+            callback: function (response) {
+                if (response.message) {
+                    Swal.fire({
+                        title: __('تم الحفظ!'),
+                        text: __('البيانات تم حفظها بنجاح, رمز الحالة هو {0}', [response.message.data.lost_person_case_id]),
+                        icon: 'success',
+                        confirmButtonText: __('موافق')
+                    })
+                    reset_form();
+                    setTimeout(() => {
+                        window.localStorage.clear();
+                        document.getElementById("back_to_home").disabled = false;
+                        document.getElementById("back_to_home").onclick = function () {
+                            window.location.pathname = 'home'
+                        }
+                    }, 3000);
+                } else {
+                    Swal.fire({
+                        title: __('لم يتم الحفظ!'),
+                        text: __('البيانات لم يتم حفظها بنجاح.'),
+                        icon: 'error',
+                        confirmButtonText: __('حسنا')
+                    });
                 }
-            });
-        }
+            }
+        });
     };
     reader.readAsDataURL(file);
 };

@@ -9,23 +9,46 @@
     </div>
     <h3>{{ _("المفقودون") }}</h3>
     <div v-if="lost_persons.length > 0" id="lost_persons_list" class="lost-persons">
-        <div class="case-list">
-            <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details mb-5">
-                <div class="w-75 d-flex flex-column gap-2 p-1">
-                    <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'"
-                        alt="lost person" class="person-img">
+        <div class="case-list mt-5">
+            <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details">
+                <div class="row mt-3 w-100">
+                    <div class="case-header col-5">
+                        <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'"
+                            alt="lost person" class="case-img w-100 h-75">
+                    </div>
+                    <div class="case-body col text-right">
+                        <div class="info mb-2">
+                            <p class="info-title">{{ _("أسم الطفل") }}</p>
+                            <p class="highlight">[[ person.full_name ]]</p>
+                        </div>
+                        <div class="info mb-2">
+                            <p class="info-title">{{ _("تم فقد الطفل في") }}</p>
+                            <p class="highlight">[[ person.address ]]</p>
+                        </div>
+                        <div class="row g-2 m-2">
+                            <div class="info">
+                                <p class="info-title">{{ _("عمر الطفل") }}</p>
+                                <p class="highlight">[[ person.age ]]</p>
+                            </div>
+                            <div class="info">
+                                <p class="info-title">{{ _("تاريخ ميلاد الطفل") }}</p>
+                                <p class="highlight">[[ person.birthdate ]]</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <button class="btn expand my-2" type="button" @click="toggle_details(person.lost_person_id)">
-                    <img :src="selected_case === person.lost_person_id ? '/static/img/arrow-up.svg' : '/static/img/arrow-down.svg'"
-                        alt="arrow">
-                </button>
-
-                <div v-show="selected_case === person.lost_person_id" class="person-details mt-2">
-                    <h4 class="person-title">{{ _("مزيد من التفاصيل") }}</h4>
-                    <p>{{ _("الاسم الكامل") }}: <strong>[[ person.full_name ]]</strong></p>
-                    <p>{{ _("تاريخ الميلاد") }}: [[ person.birthdate ]]</p>
-                    <p>{{ _("الجنس") }}: [[ person.gender ]]</p>
+                <p class="notes mt-3">[[ person.notes ]]</p>
+                <div class="contact-header">
+                    <span class="line">───────</span>
+                    {{ _("بيانات التواصل") }}
+                    <span class="line">───────</span>
+                </div>
+                <div class="contact-info">
+                    <p class="contact-name">[[ person.contact_name ]]</p>
+                    <div class="contact-details">
+                        <p>[[ person.contact_phone ]]</p>
+                        <p>[[ person.contact_email ]]</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -37,7 +60,7 @@
         <p class="desc text-center">{{ _("لم يتم الإبلاغ عن أي حالات مفقودة حتى الآن.") }}</p>
     </div>
 
-    <div class="load-more text-center my-3" v-if="lost_persons.length > 0 && !no_more_data">
+    <div class="load-more text-center my-4" v-if="lost_persons.length > 0 && !no_more_data">
         <button class="btn btn-primary" @click="get_lost_persons">
             {{ _("تحميل المزيد") }}
         </button>
