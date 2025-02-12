@@ -1,8 +1,10 @@
 import json
+from typing import cast
 from sa3ed_app.api.api_endpoint import *
 from frappe import _
 from frappe.query_builder.functions import Concat_ws
 from sa3ed_app.api.sa3ed_address_endpoints import create_sa3ed_address
+from sa3ed_app.sa3ed_app.doctype.lost_person.lost_person import LostPerson
 from sa3ed_app.utils.file_handler import save_image_attachment
 
 
@@ -54,7 +56,7 @@ def create_lost_person_case(args_obj: str):
         return ApiEndPoint.create_response(status_code=status_code, message=error_msg, data=data)
 
     try:
-        new_doc = frappe.new_doc("Lost Person")
+        new_doc = cast(LostPerson, frappe.new_doc("Lost Person"))
         new_doc.first_name = args_obj["first_name"]
         new_doc.last_name = args_obj["last_name"]
         new_doc.nationality = args_obj["nationality"]
@@ -91,7 +93,7 @@ def create_lost_person_case(args_obj: str):
                                                 max_size_in_mb=2,
                                                 target_field="pic_preview",
                                                 is_private=0)
-            new_doc.pic = new_doc.pic_preview = image_file_url
+            new_doc.pic = image_file_url
 
             new_doc.save(ignore_permissions=True)
         status_code = 200
