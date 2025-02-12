@@ -100,7 +100,7 @@ document.getElementById("submit_image").onclick = function (evt) {
             && window.localStorage.getItem('lost_address') != ""
             && window.localStorage.getItem('home_address') != "") {
             frappe.call({
-                method: "sa3ed_app.api.lost_person_endpoints.create_lost_person_case",
+                method: "sa3ed_app.api.lost_person.create_lost_person_case",
                 type: "POST",
                 args: args,
                 callback: function (response) {

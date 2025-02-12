@@ -2,7 +2,7 @@ import json
 from typing import cast
 from sa3ed_app.api.api_endpoint import *
 from frappe import _
-from sa3ed_app.api.sa3ed_address_endpoints import create_sa3ed_address
+from sa3ed_app.api.sa3ed_address import create_sa3ed_address
 from sa3ed_app.sa3ed_app.doctype.found_person.found_person import FoundPerson
 from sa3ed_app.utils.file_handler import save_image_attachment
 from sa3ed_app.utils.date_helper import calculate_age

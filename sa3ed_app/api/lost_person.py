@@ -3,7 +3,7 @@ from typing import cast
 from sa3ed_app.api.api_endpoint import *
 from frappe import _
 from frappe.query_builder.functions import Concat_ws
-from sa3ed_app.api.sa3ed_address_endpoints import create_sa3ed_address
+from sa3ed_app.api.sa3ed_address import create_sa3ed_address
 from sa3ed_app.sa3ed_app.doctype.lost_person.lost_person import LostPerson
 from sa3ed_app.utils.file_handler import save_image_attachment
 

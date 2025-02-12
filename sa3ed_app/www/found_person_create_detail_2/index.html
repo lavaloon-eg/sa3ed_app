@@ -18,8 +18,8 @@
         </div>
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="finder_name">{{_("اسمك")}}</label>
-            <input class="w-100" id="finder_name" @mouseleave="change_line()" type="text" placeholder="{{_('ادخل اسمك')}}"
-                v-model="finder_name" required>
+            <input class="w-100" id="finder_name" type="text" placeholder="{{_('ادخل اسمك')}}" v-model="finder_name"
+                required>
             <div class="invalid-feedback" v-if="errors.finder_name">
                 {{_("يرجى إدخال اسمك")}}
             </div>
@@ -27,19 +27,17 @@
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="email">{{_("البريد الالكتروني")}}</label>
-            <input class="w-100" id="email" @mouseleave="change_line()" type="text" placeholder="example@test.com"
-                v-model="email" required>
+            <input class="w-100" id="email" type="text" placeholder="example@test.com" v-model="email" required>
             <div class="invalid-feedback" v-if="errors.email">
-                يرجى إدخال البريد الالكتروني
+                {{_("يرجى إدخال البريد الالكتروني")}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="phone_number">رقم الهاتف</label>
-            <input class="w-100" id="phone_number" @mouseleave="change_line()" type="tel" placeholder="1xxxxxxxx"
-                v-model="phone_number" required>
+            <label class="w-100 text-right" for="phone_number">{{_("رقم الهاتف")}}</label>
+            <input class="w-100" id="phone_number" type="tel" placeholder="1xxxxxxxx" v-model="phone_number" required>
             <div class="invalid-feedback" v-if="errors.phone">
-                يرجى إدخال رقم الهاتف
+                {{_("يرجى إدخال رقم الهاتف")}}
             </div>
         </div>
         <div class="w-100 d-flex justify-content-center mb-6">
@@ -48,7 +46,7 @@
         <div class="w-100 d-flex justify-content-center">
             <button type="submit" class="submit-btn" ref="btn">
                 <img src="/static/img/arrow-white.svg" alt="found person" />
-                <span>ارسال</span>
+                <span>{{_("التالي")}}</span>
             </button>
         </div>
     </form>

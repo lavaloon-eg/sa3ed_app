@@ -46,7 +46,7 @@
             <input class="w-100" id="childAddressLine" @mouseleave="change_line()" type="text" ref="address"
                 placeholder="{{_('ادخل العنوان الذي وجد فيه الطفل')}}" v-model="found_address_line" required>
             <div class="invalid-feedback" v-if="errors.address_line">
-                {{_('يرجى ادخال العنوان')}}
+                {{_('يرجى ادخال العنوان الذي وجد فيه الطفل')}}
             </div>
         </div>
 

@@ -26,9 +26,9 @@
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="home_address_line">{{_('العنوان')}}</label>
             <input class="w-100" id="home_address_line" @mouseleave="change_line()" type="text" ref="address"
-                placeholder="{{_('ادخل العنوان')}}" v-model="home_address_line" required>
+                placeholder="{{_('ادخل العنوان الذي يعيش فيه الطفل')}}" v-model="home_address_line" required>
             <div class="invalid-feedback" v-if="errors.home_address_line">
-                {{_('يرجى ادخال العنوان')}}
+                {{_('يرجى ادخال العنوان الذي يعيش فيه الطفل')}}
             </div>
         </div>
 
