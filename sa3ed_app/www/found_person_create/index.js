@@ -65,7 +65,7 @@ function render_response_create_found_person_case(...args) {
             window.localStorage.setItem('fndnotes', ' ');
             window.localStorage.setItem('fndemail_Address', ' ');
             window.localStorage.setItem('fndstatus', ' ');
-            window.localStorage.setItem('fnduser_name', ' ');
+            window.localStorage.setItem('finder_user_name', ' ');
             window.localStorage.setItem('found_address', ' ');
         }, 4000);
     }
@@ -109,14 +109,14 @@ document.getElementById("SubmitImage").onclick = function (evt) {
                 'first_name': window.localStorage.getItem('fndfirst_name'),
                 'middle_name': "",
                 'last_name': "test",
-                'finder_name': window.localStorage.getItem('fnduser_name'),
+                'finder_name': window.localStorage.getItem('finder_user_name'),
                 'gender': window.localStorage.getItem('fndgender'),
                 'nationality': window.localStorage.getItem('fndcountry'),
                 'birthdate': window.localStorage.getItem('fndbirthdate'),
                 'seen_date': window.localStorage.getItem('found_date'),
-                'phone_1': window.localStorage.getItem('fndphone_1'),
+                'phone_1': window.localStorage.getItem('finder_phone_1'),
                 'notes': window.localStorage.getItem('fndnotes'),
-                'email_Address': window.localStorage.getItem('fndemail_Address'),
+                'email_Address': window.localStorage.getItem('finder_email_Address'),
                 'case_status': window.localStorage.getItem('fndstatus'),
                 'seen_address': parsed_address
             }

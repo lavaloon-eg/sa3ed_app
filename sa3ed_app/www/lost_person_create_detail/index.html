@@ -27,7 +27,7 @@
             <label class="w-100 text-right" for="child_birthdate">{{_('تاريخ ميلاد الطفل')}}</label>
             <input class="w-100" id="child_birthdate" class="testing" @mouseleave="change_line()" type="date" ref="date"
                 placeholder="{{_('تاريخ ميلاد الطفل')}}" v-model="birthdate" required>
-            <div class="invalid-feedback" v-if="errors.perdate">
+            <div class="invalid-feedback" v-if="errors.birthdate">
                 {{_('يرجى إدخال تاريخ ميلاد الطفل')}}
             </div>
         </div>
@@ -37,14 +37,14 @@
             <input class="w-100" id="lost_city" @mouseleave="change_line()" type="text" ref="city"
                 placeholder="{{_('ادخل  مدينه الفقدان للطفل')}}" v-model="city" required>
             <div class="invalid-feedback" v-if="errors.city">
-                يرجى إدخال مدينه الفقدان
+                {{_('يرجى إدخال مدينه الفقدان')}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="lost_address_line">{{_('العنوان')}}</label>
             <input class="w-100" id="lost_address_line" @mouseleave="change_line()" type="text" ref="address"
-                placeholder="{{_('ادخل العنوان')}}" v-model="lost_address_line" required>
+                placeholder="{{_('ادخل العنوان الذي فقد فيه الطفل')}}" v-model="lost_address_line" required>
             <div class="invalid-feedback" v-if="errors.lost_address_line">
                 {{_('يرجى ادخال العنوان')}}
             </div>
@@ -60,14 +60,14 @@
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="lost_gender">{{_('نوع الطفل المفقود')}}</label>
+            <label class="w-100 text-right" for="lost_gender">{{_('جنس الطفل المفقود')}}</label>
             <select class="w-100" id="lost_gender" v-model="gender" required>
                 <option value="" disabled>{{_('اختر الجنس')}}</option>
                 <option value="Male" class="test">{{_('ذكر')}}</option>
                 <option value="Female">{{_('انثي')}}</option>
             </select>
             <div class="invalid-feedback" v-if="errors.gender">
-                {{_('يرجى إدخال نوع الطفل المفقود')}}
+                {{_('يرجى إدخال جنس الطفل المفقود')}}
             </div>
         </div>
 

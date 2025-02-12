@@ -14,20 +14,20 @@
                 <img class="icon" src="/static/img/found.svg" alt="found person" />
                 (٣/٢) وجد شخص
             </h3>
-            <p class="desc">قم بادخال بيانات التواصل</p>
+            <p class="desc">{{ _("قم بادخال بيانات التواصل") }}</p>
         </div>
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="finder_name">اسمك</label>
-            <input class="w-100" id="finder_name" @mouseleave="change_line()" type="text" ref="name" placeholder="ادخل اسمك"
+            <label class="w-100 text-right" for="finder_name">{{_("اسمك")}}</label>
+            <input class="w-100" id="finder_name" @mouseleave="change_line()" type="text" placeholder="{{_('ادخل اسمك')}}"
                 v-model="finder_name" required>
-            <div class="invalid-feedback" v-if="errors.name">
-                يرجى إدخال اسمك
+            <div class="invalid-feedback" v-if="errors.finder_name">
+                {{_("يرجى إدخال اسمك")}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="email">البريد الالكتروني</label>
-            <input class="w-100" id="email" @mouseleave="change_line()" type="text" ref="date" placeholder="example@test.com"
+            <label class="w-100 text-right" for="email">{{_("البريد الالكتروني")}}</label>
+            <input class="w-100" id="email" @mouseleave="change_line()" type="text" placeholder="example@test.com"
                 v-model="email" required>
             <div class="invalid-feedback" v-if="errors.email">
                 يرجى إدخال البريد الالكتروني
@@ -36,7 +36,7 @@
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="phone_number">رقم الهاتف</label>
-            <input class="w-100" id="phone_number" @mouseleave="change_line()" type="tel" ref="phone" placeholder="1xxxxxxxx"
+            <input class="w-100" id="phone_number" @mouseleave="change_line()" type="tel" placeholder="1xxxxxxxx"
                 v-model="phone_number" required>
             <div class="invalid-feedback" v-if="errors.phone">
                 يرجى إدخال رقم الهاتف

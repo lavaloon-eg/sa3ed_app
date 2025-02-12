@@ -70,8 +70,8 @@ def create_lost_person_case(args_obj: str):
         if args_obj.get("phone_2"):
             new_doc.phone_2 = args_obj["phone_2"]
 
-        if args_obj.get("email_Address"):
-            new_doc.email_address = args_obj["email_Address"]
+        if args_obj.get("email_address"):
+            new_doc.email_address = args_obj["email_address"]
 
         if args_obj.get("notes"):
             new_doc.notes = args_obj["notes"]
