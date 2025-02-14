@@ -1,22 +1,17 @@
 let found_person_form_2_app = Vue.createApp({
     data() {
         return {
-            finder_name: '',        
-            email: '',           
-            phone_number: '',    
-            phoneInput: null,
-            errors: {
-                name: false,
-                email: false,
-                phone: false
-            }
-        }
+            finder_name: '',
+            email: '',
+            phone_number: '',
+            phone_input: null,
+            errors: {}
+        };
     },
-
     mounted() {
-        this.phoneInput = window.intlTelInput(this.$refs.phone, {
+        this.phone_input = window.intlTelInput(this.$refs.phone, {
             initialCountry: "auto",
-            geoIpLookup: function(callback) {
+            geoIpLookup: function (callback) {
                 fetch('https://ipinfo.io/json', { headers: { 'Accept': 'application/json' } })
                     .then(response => response.json())
                     .then(data => callback(data.country))
@@ -30,81 +25,56 @@ let found_person_form_2_app = Vue.createApp({
     },
     methods: {
         validate_form() {
-            this.errors = {
-                name: !this.finder_name,
-                email: !this.email,
-                phone: !this.phone_number
-            };
-            return !Object.values(this.errors).some(error => error);
-        },
-        btn_event() { 
-            if (this.validate_form()) {
-                if (this.finder_name && this.validate_email(this.email) && this.validate_phone()) {
-                    window.localStorage.setItem('fnduser_name', this.finder_name);
-                    window.localStorage.setItem('fndemail_Address', this.email);
-                    window.localStorage.setItem('fndphone_1', this.phoneInput.getNumber());
-                    window.location.pathname = '/found_person_create';
-                } else {
-                    Swal.fire({
-                        title: 'خطا في ادخال البيانات',
-                        text: '',
-                        icon: 'error',
-                        confirmButtonText: 'خطا'
-                    });
-                }
-            } else {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+            this.errors = {};
+
+            if (!this.finder_name) this.errors.finder_name = true;
+            if (!this.email) this.errors.email = true;
+            if (!this.phone_number) this.errors.phone = true;
+
+            if (Object.keys(this.errors).length > 0) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                this.fire_toast(__('يرجى ادخال البيانات'), '', 'error', __('حسنا'));
+                return false;
             }
-        },
 
-        change_line() {
-            const fields = [this.$refs.name, this.$refs.date, this.$refs.phone];
-            const btn = this.$refs.btn;
-            fields.forEach(field => {
-                if (field.value !== '') {
-                    field.style.borderBottom = '1px solid #0ACCAD';
-                    btn.style.backgroundColor = '#053B4F';
-                } else {
-                    
-                }
-            });
+            if (!this.validate_email(this.email)) return false;
+            if (!this.validate_phone()) return false;
+            return true;
         },
+        btn_event() {
+            if (!this.validate_form()) return;
 
+            window.localStorage.setItem('finder_user_name', this.finder_name);
+            window.localStorage.setItem('finder_email_Address', this.email);
+            window.localStorage.setItem('finder_phone_1', this.phone_number);
+            window.location.pathname = '/found_person_create';
+        },
         validate_email(email) {
-            let email_test = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
-            if (email_test.test(email)) {
-                return true;
-            } else {
-                Swal.fire({
-                    title: 'خطا في البريد الالكتروني',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+            let email_pattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+            if (!email_pattern.test(email)) {
+                this.fire_toast(__('خطا في البريد الالكتروني'), '', 'error', __('حسنا'));
                 return false;
             }
+            return true;
         },
-
         validate_phone() {
-            if (this.phoneInput.isValidNumber()) {
-                this.phone_number = this.phoneInput.getNumber();
-                return true;
-            } else {
-                this.phone_number = '';
-                Swal.fire({
-                    title: 'خطا في رقم الهاتف المحمول',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+            if (!this.phone_input.isValidNumber()) {
+                this.fire_toast(__('خطا في رقم الهاتف المحمول'), '', 'error', __('حسنا'));
                 return false;
             }
+            this.phone_number = this.phone_input.getNumber();
+            return true;
         },
         back_to_prev() {
             window.history.back();
+        },
+        fire_toast(title = null, text = null, icon = null, confirm_button_text = null) {
+            Swal.fire({
+                title: title || __('تم الحفظ!'),
+                text: text || __('البيانات تم حفظها بنجاح.'),
+                icon: icon || 'success',
+                confirmButtonText: confirm_button_text || __('موافق')
+            });
         }
     }
 });

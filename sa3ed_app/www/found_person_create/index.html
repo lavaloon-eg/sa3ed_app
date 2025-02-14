@@ -13,24 +13,19 @@
                     <img class="icon" src="/static/img/found.svg" alt="found person" />
                     (٣/٣) وجد شخص
                 </h3>
-                <p class="desc">من فضلك قم برفع صورة الشخص للمطابقة</p>
+                <p class="desc">{{ _("من فضلك قم برفع صورة الشخص للمطابقة") }}</p>
             </div>
             <div>
-                <img class="img-upload" src="/static/img/upload.svg" onclick="open_file_browser()" id="imagePreview"
+                <img class="img-upload" src="/static/img/upload.svg" onclick="open_file_browser()" id="image_preview"
                     alt="image preview" />
             </div>
             <form method="post" id="form_img_upload" enctype="multipart/form-data">
-                <div class="hide alert mt-4 mx-auto w-75" id="validationRules"></div>
                 <div>
-                    <input type="file" id="UploadImage" style="display:none" accept=".png, .jpg, .jpeg">
+                    <input type="file" id="upload_image" style="display:none" accept=".png, .jpg, .jpeg">
                 </div>
                 <div class="w-100 d-flex flex-column align-items-center">
-                    <button type="button" class="submit-btn mt-5" id="SubmitImage" disabled>حفظ</button>
-                    <button type="button" class="back-btn mt-5" id="BachToHome" disabled>العوده للريئسيه</button>
-                </div>
-                <div class="progress my-4" id="ProgressBar" hidden>
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                    <button type="button" class="submit-btn mt-5" id="submit_image" disabled>{{ _("ارسال") }}</button>
+                    <button type="button" class="back-btn mt-5" id="bach_to_home" disabled>{{ _("العوده للرئيسية") }}</button>
                 </div>
             </form>
         </div>

@@ -2,31 +2,31 @@ const lost_person_form_app = Vue.createApp({
     delimiters: ['[[', ']]'],
     data() {
         return {
-            lost_person_name:'',
-            perdate:'',
-            cityperloca:'',
-            lost_address_line:'',
-            lostperdate:'',
-            selectedGender: '', 
-            selected_country:'',
-            notes:'',
-            notesloc:'',
-            errors:{
-                lost_person_name:'',
-                perdate:'',
-                cityperloca:'',
-                lost_address_line:'',
-                lostperdate:'',
-                selectedGender:'',
-                country:'',
-                notes:'',
-                notesloc:'',
+            lost_person_name: '',
+            birthdate: '',
+            city: '',
+            lost_address_line: '',
+            lost_date: '',
+            gender: '',
+            country: '',
+            notes: '',
+            address_notes: '',
+            errors: {
+                lost_person_name: false,
+                birthdate: false,
+                city: false,
+                lost_address_line: false,
+                lost_date: false,
+                gender: false,
+                country: false,
+                notes: false,
+                address_notes: false,
             },
-            countries: this.getCountries()
+            countries: this.get_countries()
         }
     },
-    methods:{
-        async getCountries() {
+    methods: {
+        async get_countries() {
             try {
                 const response = await fetch('/countries.json');
                 if (!response.ok) {
@@ -37,112 +37,72 @@ const lost_person_form_app = Vue.createApp({
                 console.error('Error loading countries:', error);
             }
         },
-        validateForm() {
+        validate_form() {
             this.errors = {
                 lost_person_name: !this.lost_person_name,
-                perdate: !this.perdate,
-                cityperloca: !this.cityperloca,
+                birthdate: !this.birthdate,
+                city: !this.city,
                 lost_address_line: !this.lost_address_line,
-                lostperdate: !this.lostperdate,
-                selectedGender: !this.selectedGender,
-                country: !this.selected_country,
+                lost_date: !this.lost_date,
+                gender: !this.gender,
+                country: !this.country,
             };
             return !Object.values(this.errors).some(error => error);
         },
-        btnevent() {
-            if (this.validateForm()) {
-                const isBirthdateValid = this.validateBirthdate();
-            const isLostdateValid = this.validateLostdate();
-            if( !(isBirthdateValid && isLostdateValid) ) {
+        btn_event() {
+            if (!this.validate_form()) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
-            }   
-            if(this.lost_address_line!=''&&this.lost_person_name != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.selected_country !='')  {
-                window.localStorage.setItem('lost_person_name',this.lost_person_name);
-                window.localStorage.setItem('lost_date',this.lostperdate);
-                window.localStorage.setItem('birthdate',this.perdate)
-                window.localStorage.setItem('gender',this.selectedGender)
-                window.localStorage.setItem('country',this.selected_country)
-                window.localStorage.setItem('notes',this.notes)
-                window.localStorage.setItem('notesloc',this.notesloc)
-                window.localStorage.setItem('lost_addres_type','Lost Place');
-                // send lost_address data os object
-                let lost_address_object = {
-                    title:'test',
-                    city: (this.cityperloca).toString(),
-                    country:(this.selected_country).toString(),
-                    address_type:'Lost Place',
-                    address_line_1:this.lost_address_line.toString(),
-                    notes:this.notesloc.toString(),
-                    address_line_2: '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
-                    postal_code:  ''
+            }
+
+            if (!this.validate_birthdate() || !this.validate_lost_date()) {
+                return;
+            }
+
+            const fieldsToStore = ['lost_person_name', 'birthdate', 'city', 'lost_date', 'gender', 'country', 'notes', 'address_notes'];
+            fieldsToStore.forEach(field => {
+                if (this[field] !== undefined && this[field] !== null) {
+                    window.localStorage.setItem(field, this[field]);
                 }
-                window.localStorage.setItem('lost_address',JSON.stringify(lost_address_object))                
-                window.location.pathname ='/lost_person_create_detail_2'
-            } else {
-                Swal.fire({
-                    title: 'يرجي ادخال البيانات',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
-            }
-            } else {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            }
+            });
+
+            const lost_address_object = {
+                title: `${this.lost_address_line?.toString() || ''}-${this.city?.toString() || ''}-${this.country?.toString() || ''}`,
+                city: this.city?.toString() || '',
+                country: this.country?.toString() || '',
+                address_type: 'Lost Place',
+                address_line_1: this.lost_address_line?.toString() || '',
+                notes: this.address_notes?.toString() || '',
+                address_line_2: '',
+                postal_code: ''
+            };
+
+            window.localStorage.setItem('lost_address', JSON.stringify(lost_address_object));
+            window.location.pathname = '/lost_person_create_detail_2';
         },
-        changeline() {
-            if(this.$refs.name.value != '') {
-                this.$refs.name.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.date.value != '') {
-                this.$refs.date.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
-            if(this.$refs.loc.value != '') {
-                this.$refs.loc.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.lostdate.value != '') {
-                this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
+        change_line() {
+            const refs = ["name", "date", "city", "address", "lost_date"];
+            refs.forEach(ref => {
+                if (this.$refs[ref].value) {
+                    this.$refs[ref].style.borderBottom = '1px solid #0ACCAD';
+                    this.$refs.btn.style.backgroundColor = '#053B4F';
+                }
+            });
         },
-        validateBirthdate() {
-            const birthdate = this.perdate;
-            
-            if (new Date(birthdate) > new Date()) {
-                Swal.fire({
-                    title: 'تاريخ الميلاد يجب ان يكون اصغر من او يساوي تاريخ اليوم',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+        validate_birthdate() {
+            if (new Date(this.birthdate) > new Date()) {
+                this.fire_toast(__('تاريخ الميلاد يجب ان يكون اصغر من او يساوي تاريخ اليوم'), '', 'error', __('خطا'));
                 return false;
             } else {
                 return true;
             }
         },
-        validateLostdate() {
-            const lostdate = this.lostperdate;
-            if (new Date(lostdate) > new Date()) {
-                Swal.fire({
-                    title: 'تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+        validate_lost_date() {
+            if (new Date(lost_date) > new Date()) {
+                this.fire_toast(__('تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم'), '', 'error', __('خطا'));
                 return false;
-            } else if(new Date(this.perdate) >= new Date(lostdate)){
-                Swal.fire({
-                    title: 'تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });                
+            } else if (new Date(this.birthdate) >= new Date(this.lost_date)) {
+                this.fire_toast(__('تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد'), '', 'error', __('خطا'));
                 return false;
             }
             else {
@@ -151,6 +111,14 @@ const lost_person_form_app = Vue.createApp({
         },
         back_to_prev() {
             window.history.back();
+        },
+        fire_toast(title = null, text = null, icon = null, confirm_button_text = null) {
+            Swal.fire({
+                title: title || __("تم الحفظ!"),
+                text: text || __("البيانات تم حفظها بنجاح."),
+                icon: icon || 'success',
+                confirmButtonText: confirm_button_text || __("موافق")
+            });
         }
     },
 })

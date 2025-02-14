@@ -4,7 +4,7 @@ const lost_person_form_2_app = Vue.createApp({
         return {
             city: '',
             home_address_line: '',
-            selected_country: '',
+            country: '',
             notes: '',
             errors: {
                 city: false,
@@ -30,42 +30,37 @@ const lost_person_form_2_app = Vue.createApp({
             this.errors = {
                 city: !this.city,
                 home_address_line: !this.home_address_line,
-                country: !this.selected_country,
+                country: !this.country,
             };
             return !Object.values(this.errors).some(error => error);
         },
         btn_event() {
-            if (this.validate_form()) {
-                if (this.home_address_line != '' && this.city != '' && this.selected_country != '') {
-                    let home_address_object = {
-                        title: 'test',
-                        city: this.city,
-                        country: this.selected_country,
-                        address_type: 'Home',
-                        address_line_1: this.home_address_line,
-                        notes: this.notes,
-                        address_line_2: '',
-                        postal_code: ''
-                    }
-                    window.localStorage.setItem('home_address', JSON.stringify(home_address_object))
-                    window.location.pathname = '/lost_person_create_detail_3'
-                } else {
-                    Swal.fire({
-                        title: 'يرجي ادخال البيانات',
-                        text: '',
-                        icon: 'error',
-                        confirmButtonText: 'خطا'
-                    });
-                }
-            } else {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
+            if (!this.validate_form()) {
+                Swal.fire({
+                    title: 'يرجي ادخال البيانات',
+                    icon: 'error',
+                    confirmButtonText: 'خطا'
                 });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
             }
+
+            const home_address_object = {
+                title: `${this.home_address_line?.toString() || ''}-${this.city?.toString() || ''}-${this.country?.toString() || ''}`,
+                city: this.city,
+                country: this.country,
+                address_type: 'Home',
+                address_line_1: this.home_address_line,
+                notes: this.notes || '',
+                address_line_2: '',
+                postal_code: ''
+            };
+
+            window.localStorage.setItem('home_address', JSON.stringify(home_address_object));
+            window.location.pathname = '/lost_person_create_detail_3';
         },
         change_line() {
-            const refs = [this.$refs.name, this.$refs.date, this.$refs.loc, this.$refs.lost_date].filter(ref => ref);
+            const refs = [this.$refs.city, this.$refs.address].filter(ref => ref);
             const btn = this.$refs.btn;
             refs.forEach(ref => ref.value !== '' ? (ref.style.borderBottom = '1px solid #0ACCAD', btn.style.backgroundColor = '#053B4F') : null);
         },

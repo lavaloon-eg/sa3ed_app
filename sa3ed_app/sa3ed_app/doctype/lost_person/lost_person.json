@@ -16,6 +16,7 @@
   "pic",
   "pic_preview",
   "contact_details_tab",
+  "reporter_name",
   "phone_1",
   "phone_2",
   "email_address",
@@ -169,11 +170,17 @@
    "fieldtype": "Link",
    "label": "Founded Person",
    "options": "Found Person"
+  },
+  {
+   "fieldname": "reporter_name",
+   "fieldtype": "Data",
+   "label": "Reporter Name",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-10 15:02:39.798364",
+ "modified": "2025-02-12 18:58:31.984434",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
