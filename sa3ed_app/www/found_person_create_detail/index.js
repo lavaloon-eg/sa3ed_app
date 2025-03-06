@@ -11,7 +11,6 @@ const found_person_form_app = Vue.createApp({
             city: '',
             found_address_line: '',
             notes: '',
-            notes_address: '',
             errors: {},
             countries: [],
         };
@@ -78,7 +77,6 @@ const found_person_form_app = Vue.createApp({
                 city: this.city,
                 country: this.country,
                 address_line_1: this.found_address_line,
-                notes: this.notes_address,
                 address_line_2: '',
                 postal_code: ''
             };
@@ -107,8 +105,8 @@ const found_person_form_app = Vue.createApp({
         }
     },
     mounted() {
-        this.get_countries();
-    }
+        this.get_countries()
+    },
 });
 
 found_person_form_app.mount('#found_person_form');

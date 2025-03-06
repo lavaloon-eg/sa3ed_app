@@ -10,7 +10,6 @@ const lost_person_form_app = Vue.createApp({
             gender: '',
             country: '',
             notes: '',
-            address_notes: '',
             errors: {
                 lost_person_name: false,
                 birthdate: false,
@@ -19,10 +18,8 @@ const lost_person_form_app = Vue.createApp({
                 lost_date: false,
                 gender: false,
                 country: false,
-                notes: false,
-                address_notes: false,
             },
-            countries: this.get_countries()
+            countries: []
         }
     },
     methods: {
@@ -59,8 +56,8 @@ const lost_person_form_app = Vue.createApp({
                 return;
             }
 
-            const fieldsToStore = ['lost_person_name', 'birthdate', 'city', 'lost_date', 'gender', 'country', 'notes', 'address_notes'];
-            fieldsToStore.forEach(field => {
+            const fields_to_store = ['lost_person_name', 'birthdate', 'city', 'lost_date', 'gender', 'country', 'notes'];
+            fields_to_store.forEach(field => {
                 if (this[field] !== undefined && this[field] !== null) {
                     window.localStorage.setItem(field, this[field]);
                 }
@@ -72,7 +69,6 @@ const lost_person_form_app = Vue.createApp({
                 country: this.country?.toString() || '',
                 address_type: 'Lost Place',
                 address_line_1: this.lost_address_line?.toString() || '',
-                notes: this.address_notes?.toString() || '',
                 address_line_2: '',
                 postal_code: ''
             };
@@ -121,6 +117,9 @@ const lost_person_form_app = Vue.createApp({
             });
         }
     },
+    mounted() {
+        this.get_countries()
+    }
 })
 
 lost_person_form_app.mount("#lost_person_form")

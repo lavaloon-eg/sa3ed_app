@@ -5,13 +5,12 @@ const lost_person_form_2_app = Vue.createApp({
             city: '',
             home_address_line: '',
             country: '',
-            notes: '',
             errors: {
                 city: false,
                 home_address_line: false,
                 country: false,
             },
-            countries: this.get_countries()
+            countries: []
         }
     },
     methods: {
@@ -51,7 +50,6 @@ const lost_person_form_2_app = Vue.createApp({
                 country: this.country,
                 address_type: 'Home',
                 address_line_1: this.home_address_line,
-                notes: this.notes || '',
                 address_line_2: '',
                 postal_code: ''
             };
@@ -67,6 +65,9 @@ const lost_person_form_2_app = Vue.createApp({
         back_to_prev() {
             window.history.back();
         }
+    },
+    mounted() {
+        this.get_countries()
     }
 })
 lost_person_form_2_app.mount("#lost_person_form_2")

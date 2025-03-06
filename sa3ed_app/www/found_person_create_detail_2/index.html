@@ -35,7 +35,7 @@
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="phone_number">{{_("رقم الهاتف")}}</label>
-            <input class="w-100" id="phone_number" type="tel" placeholder="1xxxxxxxx" v-model="phone_number" required>
+            <input class="w-100" id="phone_number" type="tel" placeholder="1xxxxxxxx" v-model="phone_number" ref="phone" required>
             <div class="invalid-feedback" v-if="errors.phone">
                 {{_("يرجى إدخال رقم الهاتف")}}
             </div>
