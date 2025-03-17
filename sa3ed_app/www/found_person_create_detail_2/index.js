@@ -10,7 +10,7 @@ let found_person_form_2_app = Vue.createApp({
     },
     mounted() {
         this.phone_input = window.intlTelInput(this.$refs.phone, {
-            initialCountry: "auto",
+            initialCountry: "eg",
             geoIpLookup: function (callback) {
                 fetch('https://ipinfo.io/json', { headers: { 'Accept': 'application/json' } })
                     .then(response => response.json())
@@ -25,20 +25,28 @@ let found_person_form_2_app = Vue.createApp({
     },
     methods: {
         validate_form() {
-            this.errors = {};
+            this.errors = {
+                finder_name: !this.finder_name?.trim(),
+                email: !this.validate_email(this.email),
+                phone: !(this.phone_input && this.phone_input.isValidNumber())
+            };
 
-            if (!this.finder_name) this.errors.finder_name = true;
-            if (!this.email) this.errors.email = true;
-            if (!this.phone_number) this.errors.phone = true;
-
-            if (Object.keys(this.errors).length > 0) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                this.fire_toast(__('يرجى ادخال البيانات'), '', 'error', __('حسنا'));
+            if (this.errors.finder_name) {
+                this.fire_toast(__('يرجى إدخال الاسم'), '', 'error', __('خطأ'));
                 return false;
             }
 
-            if (!this.validate_email(this.email)) return false;
-            if (!this.validate_phone()) return false;
+            if (this.errors.email) {
+                this.fire_toast(__('البريد الإلكتروني غير صالح'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            if (this.errors.phone) {
+                this.fire_toast(__('رقم الهاتف المحمول غير صالح'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            this.phone_number = this.phone_input.getNumber();
             return true;
         },
         btn_event() {

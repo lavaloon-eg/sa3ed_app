@@ -4,48 +4,28 @@ const lost_person_form_app = Vue.createApp({
         return {
             lost_person_name: '',
             birthdate: '',
-            city: '',
             lost_address_line: '',
+            home_address_line: '',
             lost_date: '',
             gender: '',
-            country: '',
             notes: '',
-            address_notes: '',
             errors: {
                 lost_person_name: false,
                 birthdate: false,
-                city: false,
                 lost_address_line: false,
                 lost_date: false,
                 gender: false,
-                country: false,
-                notes: false,
-                address_notes: false,
             },
-            countries: this.get_countries()
         }
     },
     methods: {
-        async get_countries() {
-            try {
-                const response = await fetch('/countries.json');
-                if (!response.ok) {
-                    throw new Error('Failed to load countries');
-                }
-                this.countries = await response.json();
-            } catch (error) {
-                console.error('Error loading countries:', error);
-            }
-        },
         validate_form() {
             this.errors = {
                 lost_person_name: !this.lost_person_name,
                 birthdate: !this.birthdate,
-                city: !this.city,
                 lost_address_line: !this.lost_address_line,
                 lost_date: !this.lost_date,
                 gender: !this.gender,
-                country: !this.country,
             };
             return !Object.values(this.errors).some(error => error);
         },
@@ -59,29 +39,39 @@ const lost_person_form_app = Vue.createApp({
                 return;
             }
 
-            const fieldsToStore = ['lost_person_name', 'birthdate', 'city', 'lost_date', 'gender', 'country', 'notes', 'address_notes'];
-            fieldsToStore.forEach(field => {
+            const fields_to_store = ['lost_person_name', 'birthdate', 'lost_date', 'gender', 'notes'];
+            fields_to_store.forEach(field => {
                 if (this[field] !== undefined && this[field] !== null) {
                     window.localStorage.setItem(field, this[field]);
                 }
             });
 
             const lost_address_object = {
-                title: `${this.lost_address_line?.toString() || ''}-${this.city?.toString() || ''}-${this.country?.toString() || ''}`,
-                city: this.city?.toString() || '',
-                country: this.country?.toString() || '',
+                title: this.lost_address_line?.toString() || '',
+                city: '',
+                country: '',
                 address_type: 'Lost Place',
                 address_line_1: this.lost_address_line?.toString() || '',
-                notes: this.address_notes?.toString() || '',
+                address_line_2: '',
+                postal_code: ''
+            };
+
+            const home_address_object = {
+                title: this.home_address_line?.toString() || '',
+                city: '',
+                country: '',
+                address_type: 'Home',
+                address_line_1: this.home_address_line,
                 address_line_2: '',
                 postal_code: ''
             };
 
             window.localStorage.setItem('lost_address', JSON.stringify(lost_address_object));
+            window.localStorage.setItem('home_address', JSON.stringify(home_address_object));
             window.location.pathname = '/lost_person_create_detail_2';
         },
         change_line() {
-            const refs = ["name", "date", "city", "address", "lost_date"];
+            const refs = ["name", "date", "address", "lost_date"];
             refs.forEach(ref => {
                 if (this.$refs[ref].value) {
                     this.$refs[ref].style.borderBottom = '1px solid #0ACCAD';
@@ -120,7 +110,7 @@ const lost_person_form_app = Vue.createApp({
                 confirmButtonText: confirm_button_text || __("موافق")
             });
         }
-    },
+    }
 })
 
 lost_person_form_app.mount("#lost_person_form")
