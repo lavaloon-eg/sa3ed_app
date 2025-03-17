@@ -30,8 +30,7 @@
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
-   "options": "Country",
-   "reqd": 1
+   "options": "Country"
   },
   {
    "fieldname": "address_type",
@@ -54,8 +53,7 @@
   {
    "fieldname": "city",
    "fieldtype": "Data",
-   "label": "City",
-   "reqd": 1
+   "label": "City"
   },
   {
    "fieldname": "address_line_1",
@@ -107,7 +105,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-12 14:15:57.157869",
+ "modified": "2025-03-17 12:16:10.893429",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Sa3ed Address",

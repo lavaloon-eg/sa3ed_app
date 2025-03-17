@@ -16,7 +16,7 @@
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" class="w-100 text-right" for="childName">{{_('اسم الطفل')}}</label>
-            <input class="w-100" id="childName" @mouseleave="change_line()" type="text" ref="found_person_name" placeholder="{{_('ادخل اسم الطفل')}}"
+            <input class="w-100" id="childName" type="text" ref="found_person_name" placeholder="{{_('ادخل اسم الطفل')}}"
                 v-model="found_person_name" required minlength="3" maxlength="50" :class="{'is-invalid': errors.found_person_name}">
             <div class="invalid-feedback" v-if="errors.found_person_name">
                 {{_("يرجى إدخال اسم الطفل (3 أحرف على الأقل)")}}
@@ -25,7 +25,7 @@
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="child_birthdate">{{_('تاريخ ميلاد الطفل')}}</label>
-            <input class="w-100" id="child_birthdate" class="testing" @mouseleave="change_line()" type="date" ref="date"
+            <input class="w-100" id="child_birthdate" class="testing" type="date" ref="date"
                 placeholder="{{_('تاريخ ميلاد الطفل')}}" v-model="birthdate" required>
             <div class="invalid-feedback" v-if="errors.birthdate">
                 {{_('يرجى إدخال تاريخ ميلاد الطفل')}}
@@ -33,26 +33,17 @@
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="city">{{_('مدينه اللي وجد فيها الطفل')}}</label>
-            <input class="w-100" id="city" @mouseleave="change_line()" type="text" ref="city"
-                placeholder="{{_('ادخل  مدينه اللي وجد فيها الطفل')}}" v-model="city" required>
-            <div class="invalid-feedback" v-if="errors.city">
-                {{_('يرجى إدخال مدينه اللتي وجد فيها الطفل')}}
-            </div>
-        </div>
-
-        <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="childAddressLine">{{_('العنوان')}}</label>
-            <input class="w-100" id="childAddressLine" @mouseleave="change_line()" type="text" ref="address"
-                placeholder="{{_('ادخل العنوان الذي وجد فيه الطفل')}}" v-model="found_address_line" required>
+            <label class="w-100 text-right" for="childAddressLine">{{_('منطقة اللي وجد فيها الطفل')}}</label>
+            <input class="w-100" id="childAddressLine" type="text" ref="address"
+                placeholder="{{_('منطقة اللي وجد فيها الطفل')}}" v-model="found_address_line" required>
             <div class="invalid-feedback" v-if="errors.address_line">
-                {{_('يرجى ادخال العنوان الذي وجد فيه الطفل')}}
+                {{_('يرجى ادخال منطقة اللي وجد فيها الطفل')}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
             <label class="w-100 text-right" for="child_found_date">{{_('تاريخ رؤية الطفل')}}</label>
-            <input class="w-100" id="child_found_date" @mouseleave="change_line()" type="date" ref="found_date"
+            <input class="w-100" id="child_found_date" type="date" ref="found_date"
                 placeholder="{{_('ادخل  التاريخ الذي وجد فيها الطفل')}}" v-model="found_person_date" required>
             <div class="invalid-feedback" v-if="errors.found_date">
                 {{_('يرجى ادخال التاريخ الذي وجد فيها الطفل')}}
@@ -84,18 +75,7 @@
             </div>
         </div>
 
-        <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="child_country">{{_('الدوله')}}</label>
-            <select class="w-100" id="child_country" required v-model="country">
-                <option value="" disabled>{{_('اختر الدوله')}}</option>
-                <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
-            </select>
-            <div class="invalid-feedback" v-if="errors.country">
-                {{_('يرجى ادخال الدوله')}}
-            </div>
-        </div>
-
-        <textarea id="child_notes" class="w-100 mb-6" placeholder="{{_('ادخل بعض البيانات مثل الحذاء')}}" v-model='notes'></textarea>
+        <textarea id="child_notes" class="w-100 mb-6" placeholder="{{_('ادخل معلومات إضافية عن الطفل مثلا لون ردائه أو شئ مميز')}}" v-model='notes'></textarea>
         <div class="w-100 d-flex justify-content-center">
             <button type="submit" class="submit-btn" ref="btn">
                 <img src="/static/img/arrow-white.svg" alt="found person" />

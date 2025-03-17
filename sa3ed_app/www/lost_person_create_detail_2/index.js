@@ -1,73 +1,94 @@
-const lost_person_form_2_app = Vue.createApp({
-    delimiters: ['[[', ']]'],
+var lost_person_form_3_app = Vue.createApp({
     data() {
         return {
-            city: '',
-            home_address_line: '',
-            country: '',
+            user_name: '',
+            email: '',
+            phone_number: '',
+            phone_input: null,
             errors: {
-                city: false,
-                home_address_line: false,
-                country: false,
-            },
-            countries: []
-        }
-    },
-    methods: {
-        async get_countries() {
-            try {
-                const response = await fetch('/countries.json');
-                if (!response.ok) {
-                    throw new Error('Failed to load countries');
-                }
-                this.countries = await response.json();
-            } catch (error) {
-                console.error('Error loading countries:', error);
+                user_name: false,
+                email: false,
+                phone_number: false
             }
-        },
+        };
+    },
+
+    mounted() {
+        this.phone_input = window.intlTelInput(this.$refs.phone, {
+            initialCountry: "eg",
+            geoIpLookup: function (callback) {
+                fetch('https://ipinfo.io/json', { headers: { 'Accept': 'application/json' } })
+                    .then(response => response.json())
+                    .then(data => callback(data.country))
+                    .catch(() => callback('us'));
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+
+        const wrapper = this.$refs.phone.parentNode;
+        wrapper.classList.add("w-100");
+    },
+
+    methods: {
         validate_form() {
             this.errors = {
-                city: !this.city,
-                home_address_line: !this.home_address_line,
-                country: !this.country,
+                user_name: !this.user_name.trim(),
+                email: !this.validate_email(this.email),
+                phone_number: !(this.phone_input && this.phone_input.isValidNumber())
             };
-            return !Object.values(this.errors).some(error => error);
+
+            if (this.errors.user_name) {
+                this.fire_toast(__('يرجى إدخال الاسم'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            if (this.errors.email) {
+                this.fire_toast(__('البريد الإلكتروني غير صالح'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            if (this.errors.phone_number) {
+                this.fire_toast(__('رقم الهاتف المحمول غير صالح'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            this.phone_number = this.phone_input.getNumber();
+            return true;
         },
+
         btn_event() {
             if (!this.validate_form()) {
-                Swal.fire({
-                    title: 'يرجي ادخال البيانات',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
 
-            const home_address_object = {
-                title: `${this.home_address_line?.toString() || ''}-${this.city?.toString() || ''}-${this.country?.toString() || ''}`,
-                city: this.city,
-                country: this.country,
-                address_type: 'Home',
-                address_line_1: this.home_address_line,
-                address_line_2: '',
-                postal_code: ''
-            };
+            window.localStorage.setItem('user_name', this.user_name);
+            window.localStorage.setItem('email_Address', this.email);
+            window.localStorage.setItem('phone_1', this.phone_number);
 
-            window.localStorage.setItem('home_address', JSON.stringify(home_address_object));
-            window.location.pathname = '/lost_person_create_detail_3';
+            window.location.pathname = '/lost_person_create';
         },
-        change_line() {
-            const refs = [this.$refs.city, this.$refs.address].filter(ref => ref);
-            const btn = this.$refs.btn;
-            refs.forEach(ref => ref.value !== '' ? (ref.style.borderBottom = '1px solid #0ACCAD', btn.style.backgroundColor = '#053B4F') : null);
+
+        validate_email(email) {
+            if (!email) return false;
+            const email_pattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+            return email_pattern.test(email.trim());
         },
+
+        fire_toast(title = '', text = '', icon = '', confirm_button_text = '') {
+            Swal.fire({
+                title,
+                text,
+                icon,
+                confirmButtonText: confirm_button_text
+            });
+        },
+
         back_to_prev() {
             window.history.back();
         }
-    },
-    mounted() {
-        this.get_countries()
     }
-})
-lost_person_form_2_app.mount("#lost_person_form_2")
+
+});
+
+lost_person_form_3_app.mount("#lost_person_form_3");

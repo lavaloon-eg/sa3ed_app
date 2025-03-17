@@ -17,8 +17,8 @@ class Sa3edAddress(Document):
 		address_line_1: DF.Data
 		address_line_2: DF.Data | None
 		address_type: DF.Literal["Home", "Seen Place", "Lost Place", "Hospitality Address"]
-		city: DF.Data
-		country: DF.Link
+		city: DF.Data | None
+		country: DF.Link | None
 		latitude: DF.Float
 		location: DF.Data | None
 		longitude: DF.Float

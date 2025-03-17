@@ -1,9 +1,9 @@
-.btn {
+.clickbtn {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.btn div {
+.clickbtn div {
     display: block;
     display: flex;
     justify-content: center;
@@ -16,26 +16,27 @@
     color: white;
     cursor: pointer;
     gap: 5px;
+    margin-top: 44px;
 }
-.gender-options {
-    gap: 7px;
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    flex-direction: row-reverse;
-    margin-bottom: 33px;
+
+.iti__flag {
+    background-color: transparent;
 }
-.form-control{
-    background-color: #f2efe6;
-    text-align: center;
-    margin-bottom: 33px;
-    color: #053B4F; 
-    border: 1px solid #053B4F; 
+
+.iti__input {
+    width: calc(100% - 40px); 
     padding: 10px; 
+    border: 1px solid #ccc; 
     border-radius: 4px; 
-    appearance: none; 
-    -moz-appearance: none; 
-    -webkit-appearance: none; 
-    width: 100%; 
-    
+    box-sizing: border-box; 
+}
+.iti__country-list {
+    width: 300px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffffa1 !important;
+}
+.iti__hide {
+    display: none !important;
 }

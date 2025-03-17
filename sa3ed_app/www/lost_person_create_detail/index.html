@@ -9,7 +9,7 @@
         <div>
             <h3 class="page-title">
                 <img src="/static/img/miss.svg" alt="lost person" />
-                (٤/۱) فقد شخص
+                (٣/۱) فقد شخص
             </h3>
             <p class="desc">{{_('قم بادخال بيانات الطفل')}}</p>
         </div>
@@ -33,21 +33,18 @@
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="lost_city">{{_('مدينه الفقدان')}}</label>
-            <input class="w-100" id="lost_city" @mouseleave="change_line()" type="text" ref="city"
-                placeholder="{{_('ادخل  مدينه الفقدان للطفل')}}" v-model="city" required>
-            <div class="invalid-feedback" v-if="errors.city">
-                {{_('يرجى إدخال مدينه الفقدان')}}
+            <label class="w-100 text-right" for="lost_address_line">{{_('منطقة الفقدان')}}</label>
+            <input class="w-100" id="lost_address_line" @mouseleave="change_line()" type="text" ref="address"
+                placeholder="{{_('ادخل  منطقة الفقدان للطفل')}}" v-model="lost_address_line" required>
+            <div class="invalid-feedback" v-if="errors.lost_address_line">
+                {{_('يرجى إدخال منطقة الفقدان')}}
             </div>
         </div>
 
         <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="lost_address_line">{{_('العنوان')}}</label>
-            <input class="w-100" id="lost_address_line" @mouseleave="change_line()" type="text" ref="address"
-                placeholder="{{_('ادخل العنوان الذي فقد فيه الطفل')}}" v-model="lost_address_line" required>
-            <div class="invalid-feedback" v-if="errors.lost_address_line">
-                {{_('يرجى ادخال العنوان')}}
-            </div>
+            <label class="w-100 text-right" for="home_address_line">{{_('منطقة السكنية للطفل')}}</label>
+            <input class="w-100" id="home_address_line" type="text"
+                placeholder="{{_('ادخل المنطقة السكنية للطفل')}}" v-model="home_address_line">
         </div>
 
         <div class="w-100 mb-6">
@@ -71,18 +68,7 @@
             </div>
         </div>
 
-        <div class="w-100 mb-6">
-            <label class="w-100 text-right" for="country_select">{{_('الدوله')}}</label>
-            <select class="w-100" id="country_select" required v-model="country">
-                <option value="" disabled>{{_('اختر الدوله')}}</option>
-                <option v-for="country in countries" :value="country.english_name">[[ country.arabic_name ]]</option>
-            </select>
-            <div class="invalid-feedback" v-if="errors.country">
-                {{_('يرجى ادخال الدوله')}}
-            </div>
-        </div>
-
-        <textarea class="w-100 mb-6" id="notes" placeholder="{{_('ادخل  مدينه اللتي فقد فيها الطفل')}}"
+        <textarea class="w-100 mb-6" id="notes" placeholder="{{_('ادخل معلومات إضافية عن الطفل مثلا لون ردائه أو شئ مميز')}}"
             v-model="notes"></textarea>
         <div class="w-100 d-flex justify-content-center">
             <button type="submit" class="submit-btn" ref="btn">
