@@ -80,7 +80,6 @@ document.getElementById("submit_image").onclick = function (evt) {
                 'last_name': last_name,
                 'reporter_name': window.localStorage.getItem('user_name'),
                 'gender': window.localStorage.getItem('gender'),
-                'nationality': window.localStorage.getItem('country'),
                 'birthdate': window.localStorage.getItem('birthdate'),
                 'lost_date': window.localStorage.getItem('lost_date'),
                 'phone_1': window.localStorage.getItem('phone_1'),

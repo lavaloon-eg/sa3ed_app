@@ -59,7 +59,7 @@ def create_lost_person_case(args_obj: str):
     status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
 
-    mandatory_args_csv = _("first_name,last_name,reporter_name,birthdate,nationality,gender,lost_date")
+    mandatory_args_csv = _("first_name,last_name,reporter_name,birthdate,gender,lost_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                         mandatory_args_csv=mandatory_args_csv)
     if error_msg:
@@ -72,7 +72,6 @@ def create_lost_person_case(args_obj: str):
         new_doc.first_name = args_obj["first_name"]
         new_doc.last_name = args_obj["last_name"]
         new_doc.reporter_name = args_obj["reporter_name"]
-        new_doc.nationality = args_obj["nationality"]
         new_doc.gender = args_obj["gender"]
         new_doc.birthdate = args_obj["birthdate"]
         new_doc.case_status = "Open"
