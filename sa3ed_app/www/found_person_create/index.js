@@ -68,7 +68,6 @@ document.getElementById("submit_image").onclick = function (evt) {
                 last_name: last_name,
                 finder_name: window.localStorage.getItem('finder_user_name'),
                 gender: window.localStorage.getItem('found_gender'),
-                nationality: window.localStorage.getItem('found_country'),
                 birthdate: window.localStorage.getItem('found_birthdate'),
                 seen_date: window.localStorage.getItem('found_date'),
                 phone_1: window.localStorage.getItem('finder_phone_1'),
