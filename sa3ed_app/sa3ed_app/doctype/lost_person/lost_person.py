@@ -25,7 +25,7 @@ class LostPerson(Document):
 		lost_address: DF.Link | None
 		lost_date: DF.Date
 		middle_name: DF.Data | None
-		nationality: DF.Link
+		nationality: DF.Link | None
 		notes: DF.Text | None
 		phone_1: DF.Data
 		phone_2: DF.Data | None
