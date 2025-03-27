@@ -30,6 +30,6 @@ class FoundPerson(Document):
 		phone_2: DF.Data | None
 		pic: DF.AttachImage | None
 		seen_address: DF.Link | None
-		seen_date: DF.Date
+		seen_date: DF.Date | None
 	# end: auto-generated types
 	pass

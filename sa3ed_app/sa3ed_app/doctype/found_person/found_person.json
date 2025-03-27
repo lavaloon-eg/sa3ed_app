@@ -85,8 +85,7 @@
   {
    "fieldname": "seen_date",
    "fieldtype": "Date",
-   "label": "Seen Date",
-   "reqd": 1
+   "label": "Seen Date"
   },
   {
    "fieldname": "case_status",
@@ -178,7 +177,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-12 14:15:32.590102",
+ "modified": "2025-03-27 13:37:18.845177",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Found Person",

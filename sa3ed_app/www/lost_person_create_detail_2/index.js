@@ -63,7 +63,7 @@ var lost_person_form_3_app = Vue.createApp({
             }
 
             window.localStorage.setItem('user_name', this.user_name);
-            window.localStorage.setItem('email_Address', this.email);
+            window.localStorage.setItem('email_address', this.email);
             window.localStorage.setItem('phone_1', this.phone_number);
 
             window.location.pathname = '/lost_person_create';

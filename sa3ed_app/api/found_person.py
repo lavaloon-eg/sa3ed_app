@@ -13,7 +13,7 @@ def create_found_person_case(args_obj: str):
     status_code, message, data = None, '', None
     args_obj = json.loads(args_obj)
 
-    mandatory_args_csv = _("first_name,last_name,birthdate,gender,seen_date")
+    mandatory_args_csv = _("first_name,last_name,age,gender,seen_date")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                         mandatory_args_csv=mandatory_args_csv)
     if error_msg:
@@ -26,7 +26,7 @@ def create_found_person_case(args_obj: str):
         found_person_doc.first_name = args_obj["first_name"]
         found_person_doc.last_name = args_obj["last_name"]
         found_person_doc.gender = args_obj["gender"]
-        found_person_doc.age = calculate_age(args_obj["birthdate"])
+        found_person_doc.age = args_obj["age"]
         found_person_doc.case_status = args_obj["case_status"]
         found_person_doc.seen_date = args_obj["seen_date"]
         found_person_doc.phone_1 = args_obj["phone_1"]

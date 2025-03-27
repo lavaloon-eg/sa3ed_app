@@ -68,11 +68,11 @@ document.getElementById("submit_image").onclick = function (evt) {
                 last_name: last_name,
                 finder_name: window.localStorage.getItem('finder_user_name'),
                 gender: window.localStorage.getItem('found_gender'),
-                birthdate: window.localStorage.getItem('found_birthdate'),
+                age: window.localStorage.getItem('found_age'),
                 seen_date: window.localStorage.getItem('found_date'),
                 phone_1: window.localStorage.getItem('finder_phone_1'),
                 notes: window.localStorage.getItem('found_notes'),
-                email_Address: window.localStorage.getItem('finder_email_Address'),
+                email_address: window.localStorage.getItem('finder_email_address'),
                 case_status: window.localStorage.getItem('found_status'),
                 seen_address: parsed_address
             }

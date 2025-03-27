@@ -3,7 +3,7 @@ const found_person_form_app = Vue.createApp({
     data() {
         return {
             found_person_name: '',
-            birthdate: '',
+            age: '',
             found_person_date: '',
             gender: '',
             status: '',
@@ -16,9 +16,8 @@ const found_person_form_app = Vue.createApp({
         validate_form() {
             this.errors = {};
             if (!this.found_person_name || this.found_person_name.length < 3) this.errors.found_person_name = true;
-            if (!this.birthdate) this.errors.birthdate = true;
+            if (!this.age) this.errors.age = true;
             if (!this.found_address_line) this.errors.address_line = true;
-            if (!this.found_person_date) this.errors.found_date = true;
             if (!this.gender) this.errors.gender = true;
             if (!this.status) this.errors.status = true;
 
@@ -31,22 +30,11 @@ const found_person_form_app = Vue.createApp({
             return this.validate_dates();
         },
         validate_dates() {
-            const birthdate = new Date(this.birthdate);
             const found_date = new Date(this.found_person_date);
             const today = new Date();
 
-            if (birthdate > today) {
-                this.fire_toast(__('تاريخ الميلاد يجب ان يكون اصغر من او يساوي تاريخ اليوم'), '', 'error', __('حسنا'));
-                return false;
-            }
-
-            if (found_date > today) {
+            if (found_date && found_date > today) {
                 this.fire_toast(__('تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم'), '', 'error', __('حسنا'));
-                return false;
-            }
-
-            if (birthdate >= found_date) {
-                this.fire_toast(__('تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد'), '', 'error', __('حسنا'));
                 return false;
             }
 
@@ -67,7 +55,7 @@ const found_person_form_app = Vue.createApp({
 
             window.localStorage.setItem('found_person_name', this.found_person_name);
             window.localStorage.setItem('found_date', this.found_person_date);
-            window.localStorage.setItem('found_birthdate', this.birthdate);
+            window.localStorage.setItem('found_age', this.age);
             window.localStorage.setItem('found_gender', this.gender);
             window.localStorage.setItem('found_status', this.status);
             window.localStorage.setItem('found_notes', this.notes);

@@ -53,7 +53,7 @@ let found_person_form_2_app = Vue.createApp({
             if (!this.validate_form()) return;
 
             window.localStorage.setItem('finder_user_name', this.finder_name);
-            window.localStorage.setItem('finder_email_Address', this.email);
+            window.localStorage.setItem('finder_email_address', this.email);
             window.localStorage.setItem('finder_phone_1', this.phone_number);
             window.location.pathname = '/found_person_create';
         },
