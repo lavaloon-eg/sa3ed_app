@@ -4,11 +4,14 @@ from datetime import datetime, timedelta
 
 
 def calculate_age(birthdate):
-    today = datetime.today()
-    # add strmip
-    # birthdate = datetime.strptime(birthdate.s, '%Y-%m-%d')
+    today = datetime.today().date()
 
-    birthdate = datetime.strptime(birthdate, '%Y-%m-%d')
+    if isinstance(birthdate, str):
+        birthdate = datetime.strptime(birthdate, '%Y-%m-%d')
+
+    if isinstance(birthdate, datetime):
+        birthdate = birthdate.date()
+
     if today < birthdate:
         frappe.throw(msg=_("Birthdate cannot be greater than today"))
     age = today.year - birthdate.year - (

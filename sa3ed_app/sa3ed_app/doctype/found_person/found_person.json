@@ -15,9 +15,11 @@
   "pic",
   "pic_preview",
   "tab_5_tab",
+  "finder_name",
+  "email_address",
+  "column_break_opim",
   "phone_1",
   "phone_2",
-  "email_address",
   "notes_tab",
   "notes",
   "case_status_tab",
@@ -32,7 +34,8 @@
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "First Name"
+   "label": "First Name",
+   "search_index": 1
   },
   {
    "fieldname": "middle_name",
@@ -42,7 +45,8 @@
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "search_index": 1
   },
   {
    "fieldname": "nationality",
@@ -81,8 +85,7 @@
   {
    "fieldname": "seen_date",
    "fieldtype": "Date",
-   "label": "Seen Date",
-   "reqd": 1
+   "label": "Seen Date"
   },
   {
    "fieldname": "case_status",
@@ -153,18 +156,28 @@
   {
    "fieldname": "pic_preview",
    "fieldtype": "Image",
-   "label": "Pic Preview"
+   "label": "Pic Preview",
+   "options": "pic"
   },
   {
    "fieldname": "hospitality_address",
    "fieldtype": "Link",
    "label": "Hospitality Address",
    "options": "Sa3ed Address"
+  },
+  {
+   "fieldname": "column_break_opim",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "finder_name",
+   "fieldtype": "Data",
+   "label": "Finder Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-31 12:39:07.630422",
+ "modified": "2025-03-27 13:37:18.845177",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Found Person",

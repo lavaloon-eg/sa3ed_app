@@ -1,0 +1,66 @@
+{% extends base_template_path %}
+{% block content %}
+<div id="lost_persons">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev">
+            <img src="/static/img/backArrow.svg" alt="back">
+        </button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
+    </div>
+    <h3>{{ _("المفقودون") }}</h3>
+    <div v-if="lost_persons.length > 0" id="lost_persons_list" class="lost-persons">
+        <div class="case-list mt-5">
+            <div v-for="person in lost_persons" :key="person.lost_person_id" class="case-details">
+                <div class="row mt-3 w-100 main-info">
+                    <div class="case-header col-5">
+                        <img :src="person.lost_person_pic ? person.lost_person_pic : '/static/img/upload.svg'"
+                            alt="lost person" class="case-img">
+                    </div>
+                    <div class="case-body col text-right">
+                        <div class="info mb-2">
+                            <p class="info-title">{{ _("أسم الطفل") }}</p>
+                            <p class="highlight">[[ person.full_name ]]</p>
+                        </div>
+                        <div class="info mb-2">
+                            <p class="info-title">{{ _("تم فقد الطفل في") }}</p>
+                            <p class="highlight">[[ person.address ]]</p>
+                        </div>
+                        <div class="row g-2 m-2">
+                            <div class="info">
+                                <p class="info-title">{{ _("عمر الطفل") }}</p>
+                                <p class="highlight">[[ person.age ]]</p>
+                            </div>
+                            <div class="info">
+                                <p class="info-title">{{ _("تاريخ ميلاد الطفل") }}</p>
+                                <p class="highlight">[[ person.birthdate ]]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-header mt-4">
+                    {{ _("بيانات التواصل") }}
+                </div>
+                <div class="contact-info">
+                    <p class="contact-name">[[ person.contact_name ]]</p>
+                    <div class="contact-details">
+                        <p v-if="person.contact_phone">[[ person.contact_phone ]]</p>
+                        <p v-if="person.contact_email">[[ person.contact_email ]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-else class="not_found d-flex flex-column align-items-center">
+        <img src="/static/img/not-found.png" alt="not found" width="210px" height="170px">
+        <h3 class="page-title text-center">{{ _("لا يوجد أشخاص مفقودين") }}</h3>
+        <p class="desc text-center">{{ _("لم يتم الإبلاغ عن أي حالات مفقودة حتى الآن.") }}</p>
+    </div>
+
+    <div class="load-more text-center my-4" v-if="lost_persons.length > 0 && !no_more_data">
+        <button class="btn btn-primary" @click="get_lost_persons">
+            {{ _("تحميل المزيد") }}
+        </button>
+    </div>
+</div>
+{% endblock %}

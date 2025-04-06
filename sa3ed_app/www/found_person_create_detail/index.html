@@ -1,68 +1,86 @@
 {% extends base_template_path %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- #TODO: sweat library -->
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="../found_person_create_detail/index.js"></script>    
-<div id="app" class="container">
-    <div class="row justify-content-start">
-        <img class="col-.75" src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
+<div id="found_person_form">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <div class="row justify-content-end">
+    <form class="row align-items-start" @submit.prevent="btn_event">
         <div>
-            <p>
-                (٣/۱)وجد شخص
-            <img class="col-.75" src="/static/img/found.svg" alt="found person" style="width: 35px;margin-bottom:10px;" />
-            </p>
-            <p style="color: #053B4F; 
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات الطفل</p>
+            <h3 class="page-title">
+                <img class="icon" src="/static/img/found.svg" alt="found person" />
+                (٣/۱) وجد شخص
+            </h3>
+            <p class="desc">{{ _("قم بادخال بيانات الطفل") }}</p>
         </div>
-    </div>
-    <form class="row justify-content-left">
-        <label for="" >اسم الطفل</label>
-        <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="foundpername" required>
-        <label for="">تاريخ ميلاد الطفل</label>
-        <input class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
-        <label for="">  مدينه اللي وجد فيها الطفل</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي وجد فيها الطفل" v-model="city" required>
-        <!-- address line -->
-        <label for="">  الخط الارضي</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان الموجود" v-model="found_address_line" required>
-        <label for="">تاريخ رؤية الطفل </label>
-        <input  @mouseleave="changeline()" type="date" ref="founddate" placeholder="ادخل  التاريخ الذي وجد فيها الطفل" v-model="foundperdate" required>
-        <label for="" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
-        <!-- Gender -->
-        <select v-model="selectedGender" class="form-control" required>
-            <option value="" disabled>اختر الجنس</option>
-            <option value="Male" class="test">ذكر</option>
-            <option value="Female">انثي</option>
-        </select>
-        <!-- Case Status  -->
-        <label for="" style="margin-bottom: 33px;">اختر حاله الطفل</label>
-        <select v-model="selectedStatus" class="form-control" required>
-            <option value="" disabled>اختر حاله الطفل </option>
-            <option value="Seen" class="test">رايته</option>
-            <option value="Hospitality">مستضيفه لدي في المنزل</option>
-            <option value="Closed">الحاله اغلقت</option>
-        </select>
-        <!-- Country -->
-        <label for="" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="country" class="form-control">
-            <option value="" disabled>اختر الدوله</option>
-        </select>
-        <textarea name="" id="" placeholder="ادخل بعض البيانات مثل الحذاء" v-model ='notes'></textarea>
-        <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
 
-    </form>
-        <!-- btn to send data -->
-    <div class="d-flex btn row" @click="btnevent" >
-        <div ref="btn"> 
-            <img class="col-.75" src="/static/img/arrow-white.svg" alt="found person" />
-                ارسال
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" class="w-100 text-right" for="childName">{{_('اسم الطفل')}}</label>
+            <input class="w-100" id="childName" type="text" ref="found_person_name"
+                placeholder="{{_('ادخل اسم الطفل')}}" v-model="found_person_name" required minlength="3" maxlength="50"
+                :class="{'is-invalid': errors.found_person_name}">
+            <div class="invalid-feedback" v-if="errors.found_person_name">
+                {{_("يرجى إدخال اسم الطفل (3 أحرف على الأقل)")}}
+            </div>
         </div>
-    </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_age">{{_('عمر الطفل')}}</label>
+            <input class="w-100" id="child_age" type="number" min="0" placeholder="{{_('عمر الطفل')}}"
+                v-model="age" required>
+            <div class="invalid-feedback" v-if="errors.age">
+                {{_('يرجى إدخال عمر الطفل')}}
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_found_date">{{_('تاريخ رؤية الطفل')}}</label>
+            <input class="w-100" id="child_found_date" type="date" ref="found_date"
+                placeholder="{{_('ادخل  التاريخ الذي وجد فيها الطفل')}}" v-model="found_person_date">
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_gender">{{_('جنس الطفل المفقود')}}</label>
+            <select class="w-100" id="child_gender" v-model="gender" required>
+                <option value="" disabled>{{_('اختر الجنس')}}</option>
+                <option value="Male" class="test">{{_('ذكر')}}</option>
+                <option value="Female">{{_('انثي')}}</option>
+            </select>
+            <div class="invalid-feedback" v-if="errors.gender">
+                {{_('يرجى إدخال جنس الطفل المفقود')}}
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_status">{{_('حاله الطفل')}}</label>
+            <select class="w-100" id="child_status" v-model="status" required>
+                <option value="" disabled>{{_('اختر حاله الطفل')}}</option>
+                <option value="Seen" class="test">{{_('رأيته')}}</option>
+                <option value="Hospitality">{{_('مستضيفه في المنزل')}}</option>
+            </select>
+            <div class="invalid-feedback" v-if="errors.status">
+                {{_('يرجى إدخال حاله الطفل')}}
+            </div>
+        </div>
+
+        <div v-if="status" class="w-100 mb-6">
+            <label v-if="status == 'Seen'" class="w-100 text-right" for="childAddressLine">{{_('المنطقة التي تركت فيها الطفل')}}</label>
+            <label v-if="status == 'Hospitality'" class="w-100 text-right" for="childAddressLine">{{_('عنوانك')}}</label>
+            <input class="w-100" id="childAddressLine" type="text" ref="address"
+                placeholder="{{_('منطقة اللي وجد فيها الطفل')}}" v-model="found_address_line" required>
+            <div class="invalid-feedback" v-if="errors.address_line">
+                {{_('يرجى ادخال منطقة اللي وجد فيها الطفل')}}
+            </div>
+        </div>
+
+        <textarea id="child_notes" class="w-100 mb-6"
+            placeholder="{{_('ادخل معلومات إضافية عن الطفل مثلا لون ردائه أو شئ مميز')}}" v-model='notes'></textarea>
+        <div class="w-100 d-flex justify-content-center">
+            <button type="submit" class="submit-btn" ref="btn">
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>{{_('التالي')}}</span>
+            </button>
+        </div>
+    </form>
 </div>
 {% endblock %}

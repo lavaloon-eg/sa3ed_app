@@ -28,7 +28,7 @@ def save_file_attachment(filedata, target_doctype, target_doctype_id, target_fie
             "attached_to_name": target_doctype_id,
             "attached_to_field": target_field,
             "is_private": is_private,
-            "content": convert_image_base64_to_image_data(filedata['pic_base64Image'])
+            "content": convert_image_base64_to_image_data(filedata['pic_base64_image'])
         })
         file_doc.insert(ignore_permissions=True)
         return file_doc.file_url

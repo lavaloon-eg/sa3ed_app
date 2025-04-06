@@ -1,135 +1,116 @@
-var app = Vue.createApp({
-    delimiters: ['[[', ']]'], // Change delimiters here
+const lost_person_form_app = Vue.createApp({
+    delimiters: ['[[', ']]'],
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
-            lostpername:'',
-            perdate:'',
-            cityperloca:'',
-            lost_address_line:'',
-            // homeperloca:'',// home address
-            lostperdate:'',
-            selectedGender: '',// This will hold the selected gender value 
-            country:'',
-            notes:'',
-            notesloc:'',
+            lost_person_name: '',
+            birthdate: '',
+            lost_address_line: '',
+            home_address_line: '',
+            lost_date: '',
+            gender: '',
+            notes: '',
+            errors: {
+                lost_person_name: false,
+                birthdate: false,
+                lost_address_line: false,
+                lost_date: false,
+                gender: false,
+            },
         }
     },
-    methods:{
-        btnevent() {
-            const isBirthdateValid = this.validateBirthdate();
-            const isLostdateValid = this.validateLostdate();
-            if( !(isBirthdateValid && isLostdateValid) ) {
+    methods: {
+        validate_form() {
+            this.errors = {
+                lost_person_name: !this.lost_person_name,
+                birthdate: !this.birthdate,
+                lost_address_line: !this.lost_address_line,
+                lost_date: !this.lost_date,
+                gender: !this.gender,
+            };
+            return !Object.values(this.errors).some(error => error);
+        },
+        btn_event() {
+            if (!this.validate_form()) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
-            }   
-            if(this.lost_address_line!=''&& this.notesloc!= ''&&this.lostpername != '' && this.perdate != '' && this.cityperloca != ''  && this.lostperdate != '' && this.selectedGender != '' && this.country !='')  {
-                window.localStorage.setItem('first_name',this.lostpername);
-                window.localStorage.setItem('lost_date',this.lostperdate);
-                window.localStorage.setItem('birthdate',this.perdate)
-                window.localStorage.setItem('gender',this.selectedGender)
-                window.localStorage.setItem('country',this.country)
-                window.localStorage.setItem('notes',this.notes)
-                window.localStorage.setItem('notesloc',this.notesloc)
-                window.localStorage.setItem('lost_addres_type','Lost Place');
-                // send lost_address data os object
-                let lost_address_object = {
-                    title:'test',
-                    city: (this.cityperloca).toString(),
-                    country:(this.country).toString(),
-                    address_type:'Lost Place',
-                    address_line_1:this.lost_address_line.toString(),
-                    notes:this.notesloc.toString(),
-                    address_line_2: '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
-                    postal_code:  ''
+            }
+
+            if (!this.validate_birthdate() || !this.validate_lost_date()) {
+                return;
+            }
+
+            const fields_to_store = ['lost_person_name', 'birthdate', 'lost_date', 'gender', 'notes'];
+            fields_to_store.forEach(field => {
+                if (this[field] !== undefined && this[field] !== null) {
+                    window.localStorage.setItem(field, this[field]);
                 }
-                window.localStorage.setItem('lost_address',JSON.stringify(lost_address_object))                
-                window.location.pathname ='/lost_person_create_detail_2'
-            } else {
-                Swal.fire({
-                    title: 'يرجي ادخال البيانات',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
-            }
+            });
+
+            const lost_address_object = {
+                title: this.lost_address_line?.toString() || '',
+                city: '',
+                country: '',
+                address_type: 'Lost Place',
+                address_line_1: this.lost_address_line?.toString() || '',
+                address_line_2: '',
+                postal_code: ''
+            };
+
+            const home_address_object = {
+                title: this.home_address_line?.toString() || '',
+                city: '',
+                country: '',
+                address_type: 'Home',
+                address_line_1: this.home_address_line,
+                address_line_2: '',
+                postal_code: ''
+            };
+
+            window.localStorage.setItem('lost_address', JSON.stringify(lost_address_object));
+            window.localStorage.setItem('home_address', JSON.stringify(home_address_object));
+            window.location.pathname = '/lost_person_create_detail_2';
         },
-        changeline() {
-            if(this.$refs.name.value != '') {
-                this.$refs.name.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.date.value != '') {
-                this.$refs.date.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
-            if(this.$refs.loc.value != '') {
-                this.$refs.loc.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.lostdate.value != '') {
-                this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
+        change_line() {
+            const refs = ["name", "date", "address", "lost_date"];
+            refs.forEach(ref => {
+                if (this.$refs[ref].value) {
+                    this.$refs[ref].style.borderBottom = '1px solid #0ACCAD';
+                    this.$refs.btn.style.backgroundColor = '#053B4F';
+                }
+            });
         },
-        validateBirthdate() {
-            const birthdate = this.perdate;
-            
-            if (new Date(birthdate) > new Date()) {
-                Swal.fire({
-                    title: 'تاريخ الميلاد يجب ان يكون اصغر من او يساوي تاريخ اليوم',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+        validate_birthdate() {
+            if (new Date(this.birthdate) > new Date()) {
+                this.fire_toast(__('تاريخ الميلاد يجب ان يكون اصغر من او يساوي تاريخ اليوم'), '', 'error', __('خطا'));
                 return false;
             } else {
                 return true;
             }
         },
-        validateLostdate() {
-            const lostdate = this.lostperdate;
-            if (new Date(lostdate) > new Date()) {
-                Swal.fire({
-                    title: 'تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+        validate_lost_date() {
+            if (new Date(lost_date) > new Date()) {
+                this.fire_toast(__('تاريخ الفقدان يجب ان يكون اصغر من او يساوي تاريخ اليوم'), '', 'error', __('خطا'));
                 return false;
-            } else if(new Date(this.perdate) >= new Date(lostdate)){
-                Swal.fire({
-                    title: 'تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });                
+            } else if (new Date(this.birthdate) >= new Date(this.lost_date)) {
+                this.fire_toast(__('تاريخ الفقدان يجب ان يكون اكبر من او يساوي تاريخ الميلاد'), '', 'error', __('خطا'));
                 return false;
             }
             else {
                 return true;
             }
         },
+        back_to_prev() {
+            window.history.back();
+        },
+        fire_toast(title = null, text = null, icon = null, confirm_button_text = null) {
+            Swal.fire({
+                title: title || __("تم الحفظ!"),
+                text: text || __("البيانات تم حفظها بنجاح."),
+                icon: icon || 'success',
+                confirmButtonText: confirm_button_text || __("موافق")
+            });
+        }
     }
 })
-app.mount("#app")
+
+lost_person_form_app.mount("#lost_person_form")

@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{first_name}-{last_name}-{####}",
  "creation": "2024-07-22 02:41:04.594121",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -15,6 +16,7 @@
   "pic",
   "pic_preview",
   "contact_details_tab",
+  "reporter_name",
   "phone_1",
   "phone_2",
   "email_address",
@@ -34,7 +36,8 @@
    "fieldname": "first_name",
    "fieldtype": "Data",
    "label": "First Name",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "middle_name",
@@ -45,7 +48,7 @@
    "fieldname": "last_name",
    "fieldtype": "Data",
    "label": "Last Name",
-   "reqd": 1
+   "search_index": 1
   },
   {
    "fieldname": "birthdate",
@@ -119,8 +122,7 @@
    "fieldname": "nationality",
    "fieldtype": "Link",
    "label": "Nationality",
-   "options": "Country",
-   "reqd": 1
+   "options": "Country"
   },
   {
    "fieldname": "case_status_tab",
@@ -167,14 +169,21 @@
    "fieldtype": "Link",
    "label": "Founded Person",
    "options": "Found Person"
+  },
+  {
+   "fieldname": "reporter_name",
+   "fieldtype": "Data",
+   "label": "Reporter Name",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-23 19:17:47.911421",
+ "modified": "2025-03-25 14:19:45.762806",
  "modified_by": "Administrator",
  "module": "Sa3ed_App",
  "name": "Lost Person",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {

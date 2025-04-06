@@ -1,8 +1,8 @@
-from sa3ed_app.api.ApiEndPoint import *
+from sa3ed_app.api.api_endpoint import *
 from frappe import _
 import json
 
-def create_sa3ed_address(args_obj: {}) -> str:
+def create_sa3ed_address(args_obj: dict) -> str:
     mandatory_args_csv = _("title,address_type,country,city,address_line_1")
     error_msg = ApiEndPoint.validate_mandatory_parameters(args_obj=args_obj,
                                                         mandatory_args_csv=mandatory_args_csv)
@@ -19,8 +19,10 @@ def create_sa3ed_address(args_obj: {}) -> str:
         new_doc.city = args_obj['city']
         new_doc.address_line_1 = args_obj['address_line_1']
         new_doc.address_line_2 = args_obj['address_line_2']
-        new_doc.notes = args_obj['notes']
-        new_doc.postal_code = args_obj['postal_code']
+        if args_obj.get('notes'):
+            new_doc.notes = args_obj['notes']
+        if args_obj.get('postal_code'):
+            new_doc.postal_code = args_obj['postal_code']
         new_doc.save()
 
     return new_doc.name

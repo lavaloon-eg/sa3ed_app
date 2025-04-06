@@ -1,79 +1,94 @@
-var app = Vue.createApp({
-    delimiters: ['[[', ']]'], // Change delimiters here
+var lost_person_form_3_app = Vue.createApp({
     data() {
-        frappe.call({
-            method:"sa3ed_app.api.WhitelistBypass.get_country_list",
-            callback: function(result) { 
-                const message = result.message;
-                let select = document.getElementById("country_select");
-                const data = message.data;
-                if (message.statuscode != 200) {
-                    console.error(data)
-                } else {
-                    for (let index in data) {
-                        const country = data[index];
-                        if (typeof country !== "object") {
-                        } else {
-                            let option = document.createElement("option")
-                            option.value = country.name;
-                            option.innerHTML = country.name;
-                            select.append(option);
-                        }
-                    }
-                }
-            },
-        })
         return {
-            cityperloca:'',
-            home_address_line:'',
-            // homeperloca:'',// home address
-            country:'',
-            notesloc:'',
-        }
+            user_name: '',
+            email: '',
+            phone_number: '',
+            phone_input: null,
+            errors: {
+                user_name: false,
+                email: false,
+                phone_number: false
+            }
+        };
     },
-    methods:{
-        btnevent() {
-            
-            if(this.home_address_line!=''&& this.notesloc!= ''&& this.cityperloca != ''   && this.country !='')  {
-                let home_address_object = {
-                    title:'test',
-                    city:this.cityperloca,
-                    country:this.country,
-                    address_type:'Home',
-                    address_line_1:this.home_address_line,
-                    notes:this.notesloc,
-                    address_line_2:  '', // إذا كانت هذه الحقول غير موجودة، أرسل قيمة فارغة
-                    postal_code: ''
-                }
-                window.localStorage.setItem('home_address',JSON.stringify(home_address_object))
-                window.location.pathname ='/lost_person_create_detail_3'
-            } else {
-                Swal.fire({
-                    title: 'يرجي ادخال البيانات',
-                    text: '',
-                    icon: 'error',
-                    confirmButtonText: 'خطا'
-                });
+
+    mounted() {
+        this.phone_input = window.intlTelInput(this.$refs.phone, {
+            initialCountry: "eg",
+            geoIpLookup: function (callback) {
+                fetch('https://ipinfo.io/json', { headers: { 'Accept': 'application/json' } })
+                    .then(response => response.json())
+                    .then(data => callback(data.country))
+                    .catch(() => callback('us'));
+            },
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+
+        const wrapper = this.$refs.phone.parentNode;
+        wrapper.classList.add("w-100");
+    },
+
+    methods: {
+        validate_form() {
+            this.errors = {
+                user_name: !this.user_name.trim(),
+                email: !this.validate_email(this.email),
+                phone_number: !(this.phone_input && this.phone_input.isValidNumber())
+            };
+
+            if (this.errors.user_name) {
+                this.fire_toast(__('يرجى إدخال الاسم'), '', 'error', __('خطأ'));
+                return false;
             }
+
+            if (this.errors.email) {
+                this.fire_toast(__('البريد الإلكتروني غير صالح'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            if (this.errors.phone_number) {
+                this.fire_toast(__('رقم الهاتف المحمول غير صالح'), '', 'error', __('خطأ'));
+                return false;
+            }
+
+            this.phone_number = this.phone_input.getNumber();
+            return true;
         },
-        changeline() {
-            if(this.$refs.name.value != '') {
-                this.$refs.name.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
+
+        btn_event() {
+            if (!this.validate_form()) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
             }
-            if(this.$refs.date.value != '') {
-                this.$refs.date.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
-            if(this.$refs.loc.value != '') {
-                this.$refs.loc.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            }
-            if(this.$refs.lostdate.value != '') {
-                this.$refs.lostdate.style.borderBottom = '1px solid #0ACCAD'
-                this.$refs.btn.style.backgroundColor = '#053B4F'
-            } 
+
+            window.localStorage.setItem('user_name', this.user_name);
+            window.localStorage.setItem('email_address', this.email);
+            window.localStorage.setItem('phone_1', this.phone_number);
+
+            window.location.pathname = '/lost_person_create';
+        },
+
+        validate_email(email) {
+            if (!email) return false;
+            const email_pattern = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+            return email_pattern.test(email.trim());
+        },
+
+        fire_toast(title = '', text = '', icon = '', confirm_button_text = '') {
+            Swal.fire({
+                title,
+                text,
+                icon,
+                confirmButtonText: confirm_button_text
+            });
+        },
+
+        back_to_prev() {
+            window.history.back();
         }
     }
-})
-app.mount("#app")
+
+});
+
+lost_person_form_3_app.mount("#lost_person_form_3");

@@ -1,7 +1,7 @@
 import frappe
 from frappe import _
 from frappe import cint
-from sa3ed_app.Utils.Localization import *
+from sa3ed_app.utils.localization import *
 from pypika.functions import Count, Lower
 from pypika import Order
 from frappe.query_builder import DocType

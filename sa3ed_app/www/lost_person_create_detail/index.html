@@ -1,59 +1,81 @@
 {% extends base_template_path %}
 {% block content %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- #TODO: sweat library -->
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="../lost_person_create_detail/index.js"></script>    
-<div id="app" class="container">
-    <div class="row justify-content-start">
-        <img class="col-.75" src="/static/img/favicon-32x32.png" alt="lost person" width="48px" />
+<div id="lost_person_form">
+    <div class="row justify-content-between align-items-end mb-5">
+        <button class="btn btn-light" @click="back_to_prev"><img src="/static/img/backArrow.svg" alt="back"></button>
+        <img src="/static/img/favicon-32x32.png" alt="found person" width="48px" />
     </div>
-    <div class="row justify-content-end">
+    <form class="row align-items-start" @submit.prevent="btn_event">
         <div>
-            <p>
-                (٤/۱)فقد شخص
-            <img class="col-.75" src="/static/img/miss.svg" alt="lost person" />
-            </p>
-            <p style="color: #053B4F; 
-                    opacity:0.8; 
-                    font-size:20px;
-                    font-weight: 400;">قم بادخال بيانات الطفل</p>
+            <h3 class="page-title">
+                <img src="/static/img/miss.svg" alt="lost person" />
+                (٣/۱) فقد شخص
+            </h3>
+            <p class="desc">{{_('قم بادخال بيانات الطفل')}}</p>
         </div>
-    </div>
-    <form class="row justify-content-left">
-        <label for="" >اسم الطفل</label>
-        <input   @mouseleave="changeline()"  type="text" ref="name" placeholder="ادخل اسم الطفل" v-model="lostpername" required>
-        <label for="">تاريخ ميلاد الطفل</label>
-        <input class="testing"  @mouseleave="changeline()" type="date" ref ="date" placeholder="تاريخ ميلاد الطفل" v-model="perdate" required>
-        <label for="">  مدينه الفقدان</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="ادخل  مدينه اللتي فقد فيها الطفل" v-model="cityperloca" required>
-        <!-- address line -->
-        <label for="">  الخط الارضي</label>
-        <input  @mouseleave="changeline()" type="text" ref="loc" placeholder="الخط الارضي لشخص في المكان المفقود" v-model="lost_address_line" required>    
-        <label for="">تاريخ الفقدان</label>
-        <input  @mouseleave="changeline()" type="date" ref="lostdate" placeholder="ادخل  التاريخ اللتي فقد فيها الطفل" v-model="lostperdate" required>
-        <label for="" style="margin-bottom: 33px;">نوع الطفل المفقود</label>
-        <!-- Gender -->
-        <select v-model="selectedGender" class="form-control" required>
-            <option value="" disabled>اختر الجنس</option>
-            <option value="Male" class="test">ذكر</option>
-            <option value="Female">انثي</option>
-        </select>
-        <!-- Country -->
-        <label for="" style="margin-bottom: 33px;">الدوله</label>
-        <select id="country_select" required v-model="country" class="form-control">
-            <option value="" disabled>اختر الدوله</option>
-        </select>
-        <textarea name="" id="" placeholder="ادخل بعض البيانات مثل ملابس الطفل ووصفه" v-model ='notes'></textarea>
-        <textarea name="" id="" placeholder="ادخل بعض البيانات للمكان الذي فقد فيه" v-model ='notesloc'></textarea>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_name">{{_('اسم الطفل')}}</label>
+            <input class="w-100" id="child_name" @mouseleave="change_line()" type="text" ref="name"
+                placeholder="{{_('ادخل اسم الطفل')}}" v-model="lost_person_name" required>
+            <div class="invalid-feedback" v-if="errors.lost_person_name">
+                {{_('يرجى إدخال اسم الطفل')}}
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="child_birthdate">{{_('تاريخ ميلاد الطفل')}}</label>
+            <input class="w-100" id="child_birthdate" class="testing" @mouseleave="change_line()" type="date" ref="date"
+                placeholder="{{_('تاريخ ميلاد الطفل')}}" v-model="birthdate" required>
+            <div class="invalid-feedback" v-if="errors.birthdate">
+                {{_('يرجى إدخال تاريخ ميلاد الطفل')}}
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_address_line">{{_('منطقة الفقدان')}}</label>
+            <input class="w-100" id="lost_address_line" @mouseleave="change_line()" type="text" ref="address"
+                placeholder="{{_('ادخل  منطقة الفقدان للطفل')}}" v-model="lost_address_line" required>
+            <div class="invalid-feedback" v-if="errors.lost_address_line">
+                {{_('يرجى إدخال منطقة الفقدان')}}
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="home_address_line">{{_('منطقة السكنية للطفل')}}</label>
+            <input class="w-100" id="home_address_line" type="text"
+                placeholder="{{_('ادخل المنطقة السكنية للطفل')}}" v-model="home_address_line">
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_date">{{_('تاريخ الفقدان')}}</label>
+            <input class="w-100" id="lost_date" @mouseleave="change_line()" type="date" ref="lost_date"
+                placeholder="{{_('تاريخ الفقدان')}}" v-model="lost_date" required>
+            <div class="invalid-feedback" v-if="errors.lost_date">
+                {{_('يرجى إدخال تاريخ الفقدان')}}
+            </div>
+        </div>
+
+        <div class="w-100 mb-6">
+            <label class="w-100 text-right" for="lost_gender">{{_('جنس الطفل المفقود')}}</label>
+            <select class="w-100" id="lost_gender" v-model="gender" required>
+                <option value="" disabled>{{_('اختر الجنس')}}</option>
+                <option value="Male" class="test">{{_('ذكر')}}</option>
+                <option value="Female">{{_('انثي')}}</option>
+            </select>
+            <div class="invalid-feedback" v-if="errors.gender">
+                {{_('يرجى إدخال جنس الطفل المفقود')}}
+            </div>
+        </div>
+
+        <textarea class="w-100 mb-6" id="notes" placeholder="{{_('ادخل معلومات إضافية عن الطفل مثلا لون ردائه أو شئ مميز')}}"
+            v-model="notes"></textarea>
+        <div class="w-100 d-flex justify-content-center">
+            <button type="submit" class="submit-btn" ref="btn">
+                <img src="/static/img/arrow-white.svg" alt="found person" />
+                <span>{{_('التالي')}}</span>
+            </button>
+        </div>
     </form>
-        <!-- btn to send data -->
-    <div class="d-flex btn row" @click="btnevent" >
-        <div ref="btn"> 
-            <img class="col-.75" src="/static/img/arrow-white.svg" alt="lost person" />
-                ارسال
-        </div>
-    </div>
 </div>
 {% endblock %}

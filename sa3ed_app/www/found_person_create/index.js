@@ -1,15 +1,10 @@
-function OpenFileBrowser() {
-    $('#UploadImage').click();
+function open_file_browser() {
+    document.getElementById('upload_image').click();
 }
 
-function ControlSubmission(is_disabled){
-    $("#SubmitImage").attr("disabled", true);
-    $("#ProgressBar").attr("hidden", !is_disabled);
-}
-
-document.getElementById("UploadImage").onchange = function () {
+document.getElementById("upload_image").onchange = function () {
     if (this.value) {
-        document.getElementById("SubmitImage").disabled = false;
+        document.getElementById("submit_image").disabled = false;
     }
 
     const file_data_obj = this.files[0];
@@ -17,68 +12,23 @@ document.getElementById("UploadImage").onchange = function () {
     const maxSize = 1 * 1024 * 1024;
 
     if (!allowedTypes.includes(file_data_obj.type)) {
-        display_alert_with_timeout(msg="Allowed file types: JPEG, JPG, PNG", type="danger");
+        fire_toast(__('الأنواع المسموح بها: JPEG, JPG, PNG'), '', 'error', __('حسنا'));
         return;
     }
 
     if (file_data_obj.size > maxSize) {
-        display_alert_with_timeout(msg="File size exceeds 5MB", type="danger");
+        fire_toast(__('حجم الملف يتجاوز 1MB'), '', 'error', __('حسنا'));
         return;
     }
 
     const reader = new FileReader();
     reader.onload = function (e) {
-        document.getElementById('imagePreview').src = e.target.result;
+        document.getElementById('image_preview').src = e.target.result;
     };
     reader.readAsDataURL(file_data_obj);
 }
 
-function run_progress_bar(){
-    var xhr = new window.XMLHttpRequest();
-
-    xhr.upload.addEventListener("progress", function (evt) {
-        if (evt.lengthComputable) {
-            var percentComplete = evt.loaded / evt.total;
-            percentComplete = parseInt(percentComplete * 100);
-            $('.progress-bar').width(percentComplete + '%');
-            $('.progress-bar').html(percentComplete + '%');
-        }
-    }, false);
-
-    return xhr;
-}
-
-function render_response_create_found_person_case(...args){
-    const response_obj = args[0];
-    let data = null;
-    if ("data" in response_obj){
-        data = response_obj['data'];
-        display_alert_with_timeout(msg=`found_person_case_id: ${data['found_person_case_id']}`, type="success", timeout=3000)
-       
-        // clear data from localstorage
-        setTimeout(() => {
-            window.localStorage.setItem('fndfirst_name',' ');
-            window.localStorage.setItem('fndgender',' ');
-            window.localStorage.setItem('fndcountry',' ');
-            window.localStorage.setItem('fndbirthdate',' ');
-            window.localStorage.setItem('fndphone_1',' ');
-            window.localStorage.setItem('found_address',' ');
-            window.localStorage.setItem('found_date',' ');
-            window.localStorage.setItem('fndnotes',' ');
-            window.localStorage.setItem('fndemail_Address',' ');
-            window.localStorage.setItem('fndstatus',' ');
-            window.localStorage.setItem('fnduser_name',' ');
-            window.localStorage.setItem('found_address',' ');
-        }, 4000);
-    }
-    else
-    {
-        display_alert_with_timeout(msg=response_obj['error_message'], type="danger", timeout=3000);
-        ControlSubmission(is_disabled=false);
-    }
-}
-
-function convert_file_to_object(file){
+function convert_file_to_object(file) {
     return {
         lastModified: file.lastModified,
         lastModifiedDate: file.lastModifiedDate,
@@ -89,80 +39,77 @@ function convert_file_to_object(file){
     };
 };
 
-document.getElementById("SubmitImage").onclick = function (evt) {
+document.getElementById("submit_image").onclick = function (evt) {
     evt.preventDefault();
-    ControlSubmission(is_disabled=true);
-    let args = {};
-    const file = document.getElementById("UploadImage").files[0];
+    const file = document.getElementById("upload_image").files[0];
     const file_data_obj = convert_file_to_object(file);
     if (!file) {
-        alert('Please select a file.');
+        fire_toast(__('يرجى اختيار صورة'), '', 'error', __('حسنا'));
         return;
     }
 
     const reader = new FileReader();
-    reader.onload = function(event) {
-        const pic_base64Image = event.target.result;
-        args = {
-            'args_obj': {
-                    'pic': {'pic_base64Image': pic_base64Image,'file_data_obj': file_data_obj},
-                    'first_name': window.localStorage.getItem('fndfirst_name'),
-                    'middle_name': "",
-                    'last_name': "test",
-                    'gender': window.localStorage.getItem('fndgender'),
-                    'nationality': window.localStorage.getItem('fndcountry'),
-                    'birthdate': window.localStorage.getItem('fndbirthdate'),
-                    'seen_date': window.localStorage.getItem('found_date'),
-                    'phone_1': window.localStorage.getItem('fndphone_1'),
-                    'notes':window.localStorage.getItem('fndnotes'),
-                    'email_Address':window.localStorage.getItem('fndemail_Address'),
-                    'case_status':window.localStorage.getItem('fndstatus'),
-                    'seen_address':JSON.parse(window.localStorage.getItem('found_address')),
+    reader.onload = function (event) {
+        const pic_base64_image = event.target.result;
+        let found_address = window.localStorage.getItem('found_address');
+        let parsed_address = found_address ? JSON.parse(found_address) : null;
+
+        let lost_person_name = window.localStorage.getItem('found_person_name') || "";
+        let name_parts = lost_person_name.trim().split(/\s+/);
+        let first_name = name_parts[0] || "";
+        let last_name = name_parts.length > 1 ? name_parts[name_parts.length - 1] : "";
+        let middle_name = name_parts.length > 2 ? name_parts.slice(1, -1).join(' ') : "";
+
+        let args = {
+            args_obj: {
+                pic: { pic_base64_image: pic_base64_image, file_data_obj: file_data_obj },
+                first_name: first_name,
+                middle_name: middle_name,
+                last_name: last_name,
+                finder_name: window.localStorage.getItem('finder_user_name'),
+                gender: window.localStorage.getItem('found_gender'),
+                age: window.localStorage.getItem('found_age'),
+                seen_date: window.localStorage.getItem('found_date'),
+                phone_1: window.localStorage.getItem('finder_phone_1'),
+                notes: window.localStorage.getItem('found_notes'),
+                email_address: window.localStorage.getItem('finder_email_address'),
+                case_status: window.localStorage.getItem('found_status'),
+                seen_address: parsed_address
+            }
+        };
+
+        frappe.call({
+            method: "sa3ed_app.api.found_person.create_found_person_case",
+            type: "POST",
+            args: args,
+            callback: function (res) {
+                if (res.message.status_code == 201) {
+                    fire_toast(__('تم الحفظ!'), __('البيانات تم حفظها بنجاح, رمز الحالة هو {0}', [res.message.data.found_person_case_id]), 'success', __('حسنا'));
+                    setTimeout(() => {
+                        window.localStorage.clear();
+                        document.getElementById("bach_to_home").disabled = false;
+                        document.getElementById("bach_to_home").onclick = function () {
+                            window.location.pathname = 'home'
+                        }
+                    }, 3000);
+                } else {
+                    fire_toast(__('لم يتم الحفظ!'), res.message.message, 'error', __('حسنا'));
                 }
             }
-                // badry
-                if(window.localStorage.getItem('fndfirst_name') != ""
-                    &&window.localStorage.getItem('fndgender') != ""
-                    && window.localStorage.getItem('fndcountry') != ""
-                    &&window.localStorage.getItem('fndbirthdate') != ""
-                    &&window.localStorage.getItem('found_date') != ""
-                    &&window.localStorage.getItem('found_address') != ""
-                    &&window.localStorage.getItem('phone_1') != "") {
-                        // change the api to found and make api
-                    run_api(method="sa3ed_app.api.FoundPersonEndPoints.create_found_person_case",
-                        type= "POST",
-                        async = false,
-                        args = args,
-                        function_render_response = render_response_create_found_person_case
-                    );
-                } 
+        });
     };
     reader.readAsDataURL(file);
 };
-function display_alert_with_timeout(msg, type, timeout=3000) {
-    setTimeout(() => {
-        $('#validationRules').text(msg).removeClass("hide").addClass("alert-" + type);
-        if(type == 'success') {
-            Swal.fire({
-                title: 'تم الحفظ!',
-                text: 'البيانات تم حفظها بنجاح.',
-                icon: 'success',
-                confirmButtonText: 'موافق'
-            });
-        }
-        else {
-            Swal.fire({
-                title: 'لم يتم الحفظ!',
-                text: 'البيانات لم يتم حفظها بنجاح.',
-                icon: 'error',
-                confirmButtonText: 'خطا'
-            });
-        }
-        setTimeout(() => {
-            document.getElementById("BachToHome").disabled = false;
-            document.getElementById("BachToHome").onclick = function () {
-                window.location.pathname = 'home'
-            }
-        }, 3000);
-    }, timeout);
+
+function back_to_prev() {
+    window.history.back();
+};
+
+function fire_toast(title = null, text = null, icon = null, confirm_button_text = null) {
+    Swal.fire({
+        title: title || __('تم الحفظ!'),
+        text: text || __('البيانات تم حفظها بنجاح.'),
+        icon: icon || 'success',
+        confirmButtonText: confirm_button_text || __('موافق')
+    });
 }
